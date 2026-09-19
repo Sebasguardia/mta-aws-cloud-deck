@@ -1,0 +1,179 @@
+/* src/styles/reveal-overrides.css */
+
+/* ── Fullscreen viewport ── */
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Reveal container reset ── */
+.reveal {
+  width: 100vw !important;
+  height: 100vh !important;
+  color: var(--paper) !important;
+  background-color: var(--ink) !important;
+  overflow: hidden;
+  position: relative;
+}
+
+/*
+  CRÍTICO: NO sobrescribir transform de .reveal .slides
+  Reveal.js navega entre slides con transform: translateX(-N × 100%).
+  Si ponemos transform: none !important aquí, el deck se queda pegado en slide 1.
+  Dejamos que Reveal gestione .slides completamente.
+*/
+.reveal .slides {
+  text-align: left !important;
+  width: 100% !important;
+  height: 100% !important;
+  inset: 0 !important;
+  margin: 0 !important;
+  /* NO TOCAR zoom ni transform — Reveal los necesita para navegar */
+}
+
+/*
+  Cada <section> (slide) ocupa 100% del viewport.
+  Reveal gestiona su posicionamiento y visibilidad (clase .present/.past/.future).
+  Usamos flex-direction: row para que nuestros layouts de 2 columnas funcionen.
+*/
+.reveal .slides > section {
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  overflow: hidden !important;
+  display: flex !important;
+  transition: transform 750ms cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 750ms cubic-bezier(0.22, 1, 0.36, 1),
+              filter 750ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+  will-change: transform, opacity;
+}
+
+.reveal .slides > section.present {
+  opacity: 1 !important;
+  transform: scale(1) translate3d(0, 0, 0) !important;
+  filter: blur(0px) !important;
+  z-index: 11 !important;
+  pointer-events: auto !important;
+}
+
+/* Salida cinematográfica hacia atrás (Zoom-out y receso técnico con blur sutil) */
+.reveal .slides > section.past {
+  opacity: 0 !important;
+  transform: scale(0.92) translate3d(-8%, 0, 0) !important;
+  filter: blur(4px) !important;
+  z-index: 9 !important;
+  pointer-events: none !important;
+}
+
+/* Entrada cinematográfica desde adelante (Zoom suave in desde escala 1.06) */
+.reveal .slides > section.future {
+  opacity: 0 !important;
+  transform: scale(1.06) translate3d(8%, 0, 0) !important;
+  filter: blur(4px) !important;
+  z-index: 10 !important;
+  pointer-events: none !important;
+}
+
+.reveal .slides > section.slide-row {
+  flex-direction: row !important;
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+}
+
+.reveal .slides > section.slide-col {
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+}
+
+/* ── Progress bar dorado ── */
+.reveal .progress {
+  height: 6px !important;
+  background-color: rgba(245, 241, 232, 0.08) !important;
+  z-index: 50 !important;
+}
+
+.reveal .progress span {
+  background-color: var(--gold) !important;
+  transition: width 350ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+  box-shadow: 0 0 10px rgba(212, 160, 23, 0.5);
+}
+
+/* ── Reveal controls (flechas) ── */
+.reveal .controls {
+  color: var(--gold) !important;
+  right: 24px !important;
+  bottom: 24px !important;
+  z-index: 50 !important;
+}
+
+.reveal .controls button {
+  color: var(--gold) !important;
+  opacity: 0.6 !important;
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out !important;
+}
+
+.reveal .controls button:hover {
+  opacity: 1 !important;
+  transform: scale(1.12) !important;
+}
+
+/* ── Reset de tipografía de reveal SIN font-family: inherit !important.
+   El !important en font-family:inherit sobrescribiría los inline styles de React.
+   Usamos 'unset' sin !important para limpiar los defaults de reveal,
+   pero permite que los inline styles de cada componente ganen.
+── */
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 0;
+  color: inherit;
+  text-shadow: none;
+  line-height: inherit;
+  font-weight: inherit;
+}
+
+.reveal .slides section h1,
+.reveal .slides section h2,
+.reveal .slides section h3,
+.reveal .slides section p,
+.reveal .slides section span {
+  font-family: unset;
+}
+
+/* ── Slide container utility ── */
+.slide-container {
+  width: 100%;
+  height: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 3rem 4rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+@media (max-width: 1024px) {
+  .slide-container {
+    padding: 2rem 2.5rem;
+  }
+}

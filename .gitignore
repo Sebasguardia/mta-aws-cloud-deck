@@ -22,3 +22,14 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Skills y agentes locales
+.agents/
+.agent/
+.gemini/
+.claude/
+.cursor/
+.codex/
+.kiro/
+.opencode/
+skills-lock.json

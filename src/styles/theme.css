@@ -1,0 +1,179 @@
+/* src/styles/theme.css */
+:root {
+  /* Color Tokens - Industrial Brutalist Palette */
+  --ink: #0a0a0a;
+  --paper: #f5f1e8;
+  --gold: #d4a017;
+  --olive: #4a5d3a;
+  --blush: #e8a0bf;
+  --risk: #c6432b;
+  --safe: #7a9b5c;
+
+  /* Font variables are declared in fonts.css — do NOT redeclare here */
+
+  /* Brutalist Shadows & Borders */
+  --shadow-brutal-sm: 3px 3px 0px var(--ink);
+  --shadow-brutal: 6px 6px 0px var(--ink);
+  --shadow-brutal-lg: 10px 10px 0px var(--ink);
+  --shadow-brutal-gold: 6px 6px 0px var(--gold);
+  --border-brutal: 3px solid var(--ink);
+  --border-brutal-thin: 2px solid var(--ink);
+
+  /* Emil Kowalski Curves (No arbitrary defaults) */
+  --ease-cinematic: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-snappy: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Background & Surface Utilities */
+.bg-ink { background-color: var(--ink); color: var(--paper); }
+.bg-paper { background-color: var(--paper); color: var(--ink); }
+.bg-gold { background-color: var(--gold); color: var(--ink); }
+.bg-olive { background-color: var(--olive); color: var(--paper); }
+.bg-blush { background-color: var(--blush); color: var(--ink); }
+.bg-risk { background-color: var(--risk); color: #ffffff; }
+.bg-safe { background-color: var(--safe); color: #ffffff; }
+
+/* Brutalist Cards */
+.brutal-card {
+  background-color: var(--paper);
+  color: var(--ink);
+  border: var(--border-brutal);
+  box-shadow: var(--shadow-brutal);
+  transition: transform 0.2s var(--ease-snappy), box-shadow 0.2s var(--ease-snappy);
+}
+
+.brutal-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-brutal-lg);
+}
+
+.brutal-card-dark {
+  background-color: #121212;
+  color: var(--paper);
+  border: 2px solid rgba(245, 241, 232, 0.2);
+  box-shadow: 6px 6px 0px var(--gold);
+  transition: transform 0.2s var(--ease-snappy), box-shadow 0.2s var(--ease-snappy);
+}
+
+.brutal-card-dark:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 10px 10px 0px var(--gold);
+  border-color: var(--gold);
+}
+
+/* Brutalist Buttons with Tactile Press Feedback */
+.brutal-btn {
+  background-color: var(--gold);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: var(--border-brutal);
+  box-shadow: var(--shadow-brutal-sm);
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  user-select: none;
+  transition: transform 0.12s var(--ease-snappy), box-shadow 0.12s var(--ease-snappy), background-color 0.12s var(--ease-snappy);
+}
+
+.brutal-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal);
+  background-color: #e5b026;
+}
+
+.brutal-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0px var(--ink);
+}
+
+.brutal-btn-outline {
+  background-color: transparent;
+  color: var(--ink);
+  border: var(--border-brutal);
+  box-shadow: var(--shadow-brutal-sm);
+}
+
+.brutal-btn-outline:hover {
+  background-color: var(--ink);
+  color: var(--paper);
+}
+
+.brutal-btn-dark {
+  background-color: var(--gold);
+  color: var(--ink);
+  border: 2px solid var(--gold);
+  box-shadow: 4px 4px 0px #000;
+}
+
+.brutal-btn-dark:hover {
+  background-color: #ffc83b;
+  box-shadow: 6px 6px 0px #000;
+}
+
+/* Industrial Grid Blueprint Pattern */
+.bg-blueprint-grid {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(10, 10, 10, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(10, 10, 10, 0.06) 1px, transparent 1px);
+}
+
+.bg-blueprint-grid-dark {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(245, 241, 232, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(245, 241, 232, 0.05) 1px, transparent 1px);
+}
+
+/* Film Grain Texture */
+.film-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* Pulsing Status Dot */
+.pulsing-dot {
+  position: relative;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.pulsing-dot::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  opacity: 0.7;
+  animation: brutalPulse 2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+}
+
+@keyframes brutalPulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  70% { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Reduced Motion Compliance */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -12,6 +12,9 @@
   "dependencies": {
     "@fontsource/archivo-black": "^5.3.0",
     "@fontsource/inter": "^5.3.0",
+    "@fontsource/jetbrains-mono": "^5.3.0",
+    "@fontsource/yellowtail": "^5.3.0",
+    "@types/three": "^0.186.0",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
     "framer-motion": "^13.4.0",
@@ -22,6 +25,7 @@
     "recharts": "^3.10.1",
     "reveal.js": "^6.0.2",
     "split-type": "^0.3.4",
+    "three": "^0.186.0",
     "zustand": "^5.0.15"
   },
   "devDependencies": {

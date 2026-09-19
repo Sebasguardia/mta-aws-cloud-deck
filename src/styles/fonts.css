@@ -1,0 +1,95 @@
+/* src/styles/fonts.css */
+
+/* ── Self-hosted vía @fontsource (sin Google Fonts CDN) ── */
+@import '@fontsource/archivo-black';                  /* Display / Hero — peso 400 (es el único que trae) */
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import '@fontsource/inter/900.css';
+@import '@fontsource/jetbrains-mono/400.css';         /* Mono técnico */
+@import '@fontsource/jetbrains-mono/500.css';
+@import '@fontsource/jetbrains-mono/700.css';
+@import '@fontsource/jetbrains-mono/800.css';
+@import '@fontsource/yellowtail';                     /* Script / acento */
+
+/* ── Definición explícita de font-family por nombre canonical ──
+   Esto previene que el navegador caiga a fallbacks por diferencia de nombre.
+   @fontsource ya inyecta los @font-face; aquí forzamos las variables a los
+   nombres exactos que Fontsource registra.
+─────────────────────────────────────────────────────────────── */
+:root {
+  --font-display: 'Archivo Black', 'Arial Black', sans-serif;
+  --font-body:    'Inter',         system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+  --font-script:  'Yellowtail',    cursive;
+}
+
+/* ── Typography Utility Classes ── */
+.font-display {
+  font-family: var(--font-display) !important;
+  letter-spacing: -0.03em;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.font-script {
+  font-family: var(--font-script) !important;
+  font-weight: 400;
+}
+
+.font-body {
+  font-family: var(--font-body) !important;
+}
+
+.font-mono {
+  font-family: var(--font-mono) !important;
+  font-feature-settings: 'zero' 1, 'tnum' 1;
+}
+
+/* ── Fluid Typography Clamp Utilities ── */
+.text-hero {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 7vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.text-slide-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.75rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.text-script-tag {
+  font-family: var(--font-script);
+  font-size: clamp(1.5rem, 2.5vw, 2.75rem);
+  line-height: 1.1;
+}
+
+.text-tech-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* ── Brutalist Text Stroke Effect ── */
+.text-stroke-ink {
+  -webkit-text-stroke: 2px var(--ink);
+  color: transparent;
+}
+
+.text-stroke-paper {
+  -webkit-text-stroke: 2px var(--paper);
+  color: transparent;
+}
+
+.text-stroke-gold {
+  -webkit-text-stroke: 2px var(--gold);
+  color: transparent;
+}
