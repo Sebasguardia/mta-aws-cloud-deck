@@ -39,6 +39,12 @@ export function RevealDeck({ children, onSlideChange }) {
         deck.sync();
         deck.layout();
 
+        // Ocultar controles de navegación (flechas) en todas las páginas
+        const controls = deckRef.current?.querySelector(".controls");
+        if (controls) {
+          controls.style.display = "none";
+        }
+
         // Exponer la instancia para llamadas programáticas globales (ej. saltar desde Agenda)
         window.__revealDeck = deck;
 

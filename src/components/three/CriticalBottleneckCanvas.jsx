@@ -183,7 +183,7 @@ export function CriticalBottleneckCanvas({
       targetMouseY = ny * 0.25;
     };
 
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    container.addEventListener("mousemove", handleMouseMove, { passive: true });
 
     // 8. Resize Observer para reajuste responsive
     const resizeObserver = new ResizeObserver((entries) => {
@@ -300,7 +300,7 @@ export function CriticalBottleneckCanvas({
 
     return () => {
       isRunning = false;
-      window.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mousemove", handleMouseMove);
       resizeObserver.disconnect();
       if (animFrameId.current) cancelAnimationFrame(animFrameId.current);
       if (renderer.domElement && container.contains(renderer.domElement)) {

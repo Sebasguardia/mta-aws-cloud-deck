@@ -191,7 +191,7 @@ export function IamSecurityCanvas({ isActive = true, isRoot = false, selectedUse
       targetMouseY = ny * 0.2;
     };
 
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    container.addEventListener("mousemove", handleMouseMove, { passive: true });
 
     // ── 8. Resize Observer ──
     const resizeObserver = new ResizeObserver((entries) => {
@@ -307,7 +307,7 @@ export function IamSecurityCanvas({ isActive = true, isRoot = false, selectedUse
 
     return () => {
       isRunning = false;
-      window.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mousemove", handleMouseMove);
       resizeObserver.disconnect();
       if (animFrameId.current) cancelAnimationFrame(animFrameId.current);
       if (renderer.domElement && container.contains(renderer.domElement)) {

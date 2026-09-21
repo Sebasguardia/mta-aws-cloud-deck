@@ -194,7 +194,7 @@ export function GitPipelineCanvas({ isActive = true, currentStep = 0, isSimulati
       targetY = y * 0.2;
     };
 
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    container.addEventListener("mousemove", handleMouseMove, { passive: true });
 
     // Resize Observer
     const resizeObserver = new ResizeObserver((entries) => {
@@ -279,7 +279,7 @@ export function GitPipelineCanvas({ isActive = true, currentStep = 0, isSimulati
 
     return () => {
       isRunning = false;
-      window.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mousemove", handleMouseMove);
       resizeObserver.disconnect();
       if (animFrameId.current) cancelAnimationFrame(animFrameId.current);
       if (renderer.domElement && container.contains(renderer.domElement)) {

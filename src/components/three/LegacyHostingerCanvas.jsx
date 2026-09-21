@@ -156,7 +156,7 @@ export function LegacyHostingerCanvas({ isActive = true, isFaultActive = false }
       targetY = y * 0.25;
     };
 
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    container.addEventListener("mousemove", handleMouseMove, { passive: true });
 
     // 9. Resize Observer
     const resizeObserver = new ResizeObserver((entries) => {
@@ -239,7 +239,7 @@ export function LegacyHostingerCanvas({ isActive = true, isFaultActive = false }
 
     return () => {
       isRunning = false;
-      window.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mousemove", handleMouseMove);
       resizeObserver.disconnect();
       if (animFrameId.current) cancelAnimationFrame(animFrameId.current);
       if (renderer.domElement && container.contains(renderer.domElement)) {

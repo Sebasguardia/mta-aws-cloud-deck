@@ -10,6 +10,7 @@ html, body, #root {
   background-color: var(--ink);
   color: var(--paper);
   font-family: var(--font-body);
+  font-size: 18px; /* Base font size aumentado para legibilidad global */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

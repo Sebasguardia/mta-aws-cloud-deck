@@ -183,7 +183,7 @@ export function TeamTopologyCanvas({ isActive = true, selectedNode = null, onSel
       targetY = y * 0.35;
     };
 
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    container.addEventListener("mousemove", handleMouseMove, { passive: true });
 
     // 9. Resize observer
     const resizeObserver = new ResizeObserver((entries) => {
@@ -260,7 +260,7 @@ export function TeamTopologyCanvas({ isActive = true, selectedNode = null, onSel
 
     return () => {
       isRunning = false;
-      window.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("mousemove", handleMouseMove);
       resizeObserver.disconnect();
       if (animFrameId.current) cancelAnimationFrame(animFrameId.current);
       if (renderer.domElement && container.contains(renderer.domElement)) {
