@@ -416,7 +416,7 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
 
           {/* Grid de los 6 Nodos del Recorrido */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: "0.35rem" }}>
-            {nodes.map((node, index) => {
+            {nodes.map((node) => {
               const NodeIcon = node.icon;
               const isNodeActive = activeStep === node.id;
               const isNodePassed = activeStep > node.id;
@@ -424,6 +424,13 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
               return (
                 <div
                   key={node.id}
+                  onClick={() => {
+                    if (!isSimulating) {
+                      setActiveStep(node.id);
+                      setActiveTelemetry(node);
+                    }
+                  }}
+                  title="Haz click para auditar este salto perimetral"
                   style={{
                     padding: "0.45rem 0.3rem",
                     border: isNodeActive
@@ -432,7 +439,7 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
                       ? "1.5px solid #6e8e59"
                       : "1px solid rgba(245,241,232,0.12)",
                     background: isNodeActive
-                      ? "rgba(212,160,23,0.18)"
+                      ? "rgba(212,160,23,0.22)"
                       : isNodePassed
                       ? "rgba(110,142,89,0.12)"
                       : "rgba(0,0,0,0.5)",
@@ -442,7 +449,9 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
                     textAlign: "center",
                     minHeight: 80,
                     justifyContent: "space-between",
-                    transition: "all 0.2s ease",
+                    cursor: isSimulating ? "default" : "pointer",
+                    boxShadow: isNodeActive ? "2px 2px 0px #d4a017" : "none",
+                    transition: "all 0.15s ease",
                   }}
                 >
                   <div style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -496,7 +505,7 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
                     exit={{ opacity: 0 }}
                     style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "rgba(245,241,232,0.6)" }}
                   >
-                    En espera. Presiona "Simular Petición" para trazar la ruta perimetral.
+                    En espera. Presiona "Simular Petición" o haz click en cualquier nodo para trazar.
                   </motion.span>
                 )}
 
@@ -528,7 +537,7 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
 
             {activeStep > nodes.length && (
               <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#6e8e59", fontWeight: 800 }}>
-                LATENCIA: 30ms
+                LATENCIA TOTAL: 30ms
               </span>
             )}
           </div>
@@ -588,43 +597,186 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
         <div
           style={{
             position: "absolute",
-            top: "2.5rem",
-            right: "3.5rem",
-            left: "3rem",
+            top: "2rem",
+            left: "2.5rem",
             display: "flex",
-            justifyContent: "space-between",
             alignItems: "center",
+            gap: "0.5rem",
             zIndex: 10,
             pointerEvents: "none",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-            <Server size={14} style={{ color: "#d4a017" }} />
-            <span
-              style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
-                letterSpacing: "0.15em",
-                color: "rgba(245,241,232,0.7)",
-                textTransform: "uppercase",
-              }}
-            >
-              AWS NETWORK PERIMETER // 5-LAYER TOPOLOGY
-            </span>
-          </div>
-
-          <div
+          <Server size={13} style={{ color: "#d4a017" }} />
+          <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.6rem",
-              padding: "0.2rem 0.5rem",
-              background: activeStep > nodes.length ? "rgba(110,142,89,0.2)" : "rgba(212,160,23,0.15)",
-              border: activeStep > nodes.length ? "1px solid #6e8e59" : "1px solid #d4a017",
-              color: activeStep > nodes.length ? "#6e8e59" : "#d4a017",
+              fontSize: "0.62rem",
+              letterSpacing: "0.15em",
+              color: "rgba(245,241,232,0.6)",
+              textTransform: "uppercase",
+              fontWeight: 700,
             }}
           >
-            {activeStep > nodes.length ? "RESPONSE: 200 OK" : isSimulating ? `INSPECTING: STEP 0${activeStep}` : "TOPOLOGY: ISOLATED"}
-          </div>
+            AWS NETWORK TOPOLOGY // 5 LAYERS
+          </span>
+        </div>
+
+        {/* ── CUADRO FLOTANTE ARRIBA A LA DERECHA: EXPLICACIÓN DETALLADA DEL FLUJO ── */}
+        <div
+          style={{
+            position: "absolute",
+            top: "1.8rem",
+            right: "2.5rem",
+            zIndex: 20,
+            maxWidth: 320,
+          }}
+        >
+          <AnimatePresence mode="wait">
+            {activeStep === 0 ? (
+              <motion.div
+                key="flow-idle"
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                style={{
+                  padding: "0.75rem 0.95rem",
+                  background: "rgba(14,14,14,0.92)",
+                  border: "1.5px solid rgba(212,160,23,0.35)",
+                  boxShadow: "4px 4px 0px rgba(0,0,0,0.8)",
+                  backdropFilter: "blur(8px)",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.3rem" }}>
+                  <Globe size={14} style={{ color: "#d4a017" }} />
+                  <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.68rem", color: "#F5F1E8", textTransform: "uppercase" }}>
+                    FLUJO PERIMETRAL END-TO-END
+                  </span>
+                </div>
+                <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "rgba(245,241,232,0.75)", lineHeight: 1.35, margin: 0 }}>
+                  La petición viaja desde el cliente exterior a través de 5 capas de seguridad y caché hasta el núcleo de la base de datos en subred privada.
+                </p>
+                <div style={{ marginTop: "0.35rem", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.56rem", color: "#d4a017" }}>
+                  ▶ Presiona "Simular Petición" para ver cada evento en tiempo real.
+                </div>
+              </motion.div>
+            ) : activeStep <= nodes.length && activeTelemetry ? (
+              <motion.div
+                key={`flow-step-${activeStep}`}
+                initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -6, scale: 0.96 }}
+                transition={{ duration: 0.18 }}
+                style={{
+                  padding: "0.75rem 0.95rem",
+                  background: "rgba(14,14,14,0.94)",
+                  border: "1.5px solid #d4a017",
+                  boxShadow: "4px 4px 0px #d4a017",
+                  backdropFilter: "blur(8px)",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.35rem",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <span
+                    style={{
+                      fontFamily: "'Archivo Black', sans-serif",
+                      fontSize: "0.72rem",
+                      color: "#F5F1E8",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    PASO 0{activeStep} // {activeTelemetry.name}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: "0.52rem",
+                      color: "#0A0A0A",
+                      background: "#d4a017",
+                      padding: "0.15rem 0.4rem",
+                      fontWeight: 800,
+                    }}
+                  >
+                    {activeTelemetry.statusText}
+                  </span>
+                </div>
+
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: "#d4a017" }}>
+                  Protocolo: {activeTelemetry.protocol} · Latencia acumulada: {activeTelemetry.latency}
+                </div>
+
+                <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "rgba(245,241,232,0.85)", lineHeight: 1.35, margin: 0 }}>
+                  {activeTelemetry.detail}
+                </p>
+
+                <div
+                  style={{
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: "0.55rem",
+                    color: "rgba(245,241,232,0.5)",
+                    borderTop: "1px solid rgba(245,241,232,0.1)",
+                    paddingTop: "0.25rem",
+                  }}
+                >
+                  {activeStep === 1 && "Acción: Navegador emite paquete TCP/TLS hacia la nube de AWS."}
+                  {activeStep === 2 && "Acción: CloudFront entrega frontend desde PoP Edge sin tocar el servidor central."}
+                  {activeStep === 3 && "Acción: Route 53 resuelve el registro DNS y deriva la solicitud por menor latencia."}
+                  {activeStep === 4 && "Acción: La VPC aísla el tráfico en un segmento de red privado (10.0.0.0/16)."}
+                  {activeStep === 5 && "Acción: Security Group valida el puerto 5432 y filtra todo acceso no autorizado."}
+                  {activeStep === 6 && "Acción: Base de datos procesa la consulta de Workspace MTA en reposo cifrado."}
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="flow-finished"
+                initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -6, scale: 0.96 }}
+                transition={{ duration: 0.2 }}
+                style={{
+                  padding: "0.75rem 0.95rem",
+                  background: "rgba(10,18,10,0.94)",
+                  border: "1.5px solid #6e8e59",
+                  boxShadow: "4px 4px 0px #6e8e59",
+                  backdropFilter: "blur(8px)",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.3rem",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    <CheckCircle2 size={15} style={{ color: "#6e8e59" }} />
+                    <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.72rem", color: "#F5F1E8", textTransform: "uppercase" }}>
+                      PETICIÓN HTTP EXITOSA // 200 OK
+                    </span>
+                  </div>
+                  <span
+                    style={{
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: "0.52rem",
+                      color: "#6e8e59",
+                      background: "rgba(110,142,89,0.2)",
+                      border: "1px solid #6e8e59",
+                      padding: "0.15rem 0.4rem",
+                      fontWeight: 800,
+                    }}
+                  >
+                    30ms LATENCIA
+                  </span>
+                </div>
+
+                <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "rgba(245,241,232,0.85)", lineHeight: 1.35, margin: 0 }}>
+                  Respuesta despachada al navegador. La arquitectura de red garantizó caché de contenido en CloudFront, enrutamiento rápido con Route 53 y blindaje total de la base de datos dentro de la VPC.
+                </p>
+
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#6e8e59", borderTop: "1px solid rgba(110,142,89,0.3)", paddingTop: "0.25rem" }}>
+                  Tolerancia a fallos: ✅ ALTA DISPONIBILIDAD // Puntos de presencia globales.
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Canvas 3D Three.js */}

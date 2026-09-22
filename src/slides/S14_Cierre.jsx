@@ -320,7 +320,7 @@ export function S14_Cierre({ isActive: propActive } = {}) {
           </div>
         </motion.div>
 
-        {/* Botonera de Cierre y Navegación */}
+        {/* Botonera de Cierre y Celebración Cósmica */}
         <motion.div
           variants={fadeUp(0.28)}
           initial="hidden"
@@ -341,16 +341,54 @@ export function S14_Cierre({ isActive: propActive } = {}) {
             VOLVER AL INICIO (PORTADA)
           </Button>
 
-          <Button
-            variant="secondary"
-            size="md"
-            icon={PartyPopper}
+          <button
             onClick={handleCelebrate}
-            className="justify-center"
-            title="Lanzar aceleración cósmica de partículas"
+            style={{
+              position: "relative",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.55rem",
+              padding: "0.65rem 1.15rem",
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: "0.74rem",
+              fontWeight: 800,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              color: "#0a0a0a",
+              background: "linear-gradient(135deg, #d4a017 0%, #ffd700 50%, #6e8e59 100%)",
+              border: "1.5px solid #ffd700",
+              boxShadow: celebrateCount > 0 
+                ? "0 0 24px rgba(212,160,23,0.85), inset 0 0 10px rgba(255,255,255,0.4)" 
+                : "3px 3px 0px #000000",
+              cursor: "pointer",
+              transition: "all 0.15s cubic-bezier(0.16, 1, 0.3, 1)",
+              transform: celebrateCount % 2 === 1 ? "scale(0.97)" : "scale(1)",
+            }}
+            onMouseDown={(e) => {
+              e.currentTarget.style.transform = "translate(2px, 2px)";
+            }}
+            onMouseUp={(e) => {
+              e.currentTarget.style.transform = "translate(0px, 0px)";
+            }}
+            title="Lanzar aceleración hiper-espacial de los 5 nodos orbitales"
           >
-            CELEBRAR
-          </Button>
+            <Sparkles size={15} style={{ color: "#0a0a0a" }} />
+            <span>CELEBRAR // WARP 3D</span>
+            {celebrateCount > 0 && (
+              <span
+                style={{
+                  fontSize: "0.6rem",
+                  padding: "0.1rem 0.35rem",
+                  background: "#0a0a0a",
+                  color: "#ffd700",
+                  border: "1px solid #ffd700",
+                  borderRadius: "2px",
+                }}
+              >
+                +{celebrateCount}
+              </span>
+            )}
+          </button>
         </motion.div>
       </div>
 
@@ -423,6 +461,28 @@ export function S14_Cierre({ isActive: propActive } = {}) {
             zIndex: 5,
           }}
         >
+          {/* Badge flotante que identifica a los 5 Nodos de Investigación */}
+          <div
+            style={{
+              position: "absolute",
+              top: "1.2rem",
+              left: "2.8rem",
+              zIndex: 12,
+              background: "rgba(10,10,10,0.85)",
+              border: "1px solid rgba(212,160,23,0.35)",
+              padding: "0.35rem 0.65rem",
+              backdropFilter: "blur(6px)",
+              pointerEvents: "none",
+            }}
+          >
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "#d4a017", fontWeight: 700 }}>
+              ORBITAL MESH: 5 INVESTIGADORES SENATI
+            </div>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.52rem", color: "rgba(245,241,232,0.6)", marginTop: "0.15rem" }}>
+              Analí J. · Diego E. · Jean P. S. · Alfredo G. · Sebastian G.
+            </div>
+          </div>
+
           <ClosingGratitudeCanvas
             isActive={isActive}
             celebrateTrigger={celebrateCount}

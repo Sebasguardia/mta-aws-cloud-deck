@@ -250,50 +250,43 @@ export function S13_Roadmap({ isActive: propActive } = {}) {
           </motion.p>
         </div>
 
-        {/* Las 3 Fases del Roadmap con interactividad */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem" }}>
+        {/* Las 2 Fases del Roadmap con interactividad y entregables de SENATI */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
           {c.phases.map((ph, idx) => {
             const isSelected = selectedPhase === idx;
             const isCompleted = idx === 0;
-            const isNext = idx === 1;
 
             return (
               <motion.div
                 key={ph.phase}
-                variants={fadeUp(0.22 + idx * 0.08)}
+                variants={fadeUp(0.22 + idx * 0.1)}
                 initial="hidden"
                 animate={entered ? "visible" : "hidden"}
                 onClick={() => setSelectedPhase(idx)}
-                whileHover={{ x: 3 }}
+                whileHover={{ x: 4 }}
                 transition={{ duration: 0.15, ease: easings.snappy }}
                 style={{
-                  padding: "0.9rem 1.15rem",
+                  padding: "1rem 1.25rem",
                   background: isSelected
                     ? isCompleted
-                      ? "rgba(110,142,89,0.1)"
-                      : isNext
-                      ? "rgba(212,160,23,0.12)"
-                      : "rgba(255,255,255,0.04)"
+                      ? "rgba(110,142,89,0.12)"
+                      : "rgba(212,160,23,0.14)"
                     : "rgba(255,255,255,0.02)",
                   border: isSelected
                     ? isCompleted
                       ? "1.5px solid #6e8e59"
-                      : isNext
-                      ? "1.5px solid #d4a017"
-                      : "1.5px solid rgba(245,241,232,0.4)"
+                      : "1.5px solid #d4a017"
                     : "1px solid rgba(245,241,232,0.12)",
                   borderLeft: isSelected
                     ? isCompleted
-                      ? "4px solid #6e8e59"
-                      : isNext
-                      ? "4px solid #d4a017"
-                      : "4px solid rgba(245,241,232,0.6)"
-                    : "4px solid rgba(245,241,232,0.2)",
+                      ? "5px solid #6e8e59"
+                      : "5px solid #d4a017"
+                    : "5px solid rgba(245,241,232,0.2)",
                   cursor: "pointer",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "0.35rem",
-                  boxShadow: isSelected ? "3px 3px 0px #000000" : "none",
+                  gap: "0.45rem",
+                  boxShadow: isSelected ? "4px 4px 0px #000000" : "none",
                   transition: "all 0.2s ease",
                 }}
               >
@@ -302,17 +295,17 @@ export function S13_Roadmap({ isActive: propActive } = {}) {
                     <span
                       style={{
                         fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: "0.65rem",
+                        fontSize: "0.68rem",
                         fontWeight: 800,
-                        color: isCompleted ? "#6e8e59" : isNext ? "#d4a017" : "rgba(245,241,232,0.5)",
+                        color: isCompleted ? "#6e8e59" : "#d4a017",
                       }}
                     >
-                      {ph.phase} //
+                      {ph.phase} // {ph.period}
                     </span>
                     <h3
                       style={{
                         fontFamily: "'Archivo Black', sans-serif",
-                        fontSize: "0.85rem",
+                        fontSize: "0.9rem",
                         color: "#F5F1E8",
                         textTransform: "uppercase",
                         margin: 0,
@@ -328,10 +321,10 @@ export function S13_Roadmap({ isActive: propActive } = {}) {
                       fontFamily: "'JetBrains Mono', monospace",
                       fontSize: "0.55rem",
                       fontWeight: 700,
-                      padding: "0.2rem 0.5rem",
-                      background: isCompleted ? "rgba(110,142,89,0.2)" : isNext ? "rgba(212,160,23,0.2)" : "rgba(255,255,255,0.06)",
-                      color: isCompleted ? "#6e8e59" : isNext ? "#d4a017" : "rgba(245,241,232,0.5)",
-                      border: isCompleted ? "1px solid #6e8e59" : isNext ? "1px solid #d4a017" : "1px solid rgba(245,241,232,0.2)",
+                      padding: "0.2rem 0.55rem",
+                      background: isCompleted ? "rgba(110,142,89,0.2)" : "rgba(212,160,23,0.2)",
+                      color: isCompleted ? "#6e8e59" : "#d4a017",
+                      border: isCompleted ? "1px solid #6e8e59" : "1px solid #d4a017",
                       textTransform: "uppercase",
                     }}
                   >
@@ -343,13 +336,44 @@ export function S13_Roadmap({ isActive: propActive } = {}) {
                   style={{
                     fontFamily: "system-ui, -apple-system, sans-serif",
                     fontSize: "0.75rem",
-                    color: "rgba(245,241,232,0.7)",
+                    color: "rgba(245,241,232,0.75)",
                     lineHeight: 1.45,
                     margin: 0,
                   }}
                 >
                   {ph.desc}
                 </p>
+
+                {/* Checklist de Entregables Principales */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "1fr 1fr",
+                    gap: "0.3rem",
+                    marginTop: "0.25rem",
+                    paddingTop: "0.4rem",
+                    borderTop: "1px dashed rgba(245,241,232,0.12)",
+                  }}
+                >
+                  {ph.deliverables?.map((item, dIdx) => (
+                    <div
+                      key={dIdx}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.35rem",
+                        fontFamily: "'JetBrains Mono', monospace",
+                        fontSize: "0.58rem",
+                        color: isSelected ? "#F5F1E8" : "rgba(245,241,232,0.6)",
+                      }}
+                    >
+                      <span style={{ color: isCompleted ? "#6e8e59" : "#d4a017", fontWeight: 800 }}>
+                        {isCompleted ? "✔" : "▸"}
+                      </span>
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
               </motion.div>
             );
           })}
@@ -380,7 +404,7 @@ export function S13_Roadmap({ isActive: propActive } = {}) {
               margin: 0,
             }}
           >
-            "La Etapa 01 establece los cimientos metodológicos y económicos; la Etapa 02 materializa la infraestructura en la consola AWS."
+            "La Etapa 01 consolida el diagnóstico y arquitectura conceptual; la Etapa 02 materializa el cómputo EC2, almacenamiento S3 y base de datos administrada RDS."
           </p>
         </motion.div>
       </div>
@@ -405,43 +429,146 @@ export function S13_Roadmap({ isActive: propActive } = {}) {
         <div
           style={{
             position: "absolute",
-            top: "2.5rem",
-            right: "3.5rem",
-            left: "3rem",
+            top: "2rem",
+            left: "2.5rem",
             display: "flex",
-            justifyContent: "space-between",
             alignItems: "center",
+            gap: "0.5rem",
             zIndex: 10,
             pointerEvents: "none",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-            <Calendar size={14} style={{ color: "#d4a017" }} />
-            <span
-              style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
-                letterSpacing: "0.15em",
-                color: "rgba(245,241,232,0.7)",
-                textTransform: "uppercase",
-              }}
-            >
-              AWS ROADMAP VECTOR // 3-PHASE CONTINUITY
-            </span>
-          </div>
-
-          <div
+          <Calendar size={13} style={{ color: "#d4a017" }} />
+          <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.6rem",
-              padding: "0.2rem 0.5rem",
-              background: "rgba(212,160,23,0.15)",
-              border: "1px solid #d4a017",
-              color: "#d4a017",
+              fontSize: "0.62rem",
+              letterSpacing: "0.15em",
+              color: "rgba(245,241,232,0.7)",
+              textTransform: "uppercase",
+              fontWeight: 700,
             }}
           >
-            FOCUS: {c.phases[selectedPhase].phase}
-          </div>
+            AWS ROADMAP SENATI // 2-PHASE VECTOR
+          </span>
+        </div>
+
+        {/* ── CUADRO FLOTANTE ARRIBA A LA DERECHA: EXPLICACIÓN DE LA ETAPA SELECCIONADA ── */}
+        <div
+          style={{
+            position: "absolute",
+            top: "1.8rem",
+            right: "2.5rem",
+            zIndex: 20,
+            maxWidth: 320,
+          }}
+        >
+          <AnimatePresence mode="wait">
+            {selectedPhase === 0 ? (
+              <motion.div
+                key="stage-0-card"
+                initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -6, scale: 0.96 }}
+                transition={{ duration: 0.18 }}
+                style={{
+                  padding: "0.75rem 0.95rem",
+                  background: "rgba(12,20,12,0.94)",
+                  border: "1.5px solid #6e8e59",
+                  boxShadow: "4px 4px 0px #6e8e59",
+                  backdropFilter: "blur(8px)",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.35rem",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    <CheckCircle2 size={14} style={{ color: "#6e8e59" }} />
+                    <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.72rem", color: "#F5F1E8", textTransform: "uppercase" }}>
+                      ETAPA 01 // SEMANA 6
+                    </span>
+                  </div>
+                  <span
+                    style={{
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: "0.52rem",
+                      color: "#6e8e59",
+                      background: "rgba(110,142,89,0.2)",
+                      border: "1px solid #6e8e59",
+                      padding: "0.15rem 0.4rem",
+                      fontWeight: 800,
+                    }}
+                  >
+                    COMPLETADA
+                  </span>
+                </div>
+
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: "#6e8e59" }}>
+                  Servicios: Amazon VPC · AWS IAM · Route 53 · CloudFront
+                </div>
+
+                <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "rgba(245,241,232,0.85)", lineHeight: 1.35, margin: 0 }}>
+                  Estudio de limitaciones en Hostinger, justificación CAF, cálculo de TCO con alertas en $10 USD y diseño conceptual de red perimetral aislada.
+                </p>
+
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "rgba(245,241,232,0.5)", borderTop: "1px solid rgba(110,142,89,0.3)", paddingTop: "0.25rem" }}>
+                  Representación 3D: Cubo perimetral de red VPC con anillo de CloudFront y núcleo de llaves IAM.
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="stage-1-card"
+                initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -6, scale: 0.96 }}
+                transition={{ duration: 0.18 }}
+                style={{
+                  padding: "0.75rem 0.95rem",
+                  background: "rgba(18,14,10,0.94)",
+                  border: "1.5px solid #d4a017",
+                  boxShadow: "4px 4px 0px #d4a017",
+                  backdropFilter: "blur(8px)",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.35rem",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    <Sparkles size={14} style={{ color: "#d4a017" }} />
+                    <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.72rem", color: "#F5F1E8", textTransform: "uppercase" }}>
+                      ETAPA 02 // SEMANA 7
+                    </span>
+                  </div>
+                  <span
+                    style={{
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: "0.52rem",
+                      color: "#0A0A0A",
+                      background: "#d4a017",
+                      padding: "0.15rem 0.4rem",
+                      fontWeight: 800,
+                    }}
+                  >
+                    SIGUIENTE HITO
+                  </span>
+                </div>
+
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: "#d4a017" }}>
+                  Servicios: Amazon EC2 · AWS Lambda · Amazon S3/EFS/Glacier · Amazon RDS
+                </div>
+
+                <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "rgba(245,241,232,0.85)", lineHeight: 1.35, margin: 0 }}>
+                  Aprovisionamiento de cómputo en EC2, serverless con Lambda, almacenamiento de backups en S3 y despliegue del motor PostgreSQL en Amazon RDS dentro de la subred privada.
+                </p>
+
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "rgba(245,241,232,0.5)", borderTop: "1px solid rgba(212,160,23,0.3)", paddingTop: "0.25rem" }}>
+                  Representación 3D: Torre hexagonal de cómputo EC2 con cilindro de RDS y anillo orbital de S3.
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Canvas 3D Three.js */}
@@ -459,7 +586,7 @@ export function S13_Roadmap({ isActive: propActive } = {}) {
           />
         </div>
 
-        {/* HUD Inferior de los 3 Hitos Clave */}
+        {/* HUD Inferior de los 2 Hitos Curriculares */}
         <div
           style={{
             position: "absolute",
@@ -468,65 +595,64 @@ export function S13_Roadmap({ isActive: propActive } = {}) {
             right: "3.5rem",
             zIndex: 10,
             display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "0.65rem",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "0.85rem",
           }}
         >
           <div
             onClick={() => setSelectedPhase(0)}
             style={{
-              padding: "0.55rem 0.75rem",
+              padding: "0.6rem 0.9rem",
               background: selectedPhase === 0 ? "rgba(110,142,89,0.2)" : "rgba(14,14,14,0.75)",
               border: selectedPhase === 0 ? "1.5px solid #6e8e59" : "1px solid rgba(245,241,232,0.15)",
               backdropFilter: "blur(6px)",
               cursor: "pointer",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              boxShadow: selectedPhase === 0 ? "3px 3px 0px #6e8e59" : "none",
               transition: "all 0.2s ease",
             }}
           >
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.52rem", color: "#6e8e59", fontWeight: 700 }}>
-              ETAPA 01 // LISTA
+            <div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#6e8e59", fontWeight: 700 }}>
+                ETAPA 01 // SEMANA 6 (ENTREGADO)
+              </div>
+              <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.78rem", color: "#F5F1E8", marginTop: "0.15rem" }}>
+                DIAGNÓSTICO & FUNDAMENTOS CLOUD
+              </div>
             </div>
-            <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.72rem", color: "#F5F1E8", marginTop: "0.15rem" }}>
-              DIAGNÓSTICO
-            </div>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "#6e8e59", fontWeight: 800 }}>
+              COMPLETADA
+            </span>
           </div>
 
           <div
             onClick={() => setSelectedPhase(1)}
             style={{
-              padding: "0.55rem 0.75rem",
+              padding: "0.6rem 0.9rem",
               background: selectedPhase === 1 ? "rgba(212,160,23,0.2)" : "rgba(14,14,14,0.75)",
               border: selectedPhase === 1 ? "1.5px solid #d4a017" : "1px solid rgba(245,241,232,0.15)",
               backdropFilter: "blur(6px)",
               cursor: "pointer",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              boxShadow: selectedPhase === 1 ? "3px 3px 0px #d4a017" : "none",
               transition: "all 0.2s ease",
             }}
           >
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.52rem", color: "#d4a017", fontWeight: 700 }}>
-              ETAPA 02 // HITO
+            <div>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#d4a017", fontWeight: 700 }}>
+                ETAPA 02 // SEMANA 7 (SIGUIENTE PASO)
+              </div>
+              <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.78rem", color: "#F5F1E8", marginTop: "0.15rem" }}>
+                SERVICIOS CORE, ALMACENAMIENTO & BD
+              </div>
             </div>
-            <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.72rem", color: "#F5F1E8", marginTop: "0.15rem" }}>
-              STAGING & VPC
-            </div>
-          </div>
-
-          <div
-            onClick={() => setSelectedPhase(2)}
-            style={{
-              padding: "0.55rem 0.75rem",
-              background: selectedPhase === 2 ? "rgba(255,255,255,0.1)" : "rgba(14,14,14,0.75)",
-              border: selectedPhase === 2 ? "1.5px solid #FFFFFF" : "1px solid rgba(245,241,232,0.15)",
-              backdropFilter: "blur(6px)",
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-            }}
-          >
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.52rem", color: "rgba(245,241,232,0.5)", fontWeight: 700 }}>
-              ETAPA 03 // FUTURO
-            </div>
-            <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.72rem", color: "#F5F1E8", marginTop: "0.15rem" }}>
-              CI/CD & MIGRACIÓN
-            </div>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "#d4a017", fontWeight: 800 }}>
+              SIGUIENTE HITO
+            </span>
           </div>
         </div>
       </div>

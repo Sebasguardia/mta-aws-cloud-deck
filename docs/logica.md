@@ -220,14 +220,14 @@ flowchart LR
 
 ## 13 · Roadmap / próximos pasos
 
-| Campo         | Detalle                                                                                           |
-| ------------- | ------------------------------------------------------------------------------------------------- |
-| 📝 Contenido  | Línea de tiempo de próximas etapas del curso (Etapa 2, 3... placeholder)                          |
-| 🎯 Objetivo   | Cerrar con visión de continuidad                                                                  |
-| 🎞️ Entrada    | Timeline horizontal con nodos que se conectan con una línea que se "dibuja" (`stroke-dashoffset`) |
-| 🔀 Transición | `data-transition="fade"`                                                                          |
-| 🕹️ Dinámica   | Hover en cada hito muestra preview de qué se verá en esa etapa                                    |
-| 🎨 Nota       | Aquí se reintroduce el tagline en script font, cerrando el círculo visual con la Portada          |
+| Campo         | Detalle                                                                                                                                                                                                                           |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 📝 Contenido  | Línea de tiempo estructurada en **2 Etapas curriculares de SENATI**: **Etapa 01 (Completada - Semana 6)**: Diagnóstico, CAF, TCO, IAM y VPC. **Etapa 02 (Siguiente Hito - Semana 7)**: Cómputo EC2, Almacenamiento S3/EFS/Glacier y BD Administrada RDS. |
+| 🎯 Objetivo   | Demostrar dominio del syllabus del proyecto institucional de SENATI y visión clara del siguiente paso práctico.                                                                                                                   |
+| 🎞️ Entrada    | Timeline interactivo de 2 estaciones conectadas por riel de datos curvo en 3D (`RoadmapContinuityCanvas`).                                                                                                                       |
+| 🔀 Transición | `data-transition="fade"`                                                                                                                                                                                                          |
+| 🕹️ Dinámica   | Selector interactivo entre Etapa 01 y Etapa 02 con tarjeta flotante explicativa de entregables y animación 3D de prisma/bloque arquitectónico y servidor EC2 + base de datos.                                                    |
+| 🎨 Nota       | Estilo industrial brutalista, sin recarga ni parpadeo 3D WebGL (control por refs mutables).                                                                                                                                        |
 
 ## 14 · Cierre
 

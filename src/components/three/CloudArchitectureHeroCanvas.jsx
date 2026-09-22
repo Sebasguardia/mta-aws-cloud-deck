@@ -26,6 +26,12 @@ export function CloudArchitectureHeroCanvas({
   const containerRef = useRef(null);
   const animFrameId = useRef(null);
 
+  // Mantener activeStep en useRef mutable para no desmontar ni recrear la escena WebGL
+  const activeStepRef = useRef(activeStep);
+  useEffect(() => {
+    activeStepRef.current = activeStep;
+  }, [activeStep]);
+
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -122,8 +128,8 @@ export function CloudArchitectureHeroCanvas({
     const dbMesh = new THREE.LineSegments(dbWire, dbMat);
     rootGroup.add(dbMesh);
 
-    // ── 6. Paquete de Petición HTTP Viajero (Packet Particle) ──
-    const packetGeo = new THREE.SphereGeometry(0.12, 16, 16);
+    // ── 6. Paquete de Petición HTTP Viajero (Packet Particle con Halo) ──
+    const packetGeo = new THREE.SphereGeometry(0.14, 16, 16);
     const packetMat = new THREE.MeshBasicMaterial({
       color: 0xffffff,
       wireframe: true,
@@ -132,24 +138,35 @@ export function CloudArchitectureHeroCanvas({
     packetMesh.position.set(0, 0, 4.8); // Inicia en el cliente exterior
     rootGroup.add(packetMesh);
 
+    // Halo secundario de paquete
+    const haloGeo = new THREE.IcosahedronGeometry(0.25, 0);
+    const haloWire = new THREE.WireframeGeometry(haloGeo);
+    const haloMat = new THREE.LineBasicMaterial({
+      color: 0xd4a017,
+      transparent: true,
+      opacity: 0.6,
+    });
+    const haloMesh = new THREE.LineSegments(haloWire, haloMat);
+    packetMesh.add(haloMesh);
+
     // Posiciones clave del paquete por cada paso
     // 0: Reposo exterior
-    // 1: Origen (navegador)
-    // 2: CloudFront Edge
-    // 3: Route 53 DNS
-    // 4: Amazon VPC Perímetro
-    // 5: Security Groups
-    // 6: Base de datos privada
+    // 1: Origen (navegador del usuario)
+    // 2: CloudFront Edge (Torus exterior)
+    // 3: Route 53 DNS (Icosaedro)
+    // 4: Amazon VPC Perímetro (Cubo)
+    // 5: Security Groups (Octaedro)
+    // 6: Base de datos privada RDS (Cilindro central)
     // 7: 200 OK (retorno al usuario)
     const waypoints = [
-      new THREE.Vector3(0, 0, 4.8),     // 0: Idle
-      new THREE.Vector3(0, 0, 4.4),     // 1: Client
-      new THREE.Vector3(0, 1.8, 3.2),   // 2: CloudFront
-      new THREE.Vector3(1.6, -0.6, 2.2),// 3: Route 53
-      new THREE.Vector3(-1.1, 0.8, 1.1),// 4: VPC
-      new THREE.Vector3(0.6, -0.3, 0.5),// 5: Security Groups
-      new THREE.Vector3(0, 0, 0),       // 6: Database Core
-      new THREE.Vector3(0, 0, 4.4),     // 7: 200 OK response
+      new THREE.Vector3(0, 0, 4.8),      // 0: Idle
+      new THREE.Vector3(0, 0, 4.4),      // 1: Client
+      new THREE.Vector3(0, 1.8, 3.2),    // 2: CloudFront
+      new THREE.Vector3(1.6, -0.6, 2.2), // 3: Route 53
+      new THREE.Vector3(-1.1, 0.8, 1.1), // 4: VPC
+      new THREE.Vector3(0.6, -0.3, 0.5), // 5: Security Groups
+      new THREE.Vector3(0, 0, 0),        // 6: Database Core
+      new THREE.Vector3(0, 0, 4.4),      // 7: 200 OK response
     ];
 
     // ── 7. Nube de Datos en Tráfico (70 puntos) ──
@@ -211,7 +228,7 @@ export function CloudArchitectureHeroCanvas({
     });
     resizeObserver.observe(container);
 
-    // ── 10. Loop de Animación ──
+    // ── 10. Loop de Animación Continuo y Fluido ──
     const clock = new THREE.Clock();
     let isRunning = true;
     const packetCurrent = new THREE.Vector3(0, 0, 4.8);
@@ -222,9 +239,11 @@ export function CloudArchitectureHeroCanvas({
 
       if (!isActive) return;
 
+      const delta = clock.getDelta();
       const elapsed = clock.getElapsedTime();
+      const currentStep = activeStepRef.current;
 
-      // Parallax
+      // Parallax inercial
       mouseX += (targetMouseX - mouseX) * 0.05;
       mouseY += (targetMouseY - mouseY) * 0.05;
 
@@ -232,7 +251,7 @@ export function CloudArchitectureHeroCanvas({
       rootGroup.rotation.y = elapsed * 0.18 + mouseX;
       rootGroup.rotation.x = Math.sin(elapsed * 0.3) * 0.04 - mouseY;
 
-      // Rotaciones armónicas de las capas
+      // Rotaciones armónicas continuas de las capas
       cloudfrontMesh.rotation.z = elapsed * 0.3;
       route53Mesh.rotation.y = -elapsed * 0.2;
       vpcMesh.rotation.y = elapsed * 0.12;
@@ -240,66 +259,44 @@ export function CloudArchitectureHeroCanvas({
       sgMesh.rotation.y = elapsed * 0.6;
       sgMesh.rotation.z = elapsed * 0.4;
       dbMesh.rotation.y = elapsed * 1.0;
+      haloMesh.rotation.y = elapsed * 2.0;
 
-      // Resaltar capa según activeStep
-      if (activeStep === 2) {
-        // CloudFront activo
-        cloudfrontMat.color.setHex(0xf5f1e8);
-        cloudfrontMat.opacity = 0.9;
-      } else {
-        cloudfrontMat.color.setHex(0xd4a017);
-        cloudfrontMat.opacity = 0.4;
-      }
+      // Resaltar capa suavemente con lerp de color y opacidad según currentStep
+      const targetCfColor = currentStep === 2 ? new THREE.Color(0xf5f1e8) : new THREE.Color(0xd4a017);
+      cloudfrontMat.color.lerp(targetCfColor, 0.1);
+      cloudfrontMat.opacity = THREE.MathUtils.lerp(cloudfrontMat.opacity, currentStep === 2 ? 0.95 : 0.4, 0.1);
 
-      if (activeStep === 3) {
-        // Route 53 activo
-        route53Mat.color.setHex(0xf5f1e8);
-        route53Mat.opacity = 0.8;
-      } else {
-        route53Mat.color.setHex(0x6e8e59);
-        route53Mat.opacity = 0.25;
-      }
+      const targetR53Color = currentStep === 3 ? new THREE.Color(0xf5f1e8) : new THREE.Color(0x6e8e59);
+      route53Mat.color.lerp(targetR53Color, 0.1);
+      route53Mat.opacity = THREE.MathUtils.lerp(route53Mat.opacity, currentStep === 3 ? 0.85 : 0.25, 0.1);
 
-      if (activeStep === 4) {
-        // VPC activa
-        vpcMat.color.setHex(0xd4a017);
-        vpcMat.opacity = 0.8;
-      } else {
-        vpcMat.color.setHex(0x888888);
-        vpcMat.opacity = 0.35;
-      }
+      const targetVpcColor = currentStep === 4 ? new THREE.Color(0xd4a017) : new THREE.Color(0x888888);
+      vpcMat.color.lerp(targetVpcColor, 0.1);
+      vpcMat.opacity = THREE.MathUtils.lerp(vpcMat.opacity, currentStep === 4 ? 0.85 : 0.35, 0.1);
 
-      if (activeStep === 5) {
-        // Security Groups activo
-        sgMat.color.setHex(0x6e8e59);
-        sgMat.opacity = 0.95;
-      } else {
-        sgMat.color.setHex(0xd4a017);
-        sgMat.opacity = 0.6;
-      }
+      const targetSgColor = currentStep === 5 ? new THREE.Color(0x6e8e59) : new THREE.Color(0xd4a017);
+      sgMat.color.lerp(targetSgColor, 0.1);
+      sgMat.opacity = THREE.MathUtils.lerp(sgMat.opacity, currentStep === 5 ? 0.95 : 0.6, 0.1);
 
-      if (activeStep === 6) {
-        // Database activo
-        dbMat.color.setHex(0x6e8e59);
-        dbMat.opacity = 1.0;
-      } else {
-        dbMat.color.setHex(0xf5f1e8);
-        dbMat.opacity = 0.85;
-      }
+      const targetDbColor = currentStep === 6 ? new THREE.Color(0x6e8e59) : new THREE.Color(0xf5f1e8);
+      dbMat.color.lerp(targetDbColor, 0.1);
+      dbMat.opacity = THREE.MathUtils.lerp(dbMat.opacity, currentStep === 6 ? 1.0 : 0.85, 0.1);
 
-      // Desplazamiento del paquete HTTP
-      const targetWaypoint = waypoints[activeStep] || waypoints[0];
-      packetCurrent.lerp(targetWaypoint, 0.08);
+      // Desplazamiento fluido del paquete HTTP con Lerp
+      const targetWaypoint = waypoints[currentStep] || waypoints[0];
+      packetCurrent.lerp(targetWaypoint, 0.1);
       packetMesh.position.copy(packetCurrent);
 
-      if (activeStep > 0) {
+      if (currentStep > 0) {
         packetMesh.visible = true;
         const packetPulse = 1 + Math.sin(elapsed * 12) * 0.25;
         packetMesh.scale.set(packetPulse, packetPulse, packetPulse);
-        if (activeStep > 6) {
-          packetMat.color.setHex(0x6e8e59); // Verde de 200 OK
+        if (currentStep > 6) {
+          packetMat.color.lerp(new THREE.Color(0x6e8e59), 0.15); // Verde de 200 OK
+          haloMat.color.lerp(new THREE.Color(0x6e8e59), 0.15);
         } else {
-          packetMat.color.setHex(0xd4a017); // Dorado de paquete en vuelo
+          packetMat.color.lerp(new THREE.Color(0xd4a017), 0.15); // Dorado en vuelo
+          haloMat.color.lerp(new THREE.Color(0xf5f1e8), 0.15);
         }
       } else {
         packetMesh.visible = false;
@@ -330,7 +327,7 @@ export function CloudArchitectureHeroCanvas({
       }
       renderer.dispose();
     };
-  }, [isActive, activeStep]);
+  }, [isActive]);
 
   return (
     <div

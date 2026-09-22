@@ -272,44 +272,47 @@ export function S11_IAM({ isActive: propActive } = {}) {
 
         {/* Switch Táctil de Control de Acceso: Root vs IAM */}
         <motion.div
-          variants={fadeUp(0.22)}
+          variants={fadeUp(0.20)}
           initial="hidden"
           animate={entered ? "visible" : "hidden"}
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            padding: "0.5rem 0.6rem",
+            padding: "0.45rem 0.6rem",
             background: "rgba(18,18,18,0.9)",
             border: "1.5px solid rgba(245,241,232,0.15)",
             boxShadow: "4px 4px 0px #000000",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", paddingLeft: "0.5rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", paddingLeft: "0.4rem" }}>
             <Key size={14} style={{ color: isRoot ? "#c6432b" : "#6e8e59" }} />
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
+                fontSize: "0.62rem",
                 letterSpacing: "0.15em",
                 color: "rgba(245,241,232,0.7)",
                 textTransform: "uppercase",
                 fontWeight: 700,
               }}
             >
-              POLÍTICA DE IDENTIDAD
+              POLÍTICA DE GOBIERNO
             </span>
           </div>
 
           <div style={{ display: "flex", gap: "0.3rem" }}>
             <button
               type="button"
-              onClick={() => setIamMode("root")}
+              onClick={() => {
+                setIamMode("root");
+                setSelectedUserForInspection(null);
+              }}
               style={{
                 fontFamily: "'Archivo Black', sans-serif",
-                fontSize: "0.68rem",
+                fontSize: "0.65rem",
                 textTransform: "uppercase",
-                padding: "0.45rem 0.9rem",
+                padding: "0.4rem 0.85rem",
                 letterSpacing: "0.05em",
                 cursor: "pointer",
                 border: "1px solid",
@@ -324,12 +327,17 @@ export function S11_IAM({ isActive: propActive } = {}) {
 
             <button
               type="button"
-              onClick={() => setIamMode("iam")}
+              onClick={() => {
+                setIamMode("iam");
+                if (!selectedUserForInspection) {
+                  setSelectedUserForInspection(projectMeta.teamMembers[0]);
+                }
+              }}
               style={{
                 fontFamily: "'Archivo Black', sans-serif",
-                fontSize: "0.68rem",
+                fontSize: "0.65rem",
                 textTransform: "uppercase",
-                padding: "0.45rem 0.9rem",
+                padding: "0.4rem 0.85rem",
                 letterSpacing: "0.05em",
                 cursor: "pointer",
                 border: "1px solid",
@@ -344,8 +352,155 @@ export function S11_IAM({ isActive: propActive } = {}) {
           </div>
         </motion.div>
 
-        {/* Contenido Dinámico de la Matriz de Practicantes */}
+        {/* ── 2 PILARES DE LA SOLUCIÓN AWS IAM (Requerimiento Técnico Central) ── */}
+        <motion.div
+          variants={fadeUp(0.24)}
+          initial="hidden"
+          animate={entered ? "visible" : "hidden"}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "0.55rem",
+          }}
+        >
+          {/* Pilar 1: Bloqueo de Cuenta Root */}
+          <div
+            style={{
+              padding: "0.6rem 0.75rem",
+              background: "rgba(198,67,43,0.06)",
+              border: "1px solid rgba(198,67,43,0.35)",
+              borderTop: "2px solid #c6432b",
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.25rem",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+              <Lock size={12} style={{ color: "#c6432b" }} />
+              <span
+                style={{
+                  fontFamily: "'Archivo Black', sans-serif",
+                  fontSize: "0.66rem",
+                  color: "#F5F1E8",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.02em",
+                }}
+              >
+                1. BLOQUEO CUENTA ROOT
+              </span>
+            </div>
+            <p
+              style={{
+                fontFamily: "system-ui, sans-serif",
+                fontSize: "0.68rem",
+                color: "rgba(245,241,232,0.75)",
+                lineHeight: 1.35,
+                margin: 0,
+              }}
+            >
+              La cuenta raíz de AWS se sella con autenticación multifactor (MFA) física y se almacena bajo custodia estricta; prohibida para despliegues diarios.
+            </p>
+          </div>
+
+          {/* Pilar 2: Principio de Mínimo Privilegio */}
+          <div
+            style={{
+              padding: "0.6rem 0.75rem",
+              background: "rgba(110,142,89,0.06)",
+              border: "1px solid rgba(110,142,89,0.35)",
+              borderTop: "2px solid #6e8e59",
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.25rem",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+              <ShieldCheck size={13} style={{ color: "#6e8e59" }} />
+              <span
+                style={{
+                  fontFamily: "'Archivo Black', sans-serif",
+                  fontSize: "0.66rem",
+                  color: "#F5F1E8",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.02em",
+                }}
+              >
+                2. MÍNIMO PRIVILEGIO
+              </span>
+            </div>
+            <p
+              style={{
+                fontFamily: "system-ui, sans-serif",
+                fontSize: "0.68rem",
+                color: "rgba(245,241,232,0.75)",
+                lineHeight: 1.35,
+                margin: 0,
+              }}
+            >
+              Cada colaborador recibe credenciales IAM independientes asociadas únicamente a su rol (ej: Frontend solo buckets S3 y CloudFront; sin acceso a BD ni redes).
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Selector de Entidades de Identidad: Botón Cuenta Root + Matriz de Practicantes */}
         <div style={{ position: "relative" }}>
+          {/* Barra de Acceso Rápido a Cuenta Root */}
+          <motion.div
+            variants={fadeUp(0.28)}
+            initial="hidden"
+            animate={entered ? "visible" : "hidden"}
+            style={{
+              marginBottom: "0.5rem",
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => {
+                setIamMode("root");
+                setSelectedUserForInspection(null);
+              }}
+              style={{
+                width: "100%",
+                padding: "0.45rem 0.75rem",
+                background: isRoot ? "rgba(198,67,43,0.22)" : "rgba(20,20,20,0.8)",
+                border: isRoot ? "1.5px solid #c6432b" : "1px dashed rgba(198,67,43,0.4)",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                boxShadow: isRoot ? "3px 3px 0px #c6432b" : "none",
+                transition: "all 0.15s ease",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <ShieldAlert size={14} style={{ color: "#c6432b" }} />
+                <span
+                  style={{
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: "0.65rem",
+                    fontWeight: 800,
+                    color: isRoot ? "#FFFFFF" : "#c6432b",
+                    letterSpacing: "0.05em",
+                  }}
+                >
+                  AUDITAR CUENTA ROOT (RAÍZ GLOBAL)
+                </span>
+              </div>
+              <span
+                style={{
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: "0.56rem",
+                  color: isRoot ? "#FFFFFF" : "rgba(245,241,232,0.6)",
+                  background: isRoot ? "#c6432b" : "rgba(198,67,43,0.15)",
+                  padding: "0.15rem 0.45rem",
+                  fontWeight: 700,
+                }}
+              >
+                {isRoot ? "INSPECCIONANDO ROOT // RIESGO ALTO" : "VER PERMISOS Y RIESGO"}
+              </span>
+            </button>
+          </motion.div>
+
           <AnimatePresence mode="wait">
             {isRoot ? (
               /* Modo Root Compartido: Alarma y Vulnerabilidad */
@@ -356,38 +511,52 @@ export function S11_IAM({ isActive: propActive } = {}) {
                 exit={{ opacity: 0, scale: 0.98 }}
                 transition={{ duration: 0.2 }}
                 style={{
-                  padding: "1rem 1.25rem",
+                  padding: "0.85rem 1.1rem",
                   background: "rgba(198,67,43,0.08)",
                   border: "1.5px solid #c6432b",
                   boxShadow: "4px 4px 0px #c6432b",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "0.6rem",
+                  gap: "0.45rem",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-                  <ShieldAlert size={18} style={{ color: "#c6432b" }} />
-                  <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.85rem", color: "#F5F1E8", textTransform: "uppercase" }}>
-                    VULNERABILIDAD CRÍTICA DE GOBIERNO
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <AlertTriangle size={15} style={{ color: "#c6432b" }} />
+                    <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.78rem", color: "#F5F1E8", textTransform: "uppercase" }}>
+                      VULNERABILIDAD CRÍTICA // CUENTA MAESTRA EXPUESTA
+                    </span>
+                  </div>
+                  <span
+                    style={{
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: "0.55rem",
+                      color: "#c6432b",
+                      background: "rgba(198,67,43,0.2)",
+                      border: "1px solid #c6432b",
+                      padding: "0.15rem 0.4rem",
+                      fontWeight: 700,
+                    }}
+                  >
+                    ACCESO IRRESTRICTO
                   </span>
                 </div>
 
-                <p style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "0.78rem", color: "rgba(245,241,232,0.8)", lineHeight: 1.45, margin: 0 }}>
-                  Los 4 Encargados técnicos y los 10 practicantes comparten la misma contraseña maestra en el servidor Hostinger.
-                  Sin trazabilidad de auditoría en caso de borrado accidental o fuga de datos.
+                <p style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "0.74rem", color: "rgba(245,241,232,0.85)", lineHeight: 1.4, margin: 0 }}>
+                  En Hostinger y esquemas sin IAM, los 4 Encargados técnicos y 10 practicantes comparten la misma contraseña maestra. Cualquier error compromete la totalidad de la empresa.
                 </p>
 
                 {/* Fila de 10 Avatares Apilados en Riesgo */}
-                <div style={{ display: "flex", alignItems: "center", gap: "0.25rem", marginTop: "0.3rem" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.25rem", marginTop: "0.15rem" }}>
                   {projectMeta.teamMembers.map((member) => (
                     <div
                       key={member.id}
                       style={{
                         flex: 1,
-                        padding: "0.3rem 0",
+                        padding: "0.25rem 0",
                         textAlign: "center",
                         fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: "0.62rem",
+                        fontSize: "0.6rem",
                         fontWeight: 800,
                         color: "#c6432b",
                         background: "rgba(0,0,0,0.6)",
@@ -398,26 +567,9 @@ export function S11_IAM({ isActive: propActive } = {}) {
                     </div>
                   ))}
                 </div>
-
-                <div
-                  style={{
-                    padding: "0.45rem 0.65rem",
-                    background: "#0A0A0A",
-                    border: "1px solid rgba(198,67,43,0.3)",
-                    fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.65rem",
-                    color: "#c6432b",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.4rem",
-                  }}
-                >
-                  <Lock size={12} />
-                  <span>root@mta-software.com // Credenciales compartidas por WhatsApp o Slack</span>
-                </div>
               </motion.div>
             ) : (
-              /* Modo AWS IAM: 10 Identidades con Privilegios Mínimos */
+              /* Modo AWS IAM: Cuadrícula de los 10 Practicantes */
               <motion.div
                 key="iam-state"
                 initial={{ opacity: 0, scale: 0.98 }}
@@ -427,96 +579,54 @@ export function S11_IAM({ isActive: propActive } = {}) {
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  gap: "0.6rem",
+                  gap: "0.45rem",
                 }}
               >
                 {/* Cuadrícula compacta de los 10 practicantes */}
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "0.45rem" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "0.4rem" }}>
                   {projectMeta.teamMembers.map((member) => {
-                    const isSelected = selectedUserForInspection?.id === member.id;
+                    const isSelected = selectedUserForInspection?.id === member.id && !isRoot;
 
                     return (
                       <motion.div
                         key={member.id}
                         whileHover={{ y: -2 }}
-                        whileTap={{ scale: 0.97 }}
-                        onClick={() => setSelectedUserForInspection(member)}
+                        whileTap={{ scale: 0.96 }}
+                        onClick={() => {
+                          setIamMode("iam");
+                          setSelectedUserForInspection(member);
+                        }}
                         style={{
-                          padding: "0.5rem 0.6rem",
-                          background: isSelected ? "rgba(212,160,23,0.2)" : "rgba(255,255,255,0.03)",
+                          padding: "0.45rem 0.5rem",
+                          background: isSelected ? "rgba(212,160,23,0.22)" : "rgba(255,255,255,0.03)",
                           border: isSelected ? "1.5px solid #d4a017" : "1px solid rgba(245,241,232,0.15)",
                           cursor: "pointer",
                           display: "flex",
                           flexDirection: "column",
                           justifyContent: "space-between",
-                          minHeight: 70,
+                          minHeight: 64,
                           boxShadow: isSelected ? "2px 2px 0px #d4a017" : "none",
-                          transition: "all 0.15s ease",
+                          transition: "background 0.15s ease, border-color 0.15s ease",
                         }}
                       >
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: isSelected ? "#d4a017" : "rgba(245,241,232,0.5)", fontWeight: 800 }}>
+                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: isSelected ? "#d4a017" : "rgba(245,241,232,0.5)", fontWeight: 800 }}>
                             P{member.id < 10 ? `0${member.id}` : member.id}
                           </span>
-                          <ShieldCheck size={12} style={{ color: isSelected ? "#d4a017" : "#6e8e59" }} />
+                          <ShieldCheck size={11} style={{ color: isSelected ? "#d4a017" : "#6e8e59" }} />
                         </div>
 
                         <div>
-                          <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.65rem", color: "#F5F1E8", textTransform: "uppercase", lineHeight: 1.1 }}>
+                          <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.63rem", color: "#F5F1E8", textTransform: "uppercase", lineHeight: 1.1 }}>
                             {member.role.split(" ")[0]}
                           </div>
-                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.52rem", color: "rgba(245,241,232,0.5)", display: "block", marginTop: "0.15rem" }}>
+                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.5rem", color: "rgba(245,241,232,0.5)", display: "block", marginTop: "0.1rem" }}>
                             {member.iamRole.split("-")[1] || member.iamRole}
                           </span>
                         </div>
                       </motion.div>
                     );
                   })}
-                </div>
-
-                {/* Inspeccionador de Políticas Perimetrales */}
-                <div
-                  style={{
-                    padding: "0.65rem 0.9rem",
-                    background: "rgba(10,10,10,0.9)",
-                    border: "1px solid rgba(212,160,23,0.4)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  {selectedUserForInspection ? (
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-                      <UserCheck size={16} style={{ color: "#d4a017", flexShrink: 0 }} />
-                      <div>
-                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.65rem", color: "#d4a017", fontWeight: 700 }}>
-                          {selectedUserForInspection.name} // {selectedUserForInspection.role}
-                        </div>
-                        <div style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.72rem", color: "rgba(245,241,232,0.85)", marginTop: "0.1rem" }}>
-                          Acceso asignado: <span style={{ fontFamily: "'JetBrains Mono', monospace", color: "#6e8e59", fontWeight: 700 }}>{selectedUserForInspection.accessLevel}</span>
-                        </div>
-                      </div>
-                    </div>
-                  ) : (
-                    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "rgba(245,241,232,0.6)" }}>
-                      👆 Haz click en cualquier practicante para auditar su política de permisos IAM individual.
-                    </div>
-                  )}
-
-                  <span
-                    style={{
-                      fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.58rem",
-                      color: "#6e8e59",
-                      background: "rgba(110,142,89,0.15)",
-                      border: "1px solid rgba(110,142,89,0.4)",
-                      padding: "0.2rem 0.5rem",
-                      fontWeight: 700,
-                      flexShrink: 0,
-                    }}
-                  >
-                    PRIVILEGIOS_MÍNIMOS_OK
-                  </span>
                 </div>
               </motion.div>
             )}
@@ -525,26 +635,26 @@ export function S11_IAM({ isActive: propActive } = {}) {
 
         {/* Resumen del Modelo de Responsabilidad Compartida */}
         <motion.div
-          variants={fadeUp(0.38)}
+          variants={fadeUp(0.34)}
           initial="hidden"
           animate={entered ? "visible" : "hidden"}
           style={{
-            padding: "0.75rem 1rem",
+            padding: "0.65rem 0.9rem",
             background: "rgba(0,0,0,0.6)",
             border: "1px solid rgba(245,241,232,0.12)",
             borderLeft: "3px solid #d4a017",
             display: "flex",
             alignItems: "center",
-            gap: "0.75rem",
+            gap: "0.65rem",
           }}
         >
-          <Shield size={20} style={{ color: "#d4a017", flexShrink: 0 }} />
+          <Shield size={18} style={{ color: "#d4a017", flexShrink: 0 }} />
           <p
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.63rem",
+              fontSize: "0.62rem",
               color: "rgba(245,241,232,0.7)",
-              lineHeight: 1.45,
+              lineHeight: 1.4,
               margin: 0,
             }}
           >
@@ -573,43 +683,179 @@ export function S11_IAM({ isActive: propActive } = {}) {
         <div
           style={{
             position: "absolute",
-            top: "2.5rem",
-            right: "3.5rem",
-            left: "3rem",
+            top: "2rem",
+            left: "2.5rem",
             display: "flex",
-            justifyContent: "space-between",
             alignItems: "center",
+            gap: "0.5rem",
             zIndex: 10,
             pointerEvents: "none",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-            <Key size={14} style={{ color: isRoot ? "#c6432b" : "#6e8e59" }} />
-            <span
-              style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
-                letterSpacing: "0.15em",
-                color: isRoot ? "#c6432b" : "rgba(245,241,232,0.6)",
-                textTransform: "uppercase",
-              }}
-            >
-              AWS IAM IDENTITY ARCHITECTURE // ZERO_TRUST
-            </span>
-          </div>
-
-          <div
+          <Key size={13} style={{ color: isRoot ? "#c6432b" : "#6e8e59" }} />
+          <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.6rem",
-              padding: "0.2rem 0.5rem",
-              background: isRoot ? "rgba(198,67,43,0.15)" : "rgba(110,142,89,0.15)",
-              border: isRoot ? "1px solid #c6432b" : "1px solid #6e8e59",
-              color: isRoot ? "#c6432b" : "#6e8e59",
+              fontSize: "0.62rem",
+              letterSpacing: "0.15em",
+              color: isRoot ? "#c6432b" : "rgba(245,241,232,0.6)",
+              textTransform: "uppercase",
+              fontWeight: 700,
             }}
           >
-            {isRoot ? "ROOT: SINGLE_POINT_CREDENTIAL" : "IAM: 10_ISOLATED_IDENTITIES"}
-          </div>
+            AWS IAM IDENTITY ARCHITECTURE
+          </span>
+        </div>
+
+        {/* ── CUADRO FLOTANTE ARRIBA A LA DERECHA: INSPECTOR DE ACCESOS Y PERMISOS ── */}
+        <div
+          style={{
+            position: "absolute",
+            top: "1.8rem",
+            right: "2.5rem",
+            zIndex: 20,
+            maxWidth: 290,
+          }}
+        >
+          <AnimatePresence mode="wait">
+            {isRoot ? (
+              /* Tarjeta Flotante: Inspección de Cuenta Root */
+              <motion.div
+                key="root-inspect"
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -8, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                style={{
+                  padding: "0.75rem 0.9rem",
+                  background: "rgba(18,10,10,0.92)",
+                  border: "1.5px solid #c6432b",
+                  boxShadow: "4px 4px 0px #c6432b",
+                  backdropFilter: "blur(8px)",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.35rem",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    <ShieldAlert size={14} style={{ color: "#c6432b" }} />
+                    <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.7rem", color: "#F5F1E8", textTransform: "uppercase" }}>
+                      CUENTA ROOT // RAÍZ AWS
+                    </span>
+                  </div>
+                  <span
+                    style={{
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: "0.52rem",
+                      color: "#c6432b",
+                      background: "rgba(198,67,43,0.2)",
+                      border: "1px solid #c6432b",
+                      padding: "0.15rem 0.4rem",
+                      fontWeight: 700,
+                    }}
+                  >
+                    RIESGO_ROOT
+                  </span>
+                </div>
+
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#F5F1E8" }}>
+                  root@mta-software.com
+                </div>
+
+                <div style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "rgba(245,241,232,0.8)", lineHeight: 1.35 }}>
+                  <strong style={{ color: "#c6432b" }}>Permiso asignado:</strong> AdministratorAccess (Total).
+                  <div style={{ marginTop: "0.25rem", color: "rgba(245,241,232,0.65)", fontStyle: "italic" }}>
+                    Directiva: Bloqueada con MFA Físico en caja fuerte. No se usa para tareas operativas diarias.
+                  </div>
+                </div>
+              </motion.div>
+            ) : selectedUserForInspection ? (
+              /* Tarjeta Flotante: Inspección de Practicante Seleccionado */
+              <motion.div
+                key={`user-${selectedUserForInspection.id}`}
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -8, scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                style={{
+                  padding: "0.75rem 0.9rem",
+                  background: "rgba(14,14,14,0.92)",
+                  border: "1.5px solid #d4a017",
+                  boxShadow: "4px 4px 0px #d4a017",
+                  backdropFilter: "blur(8px)",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.35rem",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    <UserCheck size={14} style={{ color: "#d4a017" }} />
+                    <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.72rem", color: "#F5F1E8", textTransform: "uppercase" }}>
+                      P{selectedUserForInspection.id < 10 ? `0${selectedUserForInspection.id}` : selectedUserForInspection.id} // {selectedUserForInspection.role}
+                    </span>
+                  </div>
+                  <span
+                    style={{
+                      fontFamily: "'JetBrains Mono', monospace",
+                      fontSize: "0.52rem",
+                      color: "#6e8e59",
+                      background: "rgba(110,142,89,0.18)",
+                      border: "1px solid rgba(110,142,89,0.45)",
+                      padding: "0.15rem 0.4rem",
+                      fontWeight: 700,
+                    }}
+                  >
+                    MÍNIMO_PRIVILEGIO_OK
+                  </span>
+                </div>
+
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#d4a017" }}>
+                  IAM Role: {selectedUserForInspection.iamRole}
+                </div>
+
+                <div style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.7rem", color: "rgba(245,241,232,0.9)", lineHeight: 1.35 }}>
+                  <strong style={{ color: "#F5F1E8" }}>Acceso asignado:</strong>{" "}
+                  <span style={{ fontFamily: "'JetBrains Mono', monospace", color: "#6e8e59", fontWeight: 700 }}>
+                    {selectedUserForInspection.accessLevel}
+                  </span>
+                </div>
+
+                <div
+                  style={{
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: "0.55rem",
+                    color: "rgba(245,241,232,0.5)",
+                    borderTop: "1px solid rgba(245,241,232,0.1)",
+                    paddingTop: "0.3rem",
+                    marginTop: "0.1rem",
+                  }}
+                >
+                  Restricción: Sin acceso a bases de datos de producción ni VPC.
+                </div>
+              </motion.div>
+            ) : (
+              /* Indicador Inicial para interactuar */
+              <motion.div
+                key="empty-inspect"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                style={{
+                  padding: "0.5rem 0.75rem",
+                  background: "rgba(14,14,14,0.8)",
+                  border: "1px dashed rgba(245,241,232,0.25)",
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: "0.58rem",
+                  color: "rgba(245,241,232,0.6)",
+                  backdropFilter: "blur(6px)",
+                }}
+              >
+                👆 Selecciona un practicante para inspeccionar sus permisos IAM.
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Canvas 3D Three.js */}

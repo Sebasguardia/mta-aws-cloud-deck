@@ -4,14 +4,20 @@ import * as THREE from "three";
 
 /**
  * Visualizador 3D para Slide 14:
- * "Cierre del Deck — Ecosistema Completo de MTA Software en AWS"
+ * "Cierre del Deck — 5 Investigadores SENATI & Núcleo AWS Cloud"
  *
- * Simboliza la culminación de la Etapa 01 con un núcleo de celebración arquitectónica:
- *  - Ecosistema esférico global / Geodésica con el emblema de MTA y los halos dorados de AWS.
- *  - 10 nodos orbitales danzando en sincronía armónica (el equipo de practicantes integrado).
- *  - Nube de confeti técnico / partículas estelares doradas (#D4A017) y plata (#F5F1E8) en suave flotación.
- *  - Modo Celebración interactivo: Al presionar "Lanzar Confetti", las partículas se expanden radialmente en un warp cósmico.
- *  - Parallax suave inercial con mouse.
+ * Características conceptuales y geométricas:
+ *  - Núcleo central pentagonal / Dodecaedro de Arquitectura AWS con doble anillo orbital.
+ *  - 5 Nodos Mayores de Ciberseguridad y Nube que representan a los 5 integrantes del equipo de investigación:
+ *    1. Jara Vega Analí
+ *    2. Estilo Ratache Diego Rafael
+ *    3. Suclupe López Jean Pierre
+ *    4. Gonzales Ramirez Alfredo Valentino
+ *    5. Guardia Ticlla Sebastian Jesús
+ *  - Cada nodo proyecta un haz de luz coherente hacia el núcleo central, simbolizando la coautoría del proyecto.
+ *  - Modo Celebración Épico ("Hyper-Warp Celebration"):
+ *    Al presionar "CELEBRAR", se dispara una aceleración cósmica de 200 partículas estelares,
+ *    expansión radial de ondas de choque, giro dinámico y pulsación lumínica multicolor.
  */
 export function ClosingGratitudeCanvas({
   isActive = true,
@@ -20,12 +26,14 @@ export function ClosingGratitudeCanvas({
   const containerRef = useRef(null);
   const animFrameId = useRef(null);
   const celebratePulseRef = useRef(0);
+  const celebrateCountRef = useRef(celebrateTrigger);
 
   // Trigger pulse effect when celebrateTrigger increments
   useEffect(() => {
     if (celebrateTrigger > 0) {
       celebratePulseRef.current = 1.0;
     }
+    celebrateCountRef.current = celebrateTrigger;
   }, [celebrateTrigger]);
 
   useEffect(() => {
@@ -37,8 +45,8 @@ export function ClosingGratitudeCanvas({
 
     // 1. Scene & Camera
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
-    camera.position.set(0, 0.3, 9.8);
+    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
+    camera.position.set(0, 0.3, 10.0);
 
     // 2. Renderer
     const renderer = new THREE.WebGLRenderer({
@@ -56,7 +64,7 @@ export function ClosingGratitudeCanvas({
     scene.add(rootGroup);
 
     // ── 4. Núcleo Geodésico Global (AWS Global Backbone) ──
-    const globeGeo = new THREE.IcosahedronGeometry(1.6, 2);
+    const globeGeo = new THREE.IcosahedronGeometry(1.5, 1);
     const globeWire = new THREE.WireframeGeometry(globeGeo);
     const globeMat = new THREE.LineBasicMaterial({
       color: 0xd4a017,
@@ -67,8 +75,8 @@ export function ClosingGratitudeCanvas({
     const globeMesh = new THREE.LineSegments(globeWire, globeMat);
     rootGroup.add(globeMesh);
 
-    // Núcleo interno de gratitud (Octaedro palpitante)
-    const innerGeo = new THREE.OctahedronGeometry(0.8, 0);
+    // Núcleo interno de gratitud (Octaedro palpitante de AWS)
+    const innerGeo = new THREE.OctahedronGeometry(0.75, 0);
     const innerWire = new THREE.WireframeGeometry(innerGeo);
     const innerMat = new THREE.LineBasicMaterial({
       color: 0x6e8e59,
@@ -79,7 +87,7 @@ export function ClosingGratitudeCanvas({
     rootGroup.add(innerMesh);
 
     // Halo orbital ecuatorial (Route 53 & CloudFront CDN)
-    const haloGeo = new THREE.TorusGeometry(2.6, 0.02, 16, 64);
+    const haloGeo = new THREE.TorusGeometry(2.7, 0.02, 16, 64);
     const haloWire = new THREE.WireframeGeometry(haloGeo);
     const haloMat = new THREE.LineBasicMaterial({
       color: 0xf5f1e8,
@@ -90,8 +98,8 @@ export function ClosingGratitudeCanvas({
     haloMesh.rotation.x = Math.PI / 2.3;
     rootGroup.add(haloMesh);
 
-    // Segundo anillo inclinado
-    const halo2Geo = new THREE.TorusGeometry(3.1, 0.015, 16, 64);
+    // Segundo anillo orbital inclinado
+    const halo2Geo = new THREE.TorusGeometry(3.3, 0.018, 16, 64);
     const halo2Wire = new THREE.WireframeGeometry(halo2Geo);
     const halo2Mat = new THREE.LineBasicMaterial({
       color: 0xd4a017,
@@ -102,40 +110,90 @@ export function ClosingGratitudeCanvas({
     halo2Mesh.rotation.x = -Math.PI / 3;
     rootGroup.add(halo2Mesh);
 
-    // ── 5. Los 10 Nodos del Colectivo de Ingeniería en Órbita Armónica ──
-    const nodeCount = 10;
+    // ── 5. Los 5 Nodos de los Investigadores de SENATI ──
+    const researchers = [
+      { id: 1, name: "Jara Vega", code: "JV" },
+      { id: 2, name: "Estilo Ratache", code: "ER" },
+      { id: 3, name: "Suclupe López", code: "SL" },
+      { id: 4, name: "Gonzales Ramirez", code: "GR" },
+      { id: 5, name: "Guardia Ticlla", code: "GT" },
+    ];
+
     const nodes = [];
-    const nodeGeo = new THREE.BoxGeometry(0.3, 0.3, 0.3);
+    const nodeGeo = new THREE.DodecahedronGeometry(0.42, 0);
     const nodeWire = new THREE.WireframeGeometry(nodeGeo);
 
-    for (let i = 0; i < nodeCount; i++) {
-      const angle = (i / nodeCount) * Math.PI * 2;
-      const radius = 2.6;
+    researchers.forEach((res, i) => {
+      const angle = (i / researchers.length) * Math.PI * 2;
+      const radius = 2.65;
+      const x = Math.cos(angle) * radius;
+      const z = Math.sin(angle) * radius;
+      const y = Math.sin(angle * 2) * 0.4;
+
+      const nodeGroup = new THREE.Group();
+      nodeGroup.position.set(x, y, z);
+
       const mat = new THREE.LineBasicMaterial({
         color: i % 2 === 0 ? 0xd4a017 : 0x6e8e59,
         transparent: true,
-        opacity: 0.85,
+        opacity: 0.9,
       });
       const mesh = new THREE.LineSegments(nodeWire, mat);
-      rootGroup.add(mesh);
+      nodeGroup.add(mesh);
+
+      // Micro-anillo de órbita individual
+      const microRingGeo = new THREE.TorusGeometry(0.58, 0.012, 8, 32);
+      const microRingWire = new THREE.WireframeGeometry(microRingGeo);
+      const microRingMat = new THREE.LineBasicMaterial({
+        color: 0xf5f1e8,
+        transparent: true,
+        opacity: 0.35,
+      });
+      const microRingMesh = new THREE.LineSegments(microRingWire, microRingMat);
+      microRingMesh.rotation.x = Math.PI / 2.2;
+      nodeGroup.add(microRingMesh);
+
+      // Rayo conector con el centro de AWS
+      const beamGeo = new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(0, 0, 0),
+        nodeGroup.position.clone(),
+      ]);
+      const beamMat = new THREE.LineBasicMaterial({
+        color: i % 2 === 0 ? 0xd4a017 : 0x6e8e59,
+        transparent: true,
+        opacity: 0.35,
+      });
+      const beamLine = new THREE.Line(beamGeo, beamMat);
+      rootGroup.add(beamLine);
+
+      rootGroup.add(nodeGroup);
 
       nodes.push({
+        group: nodeGroup,
         mesh,
+        microRingMesh,
+        beamLine,
+        beamMat,
         angle,
-        radius,
-        speed: 0.015 + (i % 3) * 0.005,
-        yPhase: i * 0.6,
+        baseRadius: radius,
+        speed: 0.012,
+        yPhase: i * 1.25,
       });
-    }
+    });
 
-    // ── 6. Nube de Partículas / Confetti Técnico ──
-    const particleCount = 150;
+    // ── 6. Nube de Partículas / Confetti Técnico Cósmico (200 puntos) ──
+    const particleCount = 200;
     const particleGeo = new THREE.BufferGeometry();
     const particlePositions = new Float32Array(particleCount * 3);
+    const particleColors = new Float32Array(particleCount * 3);
     const particleVel = [];
 
+    const goldColor = new THREE.Color(0xd4a017);
+    const emeraldColor = new THREE.Color(0x6e8e59);
+    const whiteColor = new THREE.Color(0xf5f1e8);
+
     for (let i = 0; i < particleCount; i++) {
-      const rad = 0.6 + Math.random() * 3.6;
+      const rad = 0.8 + Math.random() * 3.8;
       const theta = Math.random() * Math.PI * 2;
       const phi = (Math.random() - 0.5) * Math.PI;
 
@@ -143,22 +201,29 @@ export function ClosingGratitudeCanvas({
       particlePositions[i * 3 + 1] = rad * Math.sin(phi);
       particlePositions[i * 3 + 2] = rad * Math.sin(theta) * Math.cos(phi);
 
+      const colorPick = i % 3 === 0 ? goldColor : i % 3 === 1 ? emeraldColor : whiteColor;
+      particleColors[i * 3] = colorPick.r;
+      particleColors[i * 3 + 1] = colorPick.g;
+      particleColors[i * 3 + 2] = colorPick.b;
+
       particleVel.push({
         rad,
         baseRad: rad,
         theta,
         phi,
         speed: 0.008 + Math.random() * 0.015,
-        burstSpeed: 0.05 + Math.random() * 0.1,
+        burstSpeed: 0.06 + Math.random() * 0.12,
       });
     }
 
     particleGeo.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
+    particleGeo.setAttribute("color", new THREE.BufferAttribute(particleColors, 3));
+
     const particleMat = new THREE.PointsMaterial({
-      color: 0xd4a017,
-      size: 0.055,
+      size: 0.06,
+      vertexColors: true,
       transparent: true,
-      opacity: 0.8,
+      opacity: 0.85,
     });
     const particlePoints = new THREE.Points(particleGeo, particleMat);
     rootGroup.add(particlePoints);
@@ -192,7 +257,7 @@ export function ClosingGratitudeCanvas({
     });
     resizeObserver.observe(container);
 
-    // ── 9. Loop de Animación ──
+    // ── 9. Loop de Animación Continuo y Reactivo ──
     const clock = new THREE.Clock();
     let isRunning = true;
 
@@ -204,11 +269,11 @@ export function ClosingGratitudeCanvas({
 
       const elapsed = clock.getElapsedTime();
 
-      // Mouse Parallax
+      // Mouse Parallax inercial
       mouseX += (targetMouseX - mouseX) * 0.05;
       mouseY += (targetMouseY - mouseY) * 0.05;
 
-      // Celebrate burst decay
+      // Celebrate burst decay con spring suave
       if (celebratePulseRef.current > 0.01) {
         celebratePulseRef.current *= 0.94;
       } else {
@@ -217,43 +282,54 @@ export function ClosingGratitudeCanvas({
       const pulse = celebratePulseRef.current;
 
       rootGroup.position.set(0, 0, 0);
-      rootGroup.rotation.y = elapsed * 0.15 + mouseX;
+      rootGroup.rotation.y = elapsed * (0.16 + pulse * 1.2) + mouseX;
       rootGroup.rotation.x = Math.sin(elapsed * 0.25) * 0.04 - mouseY;
 
-      // Rotaciones
-      globeMesh.rotation.y = elapsed * (0.3 + pulse * 1.5);
-      globeMesh.rotation.x = elapsed * 0.15;
-      globeMesh.scale.setScalar(1 + pulse * 0.2);
+      // Rotaciones del núcleo central
+      globeMesh.rotation.y = elapsed * (0.35 + pulse * 2.5);
+      globeMesh.rotation.x = elapsed * 0.2;
+      globeMesh.scale.setScalar(1 + pulse * 0.3);
 
-      innerMesh.rotation.y = -elapsed * (0.8 + pulse * 2.0);
-      innerMesh.rotation.z = elapsed * 0.4;
-      innerMesh.scale.setScalar(1 + Math.sin(elapsed * 4) * 0.08 + pulse * 0.3);
+      innerMesh.rotation.y = -elapsed * (0.9 + pulse * 3.0);
+      innerMesh.rotation.z = elapsed * 0.5;
+      innerMesh.scale.setScalar(1 + Math.sin(elapsed * 4) * 0.08 + pulse * 0.4);
 
-      haloMesh.rotation.z = elapsed * (0.2 + pulse * 0.8);
-      halo2Mesh.rotation.z = -elapsed * (0.15 + pulse * 0.6);
+      haloMesh.rotation.z = elapsed * (0.2 + pulse * 1.5);
+      halo2Mesh.rotation.z = -elapsed * (0.18 + pulse * 1.2);
 
-      // Nodos en órbita
+      // Animar los 5 Nodos de Investigadores SENATI
       nodes.forEach((nd) => {
-        nd.angle += nd.speed * (1 + pulse * 2.5);
-        const curRadius = nd.radius + pulse * 0.6;
-        nd.mesh.position.x = Math.cos(nd.angle) * curRadius;
-        nd.mesh.position.z = Math.sin(nd.angle) * curRadius;
-        nd.mesh.position.y = Math.sin(elapsed * 2 + nd.yPhase) * 0.5;
-        nd.mesh.rotation.y = elapsed * 1.2;
+        nd.angle += nd.speed * (1 + pulse * 2.8);
+        const curRadius = nd.baseRadius + pulse * 0.8;
+        const curX = Math.cos(nd.angle) * curRadius;
+        const curZ = Math.sin(nd.angle) * curRadius;
+        const curY = Math.sin(elapsed * 2.5 + nd.yPhase) * 0.45;
+
+        nd.group.position.set(curX, curY, curZ);
+        nd.mesh.rotation.y = elapsed * (1.2 + pulse * 3.0);
+        nd.microRingMesh.rotation.z = elapsed * 0.8;
+
+        // Actualizar rayo de energía con el centro
+        const lineArr = nd.beamLine.geometry.attributes.position.array;
+        lineArr[3] = curX;
+        lineArr[4] = curY;
+        lineArr[5] = curZ;
+        nd.beamLine.geometry.attributes.position.needsUpdate = true;
+        nd.beamMat.opacity = 0.35 + pulse * 0.5;
       });
 
-      // Partículas con soporte de burst
+      // Partículas cósmicas con soporte de warp celebración
       const posArr = particlePoints.geometry.attributes.position.array;
       for (let i = 0; i < particleCount; i++) {
         const pv = particleVel[i];
-        pv.theta += pv.speed * (1 + pulse * 2.0);
-        const r = pv.baseRad + pulse * pv.burstSpeed * 15;
+        pv.theta += pv.speed * (1 + pulse * 2.5);
+        const r = pv.baseRad + pulse * pv.burstSpeed * 22;
         posArr[i * 3] = r * Math.cos(pv.theta) * Math.cos(pv.phi);
-        posArr[i * 3 + 1] = r * Math.sin(pv.phi) + Math.sin(elapsed * 1.5 + i) * 0.1;
+        posArr[i * 3 + 1] = r * Math.sin(pv.phi) + Math.sin(elapsed * 1.8 + i) * 0.12;
         posArr[i * 3 + 2] = r * Math.sin(pv.theta) * Math.cos(pv.phi);
       }
       particlePoints.geometry.attributes.position.needsUpdate = true;
-      particleMat.size = 0.055 + pulse * 0.06;
+      particleMat.size = 0.06 + pulse * 0.08;
 
       renderer.render(scene, camera);
     };
