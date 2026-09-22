@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { slidesContent } from "../data/content.es.js";
 import { useSlideActive } from "../hooks/useSlideActive.js";
 import { PortfolioMonolithCanvas } from "../components/three/PortfolioMonolithCanvas.jsx";
+import { CanvasTransitionWrapper } from "../components/motion/CanvasTransitionWrapper.jsx";
 
 const c = slidesContent.s05_portafolio;
 
@@ -686,8 +687,10 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
           overflow: "hidden",
         }}
       >
-        {/* Canvas 3D de Monolitos que abarca toda la mitad derecha */}
-        <PortfolioMonolithCanvas isActive={isActive} activeIndex={activeProjectIdx} />
+        {/* Canvas 3D de Monolitos (Desmontado condicional GPU + Transición) */}
+        <CanvasTransitionWrapper isActive={isActive}>
+          <PortfolioMonolithCanvas isActive={isActive} activeIndex={activeProjectIdx} />
+        </CanvasTransitionWrapper>
 
         {/* HUD overlay superior derecho */}
         <div

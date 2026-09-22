@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { slidesContent } from "../data/content.es.js";
 import { useSlideActive } from "../hooks/useSlideActive.js";
 import { TeamTopologyCanvas } from "../components/three/TeamTopologyCanvas.jsx";
+import { CanvasTransitionWrapper } from "../components/motion/CanvasTransitionWrapper.jsx";
 
 const c = slidesContent.s04_equipo;
 
@@ -540,8 +541,10 @@ export function S04_Equipo({ isActive: propActive } = {}) {
           overflow: "hidden",
         }}
       >
-        {/* Canvas 3D de Topología */}
-        <TeamTopologyCanvas isActive={isActive} selectedNode={activeNode} />
+        {/* Canvas 3D de Topología (Desmontado condicional + Transición) */}
+        <CanvasTransitionWrapper isActive={isActive}>
+          <TeamTopologyCanvas isActive={isActive} selectedNode={activeNode} />
+        </CanvasTransitionWrapper>
 
         {/* HUD overlay de coordenadas y status técnico */}
         <div

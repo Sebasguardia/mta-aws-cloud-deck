@@ -20,6 +20,7 @@ import { projectMeta } from "../data/team.js";
 import { useSlideActive } from "../hooks/useSlideActive.js";
 import { useSharedDeckState } from "../hooks/useSharedDeckState.js";
 import { IamSecurityCanvas } from "../components/three/IamSecurityCanvas.jsx";
+import { CanvasTransitionWrapper } from "../components/motion/CanvasTransitionWrapper.jsx";
 import { Badge } from "../components/ui/Badge.jsx";
 import { easings } from "../lib/easings.js";
 
@@ -867,11 +868,13 @@ export function S11_IAM({ isActive: propActive } = {}) {
             zIndex: 5,
           }}
         >
-          <IamSecurityCanvas
-            isActive={isActive}
-            isRoot={isRoot}
-            selectedUserId={selectedUserForInspection?.id}
-          />
+          <CanvasTransitionWrapper isActive={isActive}>
+            <IamSecurityCanvas
+              isActive={isActive}
+              isRoot={isRoot}
+              selectedUserId={selectedUserForInspection?.id}
+            />
+          </CanvasTransitionWrapper>
         </div>
 
         {/* HUD Inferior de Ciberseguridad */}

@@ -17,6 +17,7 @@ import { slidesContent } from "../data/content.es.js";
 import { useSlideActive } from "../hooks/useSlideActive.js";
 import { useSharedDeckState } from "../hooks/useSharedDeckState.js";
 import { CostOptimizationCanvas } from "../components/three/CostOptimizationCanvas.jsx";
+import { CanvasTransitionWrapper } from "../components/motion/CanvasTransitionWrapper.jsx";
 import { CountUp } from "../components/motion/CountUp.jsx";
 import { Badge } from "../components/ui/Badge.jsx";
 import { easings } from "../lib/easings.js";
@@ -610,11 +611,13 @@ export function S10_Economia({ isActive: propActive } = {}) {
             zIndex: 5,
           }}
         >
-          <CostOptimizationCanvas
-            isActive={isActive}
-            simulatedUsers={simulatedUsers}
-            isAlert={isBudgetAlert}
-          />
+          <CanvasTransitionWrapper isActive={isActive}>
+            <CostOptimizationCanvas
+              isActive={isActive}
+              simulatedUsers={simulatedUsers}
+              isAlert={isBudgetAlert}
+            />
+          </CanvasTransitionWrapper>
         </div>
 
         {/* HUD Inferior con Métricas de Costo y Ahorro */}

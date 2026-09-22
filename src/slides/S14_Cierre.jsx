@@ -16,6 +16,7 @@ import { slidesContent } from "../data/content.es.js";
 import { projectMeta } from "../data/team.js";
 import { useSlideActive } from "../hooks/useSlideActive.js";
 import { ClosingGratitudeCanvas } from "../components/three/ClosingGratitudeCanvas.jsx";
+import { CanvasTransitionWrapper } from "../components/motion/CanvasTransitionWrapper.jsx";
 import { ClosingEvaluation } from "../components/dynamics/ClosingEvaluation.jsx";
 import { Button } from "../components/ui/Button.jsx";
 import { Badge } from "../components/ui/Badge.jsx";
