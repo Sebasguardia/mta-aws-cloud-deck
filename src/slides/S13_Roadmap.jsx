@@ -15,6 +15,7 @@ import {
 import { slidesContent } from "../data/content.es.js";
 import { useSlideActive } from "../hooks/useSlideActive.js";
 import { RoadmapContinuityCanvas } from "../components/three/RoadmapContinuityCanvas.jsx";
+import { CanvasTransitionWrapper } from "../components/motion/CanvasTransitionWrapper.jsx";
 import { Badge } from "../components/ui/Badge.jsx";
 import { easings } from "../lib/easings.js";
 
@@ -444,7 +445,7 @@ export function S13_Roadmap({ isActive: propActive } = {}) {
           </div>
         </div>
 
-        {/* Canvas 3D Three.js */}
+        {/* Canvas 3D Three.js (Desmontado condicional GPU) */}
         <div
           style={{
             width: "100%",
@@ -453,10 +454,12 @@ export function S13_Roadmap({ isActive: propActive } = {}) {
             zIndex: 5,
           }}
         >
-          <RoadmapContinuityCanvas
-            isActive={isActive}
-            activePhase={selectedPhase}
-          />
+          <CanvasTransitionWrapper isActive={isActive}>
+            <RoadmapContinuityCanvas
+              isActive={isActive}
+              activePhase={selectedPhase}
+            />
+          </CanvasTransitionWrapper>
         </div>
 
         {/* HUD Inferior de los 3 Hitos Clave */}

@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { slidesContent } from "../data/content.es.js";
 import { useSlideActive } from "../hooks/useSlideActive.js";
 import { HybridCoreCanvas } from "../components/three/HybridCoreCanvas.jsx";
+import { CanvasTransitionWrapper } from "../components/motion/CanvasTransitionWrapper.jsx";
 
 const c = slidesContent.s03_empresa;
 
@@ -482,27 +483,10 @@ export function S03_Empresa({ isActive: propActive } = {}) {
           <span style={{ position: "absolute", bottom: 6, left: 8, fontFamily: "monospace", fontSize: "0.7rem", color: "rgba(245,241,232,0.3)" }}>+</span>
           <span style={{ position: "absolute", bottom: 6, right: 8, fontFamily: "monospace", fontSize: "0.7rem", color: "rgba(245,241,232,0.3)" }}>+</span>
 
-          {/* Three.js canvas */}
-          <HybridCoreCanvas isActive={isActive} />
-
-          {/* Label flotante sobre el 3D */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: 12,
-              left: 14,
-              right: 14,
-              display: "flex",
-              justifyContent: "space-between",
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.58rem",
-              color: "rgba(245,241,232,0.45)",
-              pointerEvents: "none",
-            }}
-          >
-            <span>MOD: WIREFRAME ICOSAHEDRON + DATA ORBITS</span>
-            <span>ROTATION: MOUSE REACTIVE</span>
-          </div>
+          {/* Three.js canvas (Desmontado condicional GPU + Transición) */}
+          <CanvasTransitionWrapper isActive={isActive}>
+            <HybridCoreCanvas isActive={isActive} />
+          </CanvasTransitionWrapper>
         </div>
 
         {/* ── Highlights en Bento Box inferior ── */}

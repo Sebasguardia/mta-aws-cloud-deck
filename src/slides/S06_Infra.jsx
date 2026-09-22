@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { slidesContent } from "../data/content.es.js";
 import { useSlideActive } from "../hooks/useSlideActive.js";
 import { LegacyHostingerCanvas } from "../components/three/LegacyHostingerCanvas.jsx";
+import { CanvasTransitionWrapper } from "../components/motion/CanvasTransitionWrapper.jsx";
 
 const c = slidesContent.s06_infraestructura;
 
@@ -404,8 +405,10 @@ export function S06_Infra({ isActive: propActive } = {}) {
           overflow: "hidden",
         }}
       >
-        {/* Canvas 3D de Servidor Hostinger */}
-        <LegacyHostingerCanvas isActive={isActive} isFaultActive={isFaultActive} />
+        {/* Canvas 3D de Servidor Hostinger (Desmontado condicional GPU + Transición) */}
+        <CanvasTransitionWrapper isActive={isActive}>
+          <LegacyHostingerCanvas isActive={isActive} isFaultActive={isFaultActive} />
+        </CanvasTransitionWrapper>
 
         {/* HUD superior derecho de telemetría de servidor */}
         <div

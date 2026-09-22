@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { slidesContent } from "../data/content.es.js";
 import { useSlideActive } from "../hooks/useSlideActive.js";
 import { GitPipelineCanvas } from "../components/three/GitPipelineCanvas.jsx";
+import { CanvasTransitionWrapper } from "../components/motion/CanvasTransitionWrapper.jsx";
 
 const c = slidesContent.s07_workflow;
 
@@ -527,13 +528,15 @@ export function S07_Workflow({ isActive: propActive } = {}) {
           overflow: "hidden",
         }}
       >
-        {/* Canvas 3D de Circuito Git */}
-        <GitPipelineCanvas
-          isActive={isActive}
-          currentStep={activeStep}
-          isSimulating={isSimulating}
-          hasFailed={hasFailed}
-        />
+        {/* Canvas 3D de Circuito Git (Desmontado condicional GPU + Transición) */}
+        <CanvasTransitionWrapper isActive={isActive}>
+          <GitPipelineCanvas
+            isActive={isActive}
+            currentStep={activeStep}
+            isSimulating={isSimulating}
+            hasFailed={hasFailed}
+          />
+        </CanvasTransitionWrapper>
 
         {/* HUD superior derecho */}
         <div

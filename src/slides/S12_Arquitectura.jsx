@@ -19,6 +19,7 @@ import { slidesContent } from "../data/content.es.js";
 import { awsServices } from "../data/awsServices.js";
 import { useSlideActive } from "../hooks/useSlideActive.js";
 import { CloudArchitectureHeroCanvas } from "../components/three/CloudArchitectureHeroCanvas.jsx";
+import { CanvasTransitionWrapper } from "../components/motion/CanvasTransitionWrapper.jsx";
 import { Button } from "../components/ui/Button.jsx";
 import { Badge } from "../components/ui/Badge.jsx";
 import { Tooltip } from "../components/ui/Tooltip.jsx";
@@ -636,10 +637,12 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
             zIndex: 5,
           }}
         >
-          <CloudArchitectureHeroCanvas
-            isActive={isActive}
-            activeStep={activeStep}
-          />
+          <CanvasTransitionWrapper isActive={isActive}>
+            <CloudArchitectureHeroCanvas
+              isActive={isActive}
+              activeStep={activeStep}
+            />
+          </CanvasTransitionWrapper>
         </div>
 
         {/* HUD Inferior de los Servicios Perimetrales */}

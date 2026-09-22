@@ -18,6 +18,7 @@ import { slidesContent } from "../data/content.es.js";
 import { useSlideActive } from "../hooks/useSlideActive.js";
 import { useSharedDeckState } from "../hooks/useSharedDeckState.js";
 import { CriticalBottleneckCanvas } from "../components/three/CriticalBottleneckCanvas.jsx";
+import { CanvasTransitionWrapper } from "../components/motion/CanvasTransitionWrapper.jsx";
 import { Button } from "../components/ui/Button.jsx";
 import { Badge } from "../components/ui/Badge.jsx";
 import { easings } from "../lib/easings.js";
@@ -577,11 +578,13 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
             zIndex: 5,
           }}
         >
-          <CriticalBottleneckCanvas
-            isActive={isActive}
-            isDown={isServerDown}
-            activeProblem={selectedProblem}
-          />
+          <CanvasTransitionWrapper isActive={isActive}>
+            <CriticalBottleneckCanvas
+              isActive={isActive}
+              isDown={isServerDown}
+              activeProblem={selectedProblem}
+            />
+          </CanvasTransitionWrapper>
         </div>
 
         {/* HUD Inferior de los 3 Nodos Afectados en Cascada */}
