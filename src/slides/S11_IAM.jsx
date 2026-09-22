@@ -373,7 +373,7 @@ export function S11_IAM({ isActive: propActive } = {}) {
                 </div>
 
                 <p style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "0.78rem", color: "rgba(245,241,232,0.8)", lineHeight: 1.45, margin: 0 }}>
-                  El Jefe de Desarrollo y los 10 practicantes comparten la misma contraseña maestra en el servidor Hostinger.
+                  Los 4 Encargados técnicos y los 10 practicantes comparten la misma contraseña maestra en el servidor Hostinger.
                   Sin trazabilidad de auditoría en caso de borrado accidental o fuga de datos.
                 </p>
 

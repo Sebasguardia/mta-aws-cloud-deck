@@ -11,12 +11,12 @@ export const slidesContent = {
   },
 
   s01_cover: {
-    badge: "AWS CLOUD PRACTITIONER ESSENTIALS · ETAPA 01",
-    scriptTag: "Diagnóstico Tecnológico",
+    badge: "TECNOLOGÍA CLOUD CON AWS · ETAPA 01",
+    scriptTag: "Trabajo de Investigación",
     title: "DIAGNÓSTICO DE LA EMPRESA Y FUNDAMENTOS CLOUD",
     lead: "Caso de Estudio: Modernización de Infraestructura para MTA Software",
     companyTag: "Multiservicios Tecnoindustrial Acosta S.A.C.",
-    academicNotice: "SENATI · Formación Práctica Profesional",
+    academicNotice: "SENATI · Trabajo de Investigación Grupal",
     transitionNote: "Transición cinematográfica Zoom",
   },
 
@@ -31,7 +31,7 @@ export const slidesContent = {
         num: "01",
         title: "LA EMPRESA",
         script: "Quiénes somos",
-        description: "Modelo de negocio híbrido B2B, colectivo de ingeniería 100% remoto y portafolio de proyectos comerciales e internos.",
+        description: "Modelo de negocio híbrido B2B, área de TI investigada (4 encargados + 10 practicantes) y portafolio de proyectos.",
         targetSlide: 2,
         accent: "var(--olive)",
       },
@@ -73,13 +73,13 @@ export const slidesContent = {
   s04_equipo: {
     sectionNum: "01",
     badge: "BLOQUE 1 · LA EMPRESA",
-    scriptTag: "Talento de Ingeniería",
+    scriptTag: "Estructura del Área TI",
     title: "EL ÁREA DE DESARROLLO DE TI",
-    subtitle: "Colectivo de ingeniería ágil con modalidad de trabajo 100% remota",
-    lead: "Liderado por 1 Jefe de Desarrollo y conformado por un equipo ágil de 10 practicantes de últimos ciclos.",
-    statNumber: 10,
-    statLabel: "Practicantes de Últimos Ciclos",
-    statSubtext: "Distribuidos a nivel nacional bajo trabajo colaborativo remoto",
+    subtitle: "Estructura investigada: 4 Encargados y 10 practicantes remotos",
+    lead: "Estructurada por 4 encargados técnicos que coordinan un colectivo ágil de 10 practicantes en modalidad 100% remota.",
+    statNumber: 14,
+    statLabel: "Colaboradores Técnicos de TI",
+    statSubtext: "4 Encargados / Jefes de Área + 10 Practicantes en modalidad remota",
     stackTechnologies: [
       { name: "React", role: "Interfaces dinámicas y Single Page Applications", icon: "react" },
       { name: "Next.js", role: "Server-side rendering y optimización SEO", icon: "next" },
@@ -314,12 +314,12 @@ export const slidesContent = {
 
   s14_cierre: {
     badge: "CONCLUSIÓN · ETAPA 01",
-    scriptTag: "Cierre de Presentación",
+    scriptTag: "Cierre de Investigación",
     title: "GRACIAS POR SU ATENCIÓN",
-    subtitle: "MTA Software hacia una infraestructura en la nube escalable, segura y económica",
-    teamLead: projectMeta.teamLead.name + " (" + projectMeta.teamLead.role + ")",
-    teamSummary: projectMeta.internsCount + " Practicantes de Ingeniería de Software · Modalidad 100% Remota",
-    institution: "SENATI · AWS Cloud Practitioner Essentials",
+    subtitle: "Propuesta de arquitectura en la nube escalable, segura y económica para MTA Software",
+    teamLead: "Docente: " + projectMeta.instructor.name,
+    teamSummary: "5 Integrantes · Equipo de Investigación SENATI",
+    institution: "SENATI · " + projectMeta.course,
     callToAction: "Espacio abierto para preguntas del jurado",
   },
 };

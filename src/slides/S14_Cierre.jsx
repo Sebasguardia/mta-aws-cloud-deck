@@ -295,10 +295,10 @@ export function S14_Cierre({ isActive: propActive } = {}) {
             <Award size={15} style={{ color: "#d4a017" }} />
             <div>
               <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.72rem", color: "#F5F1E8" }}>
-                {projectMeta.teamLead.name}
+                CURSO: {projectMeta.course}
               </div>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "rgba(245,241,232,0.5)" }}>
-                {projectMeta.teamLead.role} · {projectMeta.institution}
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "rgba(245,241,232,0.6)" }}>
+                DOCENTE: {projectMeta.instructor.name} · SENATI
               </div>
             </div>
           </div>
@@ -315,7 +315,7 @@ export function S14_Cierre({ isActive: propActive } = {}) {
                 fontWeight: 700,
               }}
             >
-              10 PRACTICANTES REMOTOS
+              5 INTEGRANTES SENATI
             </span>
           </div>
         </motion.div>

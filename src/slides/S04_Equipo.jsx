@@ -362,7 +362,7 @@ export function S04_Equipo({ isActive: propActive } = {}) {
                 textTransform: "uppercase",
               }}
             >
-              // MALLA DE TALENTO REMOTO (1 LEAD + 10 PRACTICANTES)
+              // ÁREA DE TI INVESTIGADA (4 ENCARGADOS + 10 PRACTICANTES)
             </span>
             <span
               style={{
@@ -616,7 +616,7 @@ export function S04_Equipo({ isActive: propActive } = {}) {
               lineHeight: 1.3,
             }}
           >
-            1 Jefe de Desarrollo coordina 10 nodos en paralelo. Flujo descentralizado hacia el repositorio.
+            4 Encargados de TI coordinan a 10 practicantes en paralelo. Flujo descentralizado hacia el repositorio.
           </span>
         </div>
       </div>

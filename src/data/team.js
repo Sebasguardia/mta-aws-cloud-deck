@@ -1,32 +1,52 @@
 // src/data/team.js
 export const projectMeta = {
   institution: "SENATI",
-  course: "AWS Cloud Practitioner Essentials",
+  course: "TECNOLOGÍA CLOUD CON AWS",
   stageNumber: "ETAPA 01",
   stageTitle: "Diagnóstico de la Empresa y Fundamentos Cloud",
   
+  // Datos del trabajo de investigación y equipo académico de SENATI
+  academic: {
+    institution: "SENATI",
+    course: "TECNOLOGÍA CLOUD CON AWS",
+    instructor: "Huapaya Huapaya Arturo Florencio",
+    projectType: "Trabajo de Investigación Grupal",
+    researchTeam: [
+      { id: 1, name: "Jara Vega Analí", role: "Integrante" },
+      { id: 2, name: "Estilo Ratache Diego Rafael", role: "Integrante" },
+      { id: 3, name: "Suclupe López Jean Pierre", role: "Integrante" },
+      { id: 4, name: "Gonzales Ramirez Alfredo Valentino", role: "Integrante" },
+      { id: 5, name: "Guardia Ticlla Sebastian Jesús", role: "Integrante" },
+    ],
+  },
+
+  instructor: {
+    name: "Huapaya Huapaya Arturo Florencio",
+    role: "Instructor / Cloud Foundations Mentor",
+  },
+
+  // Empresa investigada
   company: {
     legalName: "Multiservicios Tecnoindustrial Acosta S.A.C.",
     commercialName: "MTA Software",
     sector: "Híbrido — Metalmecánica y Desarrollo de Software Profesional",
     businessModel: "B2B (Business-to-Business)",
     mission: "Diseño y desarrollo de soluciones digitales a medida (plataformas web, aplicaciones y sistemas empresariales) para clientes que buscan automatizar y escalar sus operaciones.",
-  },
-
-  instructor: {
-    name: "Instructor AWS SENATI",
-    title: "AWS Certified Instructor / Cloud Foundations Mentor",
-  },
-
-  teamLead: {
-    name: "Sebastián Guardia",
-    role: "Jefe de Desarrollo / Lead Cloud Architect",
+    tiTeam: {
+      managersCount: 4,
+      managersRole: "4 Encargados / Jefes de Área TI",
+      internsCount: 10,
+      internsRole: "10 Practicantes de Ingeniería (Remoto)",
+      totalMembers: 14,
+    },
   },
 
   internsCount: 10,
+  managersCount: 4,
   workMode: "100% Remota",
 
-  // 10 practicantes de últimos ciclos para el IAM Grid y avatares interactivos
+  // 10 practicantes de la empresa investigada para simulación técnica y gobierno IAM
+  // (perfiles técnicos genéricos de la empresa investigada)
   teamMembers: [
     { id: 1, name: "Practicante 01", role: "Frontend Dev", tech: "React / Vite", iamRole: "Developer-Frontend", accessLevel: "S3, CloudFront (Read/Write)" },
     { id: 2, name: "Practicante 02", role: "Frontend Dev", tech: "Next.js", iamRole: "Developer-Frontend", accessLevel: "S3, CloudFront (Read/Write)" },
