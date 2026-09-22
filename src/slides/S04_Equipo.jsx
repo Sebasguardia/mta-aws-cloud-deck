@@ -48,6 +48,7 @@ export function S04_Equipo({ isActive: propActive } = {}) {
   const [entered, setEntered] = useState(false);
   const [count, setCount] = useState(0);
   const [activeNode, setActiveNode] = useState(null);
+  const [activeSupervisor, setActiveSupervisor] = useState(null);
   const [hoveredTech, setHoveredTech] = useState(null);
 
   // Reset y trigger de animaciones
@@ -59,6 +60,7 @@ export function S04_Equipo({ isActive: propActive } = {}) {
       setEntered(false);
       setCount(0);
       setActiveNode(null);
+      setActiveSupervisor(null);
       setHoveredTech(null);
     }
   }, [isActive]);
@@ -346,9 +348,9 @@ export function S04_Equipo({ isActive: propActive } = {}) {
           </div>
         </motion.div>
 
-        {/* ── Grid Táctico de Nodos (Avatar Grid) ── */}
+        {/* ── SECCIÓN 1: LOS 4 ENCARGADOS / SUPERVISORES DE TI ── */}
         <motion.div
-          variants={fadeUp(0.38)}
+          variants={fadeUp(0.36)}
           initial="hidden"
           animate={entered ? "visible" : "hidden"}
           style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}
@@ -359,21 +361,109 @@ export function S04_Equipo({ isActive: propActive } = {}) {
                 fontFamily: "'JetBrains Mono', monospace",
                 fontSize: "0.62rem",
                 letterSpacing: "0.15em",
-                color: "rgba(245,241,232,0.45)",
+                color: "#D4A017",
                 textTransform: "uppercase",
+                fontWeight: 700,
               }}
             >
-              // ÁREA DE TI INVESTIGADA (4 ENCARGADOS + 10 PRACTICANTES)
+              // 4 ENCARGADOS DE TI (LIDERAZGO & ARQUITECTURA)
             </span>
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
+                fontSize: "0.55rem",
+                color: "rgba(245,241,232,0.45)",
+              }}
+            >
+              NÚCLEO CENTRAL EN 3D
+            </span>
+          </div>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: "6px",
+            }}
+          >
+            {[
+              { id: 0, title: "Líder Arquitectura", code: "LEAD-01", focus: "AWS & Infraestructura" },
+              { id: 1, title: "Líder Backend", code: "LEAD-02", focus: "Node / APIs / DB" },
+              { id: 2, title: "Líder Frontend", code: "LEAD-03", focus: "React & Next.js" },
+              { id: 3, title: "Líder QA & Ops", code: "LEAD-04", focus: "Git / CI / Staging" },
+            ].map((lead) => {
+              const isLeadActive = activeSupervisor === lead.id;
+              return (
+                <button
+                  key={lead.id}
+                  onClick={() => setActiveSupervisor(isLeadActive ? null : lead.id)}
+                  style={{
+                    background: isLeadActive ? "rgba(212,160,23,0.18)" : "rgba(245,241,232,0.03)",
+                    border: `1px solid ${isLeadActive ? "#D4A017" : "rgba(212,160,23,0.3)"}`,
+                    padding: "0.55rem 0.45rem",
+                    cursor: "pointer",
+                    textAlign: "left",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "0.2rem",
+                    transition: "all 0.18s ease",
+                  }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "#D4A017", fontWeight: 700 }}>
+                      {lead.code}
+                    </span>
+                    <span
+                      style={{
+                        width: 5,
+                        height: 5,
+                        borderRadius: "50%",
+                        background: "#D4A017",
+                        boxShadow: "0 0 6px #D4A017",
+                      }}
+                    />
+                  </div>
+                  <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.68rem", color: "#F5F1E8", textTransform: "uppercase" }}>
+                    {lead.title}
+                  </span>
+                  <span style={{ fontFamily: "Inter, sans-serif", fontSize: "0.58rem", color: "rgba(245,241,232,0.55)" }}>
+                    {lead.focus}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </motion.div>
+
+        {/* ── SECCIÓN 2: LOS 10 PRACTICANTES DE INGENIERÍA ── */}
+        <motion.div
+          variants={fadeUp(0.4)}
+          initial="hidden"
+          animate={entered ? "visible" : "hidden"}
+          style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
                 fontSize: "0.62rem",
-                color: "#4a5d3a",
+                letterSpacing: "0.15em",
+                color: "#6e8e59",
+                textTransform: "uppercase",
                 fontWeight: 700,
               }}
             >
-              ● 100% DISPONIBLE
+              // 10 PRACTICANTES REMOTOS (DESARROLLO & TESTING)
+            </span>
+            <span
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: "0.55rem",
+                color: activeNode !== null ? "#d4a017" : "#4a5d3a",
+                fontWeight: 700,
+              }}
+            >
+              {activeNode !== null ? `DEV-${String(activeNode + 1).padStart(2, "0")} ENFOCADO` : "● 100% DISPONIBLE"}
             </span>
           </div>
 
@@ -393,7 +483,7 @@ export function S04_Equipo({ isActive: propActive } = {}) {
                   onMouseEnter={() => setActiveNode(i)}
                   onMouseLeave={() => setActiveNode(null)}
                   style={{
-                    background: isSelected ? "rgba(212,160,23,0.15)" : "rgba(245,241,232,0.03)",
+                    background: isSelected ? "rgba(212,160,23,0.18)" : "rgba(245,241,232,0.03)",
                     border: `1px solid ${isSelected ? "#D4A017" : "rgba(245,241,232,0.1)"}`,
                     padding: "0.45rem 0.35rem",
                     cursor: "pointer",
@@ -401,7 +491,7 @@ export function S04_Equipo({ isActive: propActive } = {}) {
                     flexDirection: "column",
                     alignItems: "center",
                     gap: "0.2rem",
-                    transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
+                    transition: "all 0.15s ease",
                   }}
                 >
                   <span
@@ -414,18 +504,52 @@ export function S04_Equipo({ isActive: propActive } = {}) {
                   >
                     {intern.label}
                   </span>
-                  <span
-                    style={{
-                      width: 5,
-                      height: 5,
-                      borderRadius: "50%",
-                      background: isSelected ? "#D4A017" : "#4a5d3a",
-                      boxShadow: isSelected ? "0 0 6px #D4A017" : "none",
-                    }}
-                  />
+                  <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
+                    <span
+                      style={{
+                        width: 5,
+                        height: 5,
+                        borderRadius: "50%",
+                        background: isSelected ? "#D4A017" : "#6e8e59",
+                        boxShadow: isSelected ? "0 0 6px #D4A017" : "none",
+                      }}
+                    />
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.48rem", color: "rgba(245,241,232,0.4)" }}>
+                      {intern.role.split(" ")[0]}
+                    </span>
+                  </div>
                 </button>
               );
             })}
+          </div>
+
+          {/* Ficha interactiva de asignación remota */}
+          <div
+            style={{
+              padding: "0.55rem 0.85rem",
+              background: "rgba(14,14,14,0.75)",
+              border: "1px solid rgba(245,241,232,0.12)",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "rgba(245,241,232,0.7)" }}>
+              {activeNode !== null
+                ? `Nodo DEV-${String(activeNode + 1).padStart(2, "0")}: Asignado a [${interns[activeNode].role}] · Modalidad Remota Localhost`
+                : "Inspecciona cualquier nodo o líder para visualizar sus enlaces de datos en 3D"}
+            </div>
+            <span
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: "0.52rem",
+                color: "#d4a017",
+                background: "rgba(212,160,23,0.12)",
+                padding: "0.15rem 0.4rem",
+              }}
+            >
+              METODOLOGÍA: ÁGIL
+            </span>
           </div>
         </motion.div>
 
@@ -460,10 +584,10 @@ export function S04_Equipo({ isActive: propActive } = {}) {
                     position: "relative",
                     background: isHovered ? "rgba(212,160,23,0.08)" : "rgba(245,241,232,0.02)",
                     border: `1px solid ${isHovered ? "#D4A017" : "rgba(245,241,232,0.1)"}`,
-                    padding: "0.6rem 0.5rem",
+                    padding: "0.55rem 0.5rem",
                     textAlign: "center",
                     cursor: "help",
-                    transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
+                    transition: "all 0.15s ease",
                   }}
                 >
                   <span
@@ -541,10 +665,12 @@ export function S04_Equipo({ isActive: propActive } = {}) {
           overflow: "hidden",
         }}
       >
-        {/* Canvas 3D de Topología (Desmontado condicional + Transición) */}
-        <CanvasTransitionWrapper isActive={isActive}>
-          <TeamTopologyCanvas isActive={isActive} selectedNode={activeNode} />
-        </CanvasTransitionWrapper>
+        {/* Canvas 3D de Topología (Fluido directo, sin desmontar context) */}
+        <TeamTopologyCanvas
+          isActive={isActive}
+          selectedNode={activeNode}
+          selectedSupervisor={activeSupervisor}
+        />
 
         {/* HUD overlay de coordenadas y status técnico */}
         <div
@@ -570,7 +696,7 @@ export function S04_Equipo({ isActive: propActive } = {}) {
               fontWeight: 700,
             }}
           >
-            SYS_TOPOLOGY // 10_LEAF_MESH
+            SYS_TOPOLOGY // 4_LEADS + 10_INTERNS
           </span>
           <span
             style={{

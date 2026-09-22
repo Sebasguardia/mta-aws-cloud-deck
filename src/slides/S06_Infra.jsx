@@ -256,17 +256,20 @@ export function S06_Infra({ isActive: propActive } = {}) {
                 variants={fadeUp(0.3 + idx * 0.08)}
                 initial="hidden"
                 animate={entered ? "visible" : "hidden"}
+                whileHover={{ scale: 1.02, x: 4 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveComponentIdx(idx)}
                 style={{
-                  background: isSelected ? "rgba(245,241,232,0.05)" : "rgba(245,241,232,0.02)",
+                  background: isSelected ? "rgba(245,241,232,0.07)" : "rgba(245,241,232,0.02)",
                   border: `1px solid ${isSelected ? risk.border : "rgba(245,241,232,0.09)"}`,
                   borderLeft: `4px solid ${risk.border}`,
-                  padding: "0.85rem 1.1rem",
+                  padding: isSelected ? "0.95rem 1.2rem" : "0.85rem 1.1rem",
                   cursor: "pointer",
                   display: "flex",
                   flexDirection: "column",
                   gap: "0.35rem",
-                  transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
+                  boxShadow: isSelected ? `0 0 20px ${risk.bg}` : "none",
+                  transition: "padding 0.25s ease, background 0.2s ease, border 0.2s ease, box-shadow 0.25s ease",
                 }}
               >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -405,10 +408,13 @@ export function S06_Infra({ isActive: propActive } = {}) {
           overflow: "hidden",
         }}
       >
-        {/* Canvas 3D de Servidor Hostinger (Desmontado condicional GPU + Transición) */}
-        <CanvasTransitionWrapper isActive={isActive}>
-          <LegacyHostingerCanvas isActive={isActive} isFaultActive={isFaultActive} />
-        </CanvasTransitionWrapper>
+        {/* Canvas 3D de Servidor Hostinger continuo y fluido (Cero desmontes ni recargas) */}
+        <LegacyHostingerCanvas
+          isActive={isActive}
+          isFaultActive={isFaultActive}
+          selectedComponentIdx={activeComponentIdx}
+          onSelectComponent={(idx) => setActiveComponentIdx(idx)}
+        />
 
         {/* HUD superior derecho de telemetría de servidor */}
         <div

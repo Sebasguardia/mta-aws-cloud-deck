@@ -6,25 +6,30 @@ import * as THREE from "three";
  * Visualizador 3D Interactivo para Slide 09:
  * "AWS Cloud Adoption Framework (CAF) - Transformación de Arquitectura"
  *
- * Muestra el salto cuántico entre los dos estados:
- *  - Estado "Antes" (`isAfter === false`):
- *    - Modelo fragmentado y monocromático: 10 pequeñas terminales orbitando caóticamente
- *      un único cubo frágil (Hostinger) con enlaces inestables y desconectados.
- *  - Estado "Después" (`isAfter === true`):
- *    - Ecosistema Centralizado AWS:
- *      - Núcleo poliédrico dorado brillante (AWS Cloud Backbone / VPC).
- *      - Anillos concéntricos de gobernanza y seguridad (VPC / Route53 / CDN).
- *      - Las terminales se ordenan en una constelación de matriz hexagonal sincronizada
- *        con pulsos de luz ámbar/dorada y flujos de datos continuos.
- *
- * Directivas de animación y Three.js:
- *  - Interpolar suavemente las posiciones y colores mediante lerp para una transición fluida cuando cambia el toggle.
- *  - Mouse parallax inercial suave.
- *  - Destrucción y limpieza adecuada de recursos WebGL.
+ * Mejoras de rendimiento y fluidez:
+ *  - Cero reinicios / Cero recargas: `isActive` e `isAfter` se gestionan mediante `useRef`,
+ *    manteniendo el contexto WebGL activo de forma continua durante toda la presentación.
+ *  - Transición cinemática fluida (Morphing en vivo):
+ *    - Cuando se conmuta el toggle "Antes" vs "Después", los 10 nodos se desplazan suavemente
+ *      con aceleración/desaceleración lerp entre su distribución caótica fragmentada (Antes)
+ *      y la matriz hexagonal orbital coordinada por el VPC de AWS (Después).
+ *    - El núcleo central transmuta gradualmente de cubo gris Hostinger a dodecaedro dorado AWS
+ *      con doble halo orbital pulsante.
  */
 export function CafTransformationCanvas({ isActive = true, isAfter = false }) {
   const containerRef = useRef(null);
   const animFrameId = useRef(null);
+
+  const isActiveRef = useRef(isActive);
+  const isAfterRef = useRef(isAfter);
+
+  useEffect(() => {
+    isActiveRef.current = isActive;
+  }, [isActive]);
+
+  useEffect(() => {
+    isAfterRef.current = isAfter;
+  }, [isAfter]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -36,7 +41,7 @@ export function CafTransformationCanvas({ isActive = true, isAfter = false }) {
     // 1. Scene & Camera
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
-    camera.position.set(0, 0, 9.6);
+    camera.position.set(0, 0.2, 9.2);
 
     // 2. Renderer
     const renderer = new THREE.WebGLRenderer({
@@ -53,77 +58,87 @@ export function CafTransformationCanvas({ isActive = true, isAfter = false }) {
     const rootGroup = new THREE.Group();
     scene.add(rootGroup);
 
-    // 4. Núcleo Central de Infraestructura (Pasa de Cubo Hostinger a Dodecaedro AWS)
-    const hostingerGeo = new THREE.BoxGeometry(1.6, 1.6, 1.6);
-    const awsGeo = new THREE.DodecahedronGeometry(1.3, 0);
-
-    const coreWireGeo = new THREE.WireframeGeometry(hostingerGeo);
-    const coreMat = new THREE.LineBasicMaterial({
+    // 4. Núcleo Central de Infraestructura:
+    // Modelo Hostinger (Cubo monocromático)
+    const hostingerGeo = new THREE.BoxGeometry(1.65, 1.65, 1.65);
+    const hostingerMat = new THREE.LineBasicMaterial({
       color: 0x666666,
       transparent: true,
       opacity: 0.85,
       linewidth: 1.5,
     });
-    const coreMesh = new THREE.LineSegments(coreWireGeo, coreMat);
-    rootGroup.add(coreMesh);
+    const hostingerMesh = new THREE.LineSegments(new THREE.WireframeGeometry(hostingerGeo), hostingerMat);
+    rootGroup.add(hostingerMesh);
 
-    // Núcleo interno de energía
-    const innerCoreGeo = new THREE.OctahedronGeometry(0.7, 0);
-    const innerCoreWire = new THREE.WireframeGeometry(innerCoreGeo);
+    // Modelo AWS (Dodecaedro dorado que emerge en After)
+    const awsGeo = new THREE.DodecahedronGeometry(1.35, 0);
+    const awsMat = new THREE.LineBasicMaterial({
+      color: 0xd4a017,
+      transparent: true,
+      opacity: 0.0,
+      linewidth: 1.5,
+    });
+    const awsMesh = new THREE.LineSegments(new THREE.WireframeGeometry(awsGeo), awsMat);
+    rootGroup.add(awsMesh);
+
+    // Núcleo interno de energía (Octaedro)
+    const innerCoreGeo = new THREE.OctahedronGeometry(0.72, 0);
     const innerCoreMat = new THREE.LineBasicMaterial({
       color: 0x888888,
       transparent: true,
       opacity: 0.9,
     });
-    const innerCoreMesh = new THREE.LineSegments(innerCoreWire, innerCoreMat);
+    const innerCoreMesh = new THREE.LineSegments(new THREE.WireframeGeometry(innerCoreGeo), innerCoreMat);
     rootGroup.add(innerCoreMesh);
 
-    // Anillo de Gobierno / VPC (Visible con fuerza en After)
-    const vpcRingGeo = new THREE.TorusGeometry(3.0, 0.02, 16, 64);
-    const vpcRingWire = new THREE.WireframeGeometry(vpcRingGeo);
+    // Anillo de Gobierno / VPC (Visible en After)
+    const vpcRingGeo = new THREE.TorusGeometry(3.0, 0.018, 16, 64);
     const vpcRingMat = new THREE.LineBasicMaterial({
       color: 0xd4a017,
       transparent: true,
-      opacity: 0.15,
+      opacity: 0.1,
     });
-    const vpcRing = new THREE.LineSegments(vpcRingWire, vpcRingMat);
+    const vpcRing = new THREE.LineSegments(new THREE.WireframeGeometry(vpcRingGeo), vpcRingMat);
     vpcRing.rotation.x = Math.PI / 2.2;
     rootGroup.add(vpcRing);
 
     // Segundo anillo orbital exterior
-    const outerRingGeo = new THREE.TorusGeometry(3.6, 0.015, 16, 64);
-    const outerRingWire = new THREE.WireframeGeometry(outerRingGeo);
+    const outerRingGeo = new THREE.TorusGeometry(3.6, 0.014, 16, 64);
     const outerRingMat = new THREE.LineBasicMaterial({
       color: 0x6e8e59,
       transparent: true,
-      opacity: 0.1,
+      opacity: 0.05,
     });
-    const outerRing = new THREE.LineSegments(outerRingWire, outerRingMat);
+    const outerRing = new THREE.LineSegments(new THREE.WireframeGeometry(outerRingGeo), outerRingMat);
     outerRing.rotation.x = Math.PI / 3;
     rootGroup.add(outerRing);
 
-    // 5. Los 10 Nodos del Colectivo de Ingeniería (10 Laptops / 10 Usuarios IAM)
+    // 5. Los 10 Nodos de los Practicantes / Desarrolladores
     const nodeCount = 10;
     const nodes = [];
-    const nodeGeo = new THREE.BoxGeometry(0.35, 0.35, 0.35);
+    const nodeGeo = new THREE.BoxGeometry(0.38, 0.38, 0.38);
     const nodeWire = new THREE.WireframeGeometry(nodeGeo);
 
-    // Coordenadas calculadas para ambos estados
+    // Posiciones pseudo-aleatorias fijas para el estado Before (para consistencia)
+    const fixedRandomAngles = [0.2, 0.9, 1.45, 2.1, 2.8, 3.4, 4.0, 4.7, 5.3, 5.95];
+    const fixedRadii = [2.2, 3.1, 2.0, 2.8, 2.3, 3.2, 2.1, 2.9, 2.4, 3.0];
+    const fixedHeights = [-0.8, 1.2, -1.1, 0.7, -0.5, 1.0, -1.3, 0.4, -0.9, 1.1];
+
     for (let i = 0; i < nodeCount; i++) {
-      // Estado Fragmentado (Antes): Posiciones dispersas, caóticas y asimétricas
-      const angleBefore = (i / nodeCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.4;
-      const radiusBefore = 2.1 + (i % 3) * 0.7;
-      const yBefore = (Math.random() - 0.5) * 2.8;
+      // Estado Fragmentado (Antes): Posiciones asimétricas desconectadas
+      const angleBefore = fixedRandomAngles[i];
+      const radBefore = fixedRadii[i];
+      const yBefore = fixedHeights[i];
       const posBefore = new THREE.Vector3(
-        Math.cos(angleBefore) * radiusBefore,
+        Math.cos(angleBefore) * radBefore,
         yBefore,
-        Math.sin(angleBefore) * radiusBefore
+        Math.sin(angleBefore) * radBefore
       );
 
-      // Estado Centralizado AWS (Después): Anillo coordinado en órbita armónica
+      // Estado Centralizado AWS (Después): Anillo ordenado y armónico
       const angleAfter = (i / nodeCount) * Math.PI * 2;
-      const radiusAfter = 2.8;
-      const yAfter = Math.sin(angleAfter * 2) * 0.45;
+      const radiusAfter = 2.85;
+      const yAfter = Math.sin(angleAfter * 2) * 0.4;
       const posAfter = new THREE.Vector3(
         Math.cos(angleAfter) * radiusAfter,
         yAfter,
@@ -139,6 +154,17 @@ export function CafTransformationCanvas({ isActive = true, isAfter = false }) {
       mesh.position.copy(posBefore);
       rootGroup.add(mesh);
 
+      // Halo perimetral en cada nodo
+      const haloGeo = new THREE.TorusGeometry(0.32, 0.01, 6, 20);
+      const haloMat = new THREE.LineBasicMaterial({
+        color: 0x555555,
+        transparent: true,
+        opacity: 0.2,
+      });
+      const haloMesh = new THREE.LineSegments(new THREE.WireframeGeometry(haloGeo), haloMat);
+      haloMesh.rotation.x = Math.PI / 2;
+      mesh.add(haloMesh);
+
       // Línea de enlace hacia el núcleo central
       const linkGeo = new THREE.BufferGeometry().setFromPoints([
         new THREE.Vector3(0, 0, 0),
@@ -147,7 +173,7 @@ export function CafTransformationCanvas({ isActive = true, isAfter = false }) {
       const linkMat = new THREE.LineBasicMaterial({
         color: 0x444444,
         transparent: true,
-        opacity: 0.25,
+        opacity: 0.2,
       });
       const linkLine = new THREE.Line(linkGeo, linkMat);
       rootGroup.add(linkLine);
@@ -155,6 +181,8 @@ export function CafTransformationCanvas({ isActive = true, isAfter = false }) {
       nodes.push({
         mesh,
         mat,
+        haloMesh,
+        haloMat,
         linkLine,
         linkMat,
         posBefore,
@@ -171,7 +199,7 @@ export function CafTransformationCanvas({ isActive = true, isAfter = false }) {
     const particleVel = [];
 
     for (let i = 0; i < particleCount; i++) {
-      const rad = 1.4 + Math.random() * 2.2;
+      const rad = 1.3 + Math.random() * 2.3;
       const angle = Math.random() * Math.PI * 2;
       particlePositions[i * 3] = Math.cos(angle) * rad;
       particlePositions[i * 3 + 1] = (Math.random() - 0.5) * 3;
@@ -203,8 +231,8 @@ export function CafTransformationCanvas({ isActive = true, isAfter = false }) {
       const rect = container.getBoundingClientRect();
       const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       const ny = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
-      targetMouseX = nx * 0.4;
-      targetMouseY = ny * 0.25;
+      targetMouseX = nx * 0.35;
+      targetMouseY = ny * 0.2;
     };
 
     container.addEventListener("mousemove", handleMouseMove, { passive: true });
@@ -222,52 +250,62 @@ export function CafTransformationCanvas({ isActive = true, isAfter = false }) {
     });
     resizeObserver.observe(container);
 
-    // 9. Loop de Animación con Lerp continuo
+    // 9. Loop de Animación con Lerp continuo (Sin recarga de canvas)
     const clock = new THREE.Clock();
     let isRunning = true;
-    let transitionProgress = isAfter ? 1 : 0;
+    let transitionProgress = isAfterRef.current ? 1.0 : 0.0;
 
     const animate = () => {
       if (!isRunning) return;
       animFrameId.current = requestAnimationFrame(animate);
 
-      if (!isActive) return;
+      if (!isActiveRef.current) return;
 
       const elapsed = clock.getElapsedTime();
+      const isAfter = isAfterRef.current;
 
       // Mouse Parallax
       mouseX += (targetMouseX - mouseX) * 0.05;
       mouseY += (targetMouseY - mouseY) * 0.05;
 
-      // Transición matemática suave entre Before (0) y After (1)
-      const targetProg = isAfter ? 1 : 0;
-      transitionProgress += (targetProg - transitionProgress) * 0.08;
+      // Interpolación suave y continua de transitionProgress (0 = Antes, 1 = Después)
+      const targetProg = isAfter ? 1.0 : 0.0;
+      transitionProgress += (targetProg - transitionProgress) * 0.06;
 
       rootGroup.position.set(0, 0, 0);
-      rootGroup.rotation.y = elapsed * (0.15 + transitionProgress * 0.2) + mouseX;
+      rootGroup.rotation.y = elapsed * (0.15 + transitionProgress * 0.22) + mouseX;
       rootGroup.rotation.x = Math.sin(elapsed * 0.3) * 0.05 - mouseY;
 
-      // Interpolación de materiales del Núcleo
-      if (transitionProgress > 0.5) {
-        // Enfoque AWS Dorado
-        coreMat.color.lerp(new THREE.Color(0xd4a017), 0.1);
-        coreMat.opacity = 0.85;
-        innerCoreMat.color.lerp(new THREE.Color(0x6e8e59), 0.1);
-        vpcRingMat.opacity = 0.55 * transitionProgress;
-        outerRingMat.opacity = 0.4 * transitionProgress;
-        particleMat.color.lerp(new THREE.Color(0xd4a017), 0.1);
-      } else {
-        // Enfoque Monocromático Fragmentado (Antes)
-        coreMat.color.lerp(new THREE.Color(0x666666), 0.1);
-        coreMat.opacity = 0.5;
-        innerCoreMat.color.lerp(new THREE.Color(0x888888), 0.1);
-        vpcRingMat.opacity = 0.1;
-        outerRingMat.opacity = 0.05;
-        particleMat.color.lerp(new THREE.Color(0x777777), 0.1);
-      }
+      // Transmutación visual del Núcleo:
+      // Hostinger se desvanece y contrae / AWS emerge y brilla
+      hostingerMat.opacity = Math.max(0, (1 - transitionProgress) * 0.85);
+      hostingerMesh.scale.setScalar(1 - transitionProgress * 0.3);
 
-      coreMesh.rotation.y = elapsed * 0.5;
-      coreMesh.rotation.x = elapsed * 0.3;
+      awsMat.opacity = Math.max(0, transitionProgress * 0.9);
+      awsMesh.scale.setScalar(0.7 + transitionProgress * 0.3);
+
+      // Núcleo interior
+      innerCoreMat.color.lerpColors(
+        new THREE.Color(0x777777),
+        new THREE.Color(0x6e8e59),
+        transitionProgress
+      );
+
+      // Anillos de gobernanza y VPC
+      vpcRingMat.opacity = 0.55 * transitionProgress;
+      outerRingMat.opacity = 0.4 * transitionProgress;
+
+      // Partículas
+      particleMat.color.lerpColors(
+        new THREE.Color(0x777777),
+        new THREE.Color(0xd4a017),
+        transitionProgress
+      );
+
+      hostingerMesh.rotation.y = elapsed * 0.4;
+      hostingerMesh.rotation.x = elapsed * 0.25;
+      awsMesh.rotation.y = elapsed * 0.6;
+      awsMesh.rotation.x = elapsed * 0.35;
       innerCoreMesh.rotation.y = -elapsed * 0.8;
       innerCoreMesh.rotation.z = elapsed * 0.4;
       vpcRing.rotation.z = elapsed * 0.25;
@@ -280,22 +318,32 @@ export function CafTransformationCanvas({ isActive = true, isAfter = false }) {
           node.posAfter,
           transitionProgress
         );
-        node.currentPos.lerp(dest, 0.1);
+        node.currentPos.lerp(dest, 0.08);
         node.mesh.position.copy(node.currentPos);
 
         // Flotación micro-inercial
         node.mesh.position.y += Math.sin(elapsed * 2 + node.index) * 0.04;
         node.mesh.rotation.y = elapsed * (0.8 + node.index * 0.1);
 
-        if (transitionProgress > 0.5) {
-          node.mat.color.lerp(new THREE.Color(0xd4a017), 0.1);
-          node.linkMat.color.lerp(new THREE.Color(0xd4a017), 0.1);
-          node.linkMat.opacity = 0.45;
-        } else {
-          node.mat.color.lerp(new THREE.Color(0x555555), 0.1);
-          node.linkMat.color.lerp(new THREE.Color(0x333333), 0.1);
-          node.linkMat.opacity = 0.15;
-        }
+        // Transición de colores de nodos
+        node.mat.color.lerpColors(
+          new THREE.Color(0x555555),
+          new THREE.Color(0xd4a017),
+          transitionProgress
+        );
+        node.haloMat.color.lerpColors(
+          new THREE.Color(0x333333),
+          new THREE.Color(0x6e8e59),
+          transitionProgress
+        );
+        node.haloMat.opacity = 0.2 + transitionProgress * 0.5;
+
+        node.linkMat.color.lerpColors(
+          new THREE.Color(0x333333),
+          new THREE.Color(0xd4a017),
+          transitionProgress
+        );
+        node.linkMat.opacity = 0.15 + transitionProgress * 0.35;
 
         // Actualizar geometría de línea de enlace
         const linkPositions = node.linkLine.geometry.attributes.position.array;
@@ -305,7 +353,7 @@ export function CafTransformationCanvas({ isActive = true, isAfter = false }) {
         node.linkLine.geometry.attributes.position.needsUpdate = true;
       });
 
-      // Partículas
+      // Partículas orbitales
       const posArray = particlePoints.geometry.attributes.position.array;
       for (let i = 0; i < particleCount; i++) {
         const pv = particleVel[i];
@@ -330,7 +378,7 @@ export function CafTransformationCanvas({ isActive = true, isAfter = false }) {
       }
       renderer.dispose();
     };
-  }, [isActive, isAfter]);
+  }, []); // Sin dependencias para garantizar 0 reinicios de WebGL
 
   return (
     <div
@@ -346,3 +394,4 @@ export function CafTransformationCanvas({ isActive = true, isAfter = false }) {
 }
 
 export default CafTransformationCanvas;
+

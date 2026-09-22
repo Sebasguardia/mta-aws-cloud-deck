@@ -290,9 +290,14 @@ export function S07_Workflow({ isActive: propActive } = {}) {
                 variants={fadeUp(0.26 + idx * 0.06)}
                 initial="hidden"
                 animate={entered ? "visible" : "hidden"}
-                onClick={() => setActiveStep(idx)}
+                whileHover={{ scale: 1.02, x: 4 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => {
+                  if (isSimulating) cancelSimulation();
+                  setActiveStep(idx);
+                }}
                 style={{
-                  background: isCurrent ? "rgba(245,241,232,0.06)" : "rgba(245,241,232,0.02)",
+                  background: isCurrent ? "rgba(245,241,232,0.07)" : "rgba(245,241,232,0.02)",
                   border: `1px solid ${isCurrent ? "#d4a017" : "rgba(245,241,232,0.08)"}`,
                   borderLeft: `4px solid ${
                     idx === 4 && hasFailed
@@ -303,12 +308,13 @@ export function S07_Workflow({ isActive: propActive } = {}) {
                       ? "#4a5d3a"
                       : "rgba(245,241,232,0.15)"
                   }`,
-                  padding: "0.55rem 0.9rem",
+                  padding: isCurrent ? "0.65rem 1.0rem" : "0.55rem 0.9rem",
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
+                  boxShadow: isCurrent ? "0 0 15px rgba(212,160,23,0.15)" : "none",
+                  transition: "padding 0.2s ease, background 0.2s ease, border 0.2s ease, box-shadow 0.2s ease",
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
@@ -528,15 +534,13 @@ export function S07_Workflow({ isActive: propActive } = {}) {
           overflow: "hidden",
         }}
       >
-        {/* Canvas 3D de Circuito Git (Desmontado condicional GPU + Transición) */}
-        <CanvasTransitionWrapper isActive={isActive}>
-          <GitPipelineCanvas
-            isActive={isActive}
-            currentStep={activeStep}
-            isSimulating={isSimulating}
-            hasFailed={hasFailed}
-          />
-        </CanvasTransitionWrapper>
+         {/* Canvas 3D de Circuito Git continuo y fluido (Cero desmontes ni recargas) */}
+        <GitPipelineCanvas
+          isActive={isActive}
+          currentStep={activeStep}
+          isSimulating={isSimulating}
+          hasFailed={hasFailed}
+        />
 
         {/* HUD superior derecho */}
         <div
