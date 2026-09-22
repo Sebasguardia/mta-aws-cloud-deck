@@ -241,20 +241,20 @@ export const slidesContent = {
     badge: "BLOQUE 3 · LA PROPUESTA CLOUD",
     scriptTag: "Gobierno y Ciberseguridad",
     title: "SEGURIDAD Y GOBIERNO CON AWS IAM",
-    subtitle: "Modelo de Responsabilidad Compartida y eliminación de credenciales maestras",
+    subtitle: "Modelo de Responsabilidad Compartida y eliminación del cuello de botella por credenciales centralizadas",
     sharedResponsibility: "AWS protege la infraestructura física global (seguridad DE la nube); MTA Software es responsable de la protección de sus datos, identidades y configuraciones (seguridad EN la nube).",
     policies: [
       {
-        title: "Eliminación de Cuentas Root Compartidas",
-        desc: "La cuenta raíz se asegura con MFA y se resguarda exclusivamente para tareas administrativas de emergencia.",
+        title: "Eliminación de Cuentas Root Compartidas y Descentralización",
+        desc: "En Hostinger, solo los 4 encargados manejaban la cuenta root maestra mientras los 10 practicantes carecían de accesos. En AWS, la cuenta raíz se sella con MFA físico y se reserva únicamente para emergencias.",
       },
       {
-        title: "10 Usuarios IAM Individuales",
-        desc: "Se crean 10 usuarios específicos (uno por cada practicante) con credenciales individuales y trazabilidad en CloudTrail.",
+        title: "10 Usuarios IAM Individuales para Practicantes",
+        desc: "Se crean 10 usuarios específicos (uno por cada practicante) con credenciales individuales, eliminando el cuello de botella de despliegues y logrando trazabilidad total en CloudTrail.",
       },
       {
-        title: "Principio de Privilegios Mínimos",
-        desc: "Segmentación estricta de permisos: los desarrolladores frontend no tienen acceso a bases de datos, y los practicantes backend operan solo sobre recursos de Staging.",
+        title: "Principio de Privilegios Mínimos (Zero Trust)",
+        desc: "Segmentación estricta de permisos: los desarrolladores frontend no tienen acceso a bases de datos, y los practicantes backend operan solo sobre recursos autorizados de desarrollo y Staging.",
       },
     ],
   },

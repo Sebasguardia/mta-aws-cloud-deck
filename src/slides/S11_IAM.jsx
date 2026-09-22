@@ -323,7 +323,7 @@ export function S11_IAM({ isActive: propActive } = {}) {
                 transition: "all 0.15s ease",
               }}
             >
-              1 CUENTA ROOT COMPARTIDA
+              HOSTINGER: ACCESO CENTRALIZADO
             </button>
 
             <button
@@ -348,7 +348,7 @@ export function S11_IAM({ isActive: propActive } = {}) {
                 transition: "all 0.15s ease",
               }}
             >
-              10 USUARIOS IAM INDIVIDUALES
+              AWS IAM: 10 USUARIOS INDIVIDUALES
             </button>
           </div>
         </motion.div>
@@ -426,7 +426,7 @@ export function S11_IAM({ isActive: propActive } = {}) {
                   letterSpacing: "0.02em",
                 }}
               >
-                2. MÍNIMO PRIVILEGIO
+                2. MÍNIMO PRIVILEGIO (ZERO TRUST)
               </span>
             </div>
             <p
@@ -438,7 +438,7 @@ export function S11_IAM({ isActive: propActive } = {}) {
                 margin: 0,
               }}
             >
-              Cada colaborador recibe credenciales IAM independientes asociadas únicamente a su rol (ej: Frontend solo buckets S3 y CloudFront; sin acceso a BD ni redes).
+              Los 10 practicantes reciben identidades IAM individuales con permisos exactos a su rol (ej: Frontend solo buckets S3 y CloudFront; sin acceso a BD ni redes).
             </p>
           </div>
         </motion.div>
@@ -484,7 +484,7 @@ export function S11_IAM({ isActive: propActive } = {}) {
                     letterSpacing: "0.05em",
                   }}
                 >
-                  AUDITAR CUENTA ROOT (RAÍZ GLOBAL)
+                  AUDITAR CUELLO DE BOTELLA HOSTINGER (CUENTA ROOT CENTRALIZADA)
                 </span>
               </div>
               <span
@@ -497,7 +497,7 @@ export function S11_IAM({ isActive: propActive } = {}) {
                   fontWeight: 700,
                 }}
               >
-                {isRoot ? "INSPECCIONANDO ROOT // RIESGO ALTO" : "VER PERMISOS Y RIESGO"}
+                {isRoot ? "CUELLO DE BOTELLA OPERATIVO" : "VER RIESGO DE CENTRALIZACIÓN"}
               </span>
             </button>
           </motion.div>
@@ -525,7 +525,7 @@ export function S11_IAM({ isActive: propActive } = {}) {
                   <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                     <AlertTriangle size={15} style={{ color: "#c6432b" }} />
                     <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.78rem", color: "#F5F1E8", textTransform: "uppercase" }}>
-                      VULNERABILIDAD CRÍTICA // CUENTA MAESTRA EXPUESTA
+                      CUELLO DE BOTELLA // CREDENCIALES CENTRALIZADAS EN 4 ENCARGADOS
                     </span>
                   </div>
                   <span
@@ -539,12 +539,12 @@ export function S11_IAM({ isActive: propActive } = {}) {
                       fontWeight: 700,
                     }}
                   >
-                    ACCESO IRRESTRICTO
+                    10 SIN ACCESO DIRECTO
                   </span>
                 </div>
 
                 <p style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "0.74rem", color: "rgba(245,241,232,0.85)", lineHeight: 1.4, margin: 0 }}>
-                  En Hostinger y esquemas sin IAM, los 4 Encargados técnicos y 10 practicantes comparten la misma contraseña maestra. Cualquier error compromete la totalidad de la empresa.
+                  En Hostinger, solo los 4 encargados poseen credenciales maestras y las comparten entre sí. Los 10 practicantes carecen de accesos al servidor, generando dependencia, retrasos para desplegar y nula auditoría individual.
                 </p>
 
                 {/* Fila de 10 Avatares Apilados en Riesgo */}
