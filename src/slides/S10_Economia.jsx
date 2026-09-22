@@ -221,6 +221,19 @@ export function S10_Economia({ isActive: propActive } = {}) {
             >
               SEC_10 // FINANCIAL_OPTIMIZATION_TCO
             </span>
+            <span
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: "0.58rem",
+                color: "#6e8e59",
+                background: "rgba(110,142,89,0.15)",
+                border: "1px solid rgba(110,142,89,0.35)",
+                padding: "0.15rem 0.45rem",
+                fontWeight: 700,
+              }}
+            >
+              REGIÓN BASE: us-east-1 (N. VIRGINIA)
+            </span>
           </motion.div>
 
           <motion.p

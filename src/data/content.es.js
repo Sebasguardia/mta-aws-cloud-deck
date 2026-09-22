@@ -264,23 +264,23 @@ export const slidesContent = {
     badge: "BLOQUE 3 · LA PROPUESTA CLOUD",
     scriptTag: "Arquitectura Conceptual",
     title: "ARQUITECTURA DE RED PROPUESTA",
-    subtitle: "Diseño de red perimetral aislado y seguro para Workspace MTA y clientes",
+    subtitle: "Diseño perimetral en us-east-1 con Multi-AZ, PoPs en Sudamérica y SLAs de alta disponibilidad",
     pillars: [
       {
-        service: "Amazon VPC",
-        desc: "Entorno de red virtual aislado y privado donde convive la lógica central de la empresa.",
+        service: "Amazon VPC (Multi-AZ)",
+        desc: "Red virtual aislada en us-east-1 segmentada en 2 Zonas de Disponibilidad (AZ-a y AZ-b) para tolerancia a fallos.",
       },
       {
         service: "Security Groups",
-        desc: "Firewalls virtuales perimetrales que aíslan la base de datos del ERP bloqueando el acceso público.",
+        desc: "Firewalls de capa 4 a nivel de instancia que aíslan la BD RDS (SLA 99.95%) permitiendo solo el puerto 3306/5432.",
       },
       {
         service: "Amazon Route 53",
-        desc: "Enrutamiento DNS escalable con chequeos de salud para el ERP y las plataformas de clientes.",
+        desc: "Enrutamiento DNS global de ultra baja latencia con respaldo contractual del 100% de disponibilidad SLA.",
       },
       {
         service: "Amazon CloudFront",
-        desc: "CDN global que almacena en caché frontend y multimedia, entregando respuestas en milisegundos.",
+        desc: "CDN global con Puntos de Presencia en Sudamérica (SLA 99.9%) que entrega activos en 15-30ms sin viajar a EE.UU.",
       },
     ],
   },

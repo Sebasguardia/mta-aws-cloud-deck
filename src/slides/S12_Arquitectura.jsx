@@ -300,6 +300,19 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
             >
               SEC_12 // RESILIENT_NETWORK_ARCHITECTURE
             </span>
+            <span
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: "0.58rem",
+                color: "#d4a017",
+                background: "rgba(212,160,23,0.15)",
+                border: "1px solid rgba(212,160,23,0.4)",
+                padding: "0.15rem 0.45rem",
+                fontWeight: 700,
+              }}
+            >
+              REGION: us-east-1 // MULTI-AZ (AZ-a & AZ-b)
+            </span>
           </motion.div>
 
           <motion.p
