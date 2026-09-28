@@ -1,19 +1,190 @@
 ETAPA 1: Diagnóstico de la Empresa y Fundamentos Cloud
-1. Descripción de la Empresa de Formación Práctica
-•	Naturaleza de la empresa, sector y modelo de negocio: Multiservicios Tecnoindustrial Acosta S.A.C. (conocida comercialmente como MTA Software) es una empresa emergente con un modelo de negocio híbrido. Por un lado, abarca el rubro metalmecánico, y por otro, cuenta con un área tecnológica enfocada en el desarrollo de software profesional. En su división de TI, opera bajo un modelo de negocio B2B (Business-to-Business), dedicándose a diseñar y desarrollar soluciones digitales a medida como plataformas web, aplicaciones y sistemas empresariales para clientes que buscan automatizar y escalar sus operaciones. 
-•	Identificación y descripción del área de desarrollo de soluciones de TI: El área de desarrollo tecnológico funciona como un colectivo de ingeniería de modalidad 100% remota, liderado por un Jefe de Desarrollo y conformado por un equipo ágil de 10 practicantes de últimos ciclos. Este departamento trabaja bajo tecnologías modernas (como React, Next.js, TypeScript y Node.js) y actualmente gestiona dos líneas principales de desarrollo: 
-o	Proyectos de software comercial (Externos): Desarrollo de páginas corporativas, catálogos web y sistemas para terceros, destacando proyectos en su portafolio como Strato Studio (agencia de growth y contenido) y VIISION (desarrollo de landing pages y ERP empresarial básico). 
-o	Desarrollo de sistemas internos (Propios): El equipo se encuentra en la fase final de construcción de Workspace MTA, un ERP y ecosistema administrativo interno. Esta plataforma centralizada permitirá la gestión integral automatizada de la empresa, controlando las horas de entrada, notas de los practicantes y el estado de los proyectos con estadísticas en tiempo real. 
-2. Análisis de la Infraestructura y Tecnología Actual
-•	Descripción tecnológica: Actualmente, la infraestructura se basa en un servicio de alojamiento compartido tradicional (plan empresarial/Business en Hostinger). Este servidor se utiliza tanto para desplegar las aplicaciones de clientes externos como para alojar temporalmente el ERP interno (Workspace MTA). A nivel de desarrollo, el equipo utiliza control de versiones con Git y un repositorio centralizado en GitHub. Las pruebas de código (testing) no se realizan en un servidor unificado, sino de manera local en las computadoras portátiles de cada uno de los desarrolladores ("localhost"). 
-•	Modalidad de trabajo: El área de TI, compuesta por el Jefe de Desarrollo y los 10 practicantes, opera bajo una modalidad de trabajo 100% remota. Cada desarrollador clona el repositorio, crea su propia rama, realiza los cambios en su equipo personal y posteriormente sube las actualizaciones al repositorio principal. 
-•	Identificación de limitaciones actuales (Enfoque crítico):
-o	Falta de flexibilidad y escalabilidad: El servidor compartido de Hostinger tiene recursos fijos (CPU y RAM compartidos con otros clientes del proveedor). Esto impide escalar dinámicamente el backend del ERP (Workspace MTA) para soportar el tráfico concurrente cuando todos los empleados registren su asistencia o consulten métricas en tiempo real a la misma hora. 
-o	Ausencia de tolerancia a fallos y alta disponibilidad: Existe un único punto de fallo. Si el servidor de Hostinger sufre una interrupción, tanto el ERP que gestiona las operaciones internas de la empresa como las demostraciones (demos) de los clientes externos quedarán fuera de servicio simultáneamente, afectando la operatividad y la imagen comercial. 
-o	Brechas de seguridad y control operativo: Al carecer de un entorno en la nube centralizado y segmentado, se dificulta la gestión segura de credenciales (bases de datos, tokens). Además, la falta de un entorno de pruebas (Staging) real en la nube provoca que los pases a producción desde las computadoras locales ("funciona en mi máquina") sean riesgosos y propensos a errores humanos al momento del despliegue. 
-3. Propuesta Conceptual basada en Fundamentos AWS (Cloud Foundations)
-•	Justificación de Migración / Adopción Cloud: Aplicando el Marco de Adopción de la Nube (CAF) de AWS, la migración busca transformar principalmente las perspectivas de Tecnología y Procesos de MTA Software. El objetivo es abandonar el modelo fragmentado (uso de localhost en laptops individuales y un único servidor en Hostinger) para pasar a un ecosistema centralizado en la nube. Esto estandarizará el flujo de trabajo de los 10 desarrolladores remotos, permitiendo despliegues ágiles, pruebas en entornos reales ("Staging") y garantizando que el ERP interno soporte el crecimiento sin caídas por falta de recursos. 
-•	Estimación Económica Inicial: Se propone cambiar el modelo de costos fijos (como el plan empresarial anual de Hostinger) por el modelo de pago por uso (pay-as-you-go) de AWS. Esto reducirá el Costo Total de Propiedad (TCO) al no requerir inversión anticipada en infraestructura y evitar el pago por recursos inactivos. Inicialmente, la empresa aprovechará el AWS Free Tier (Capa Gratuita) para montar los entornos de prueba del equipo a costo cero, y se implementará AWS Budgets para configurar alertas tempranas de facturación (ej. límite de $10 USD) que notificarán a la gerencia si se supera el presupuesto. 
-•	Modelo de Seguridad y Gobierno Inicial: Se operará bajo el Modelo de Responsabilidad Compartida de AWS, donde AWS asegurará la infraestructura física y MTA Software será responsable de proteger sus datos, aplicaciones y accesos. En Hostinger, las credenciales del servidor estaban centralizadas y compartidas exclusivamente entre los 4 encargados técnicos, mientras que los 10 practicantes carecían de accesos propios (lo que provocaba cuellos de botella operativos y nula trazabilidad). Como política de gobierno inicial usando AWS Identity and Access Management (IAM), se eliminará el uso operativo de cuentas raíz compartidas. Se crearán 10 usuarios IAM individuales para cada practicante, aplicando el principio de privilegios mínimos (por ejemplo, separando permisos estrictos para quienes ven el frontend y quienes administran la base de datos del ERP), logrando autonomía controlada y auditoría total. 
-•	Diagrama de Arquitectura de Red Propuesto (Nivel Conceptual): El diseño base contemplará la creación de una Amazon VPC (Virtual Private Cloud) para proporcionar un entorno de red aislado y seguro. Dentro de esta VPC, se usarán Grupos de Seguridad para proteger la base de datos del ERP, bloqueando accesos externos no autorizados. Para la salida a internet, se integrará Amazon Route 53 para la gestión escalable de los dominios DNS (tanto de Workspace MTA como de los clientes). Finalmente, se utilizará Amazon CloudFront como red de distribución de contenido (CDN) para almacenar en caché las imágenes y el frontend cerca de los usuarios, garantizando tiempos de carga de milisegundos en las webs y catálogos de los clientes. 
+SENATI · Curso: TECNOLOGÍA CLOUD CON AWS
+Docente: Huapaya Huapaya Arturo Florencio
+Equipo de Investigación: Jara Vega Analí, Estilo Ratache Diego Rafael, Suclupe López Jean Pierre, Gonzales Ramirez Alfredo Valentino, Guardia Ticlla Sebastian Jesús
 
+================================================================================
+ÍNDICE DE CONTENIDOS Y ESTRUCTURA DEL DECK (15 SLIDES / 3 BLOQUES)
+================================================================================
+• Bloque 00: Preliminares (S00 Preloader · S01 Portada · S02 Agenda General)
+• Bloque 01: La Empresa y Contexto Operativo (S03 Empresa B2B · S04 Área TI · S05 Portafolio)
+• Bloque 02: El Diagnóstico y Auditoría (S06 Infraestructura Actual · S07 Workflow · S08 Limitaciones SPOF)
+• Bloque 03: La Propuesta Cloud AWS (S09 CAF · S10 Economía TCO · S11 Seguridad IAM · S12 Arquitectura VPC)
+• Cierre y Futuro: (S13 Roadmap de Continuidad · S14 Conclusión y Preguntas)
+
+================================================================================
+1. DESCRIPCIÓN DE LA EMPRESA DE FORMACIÓN PRÁCTICA (BLOQUE 1 · SLIDES 01 - 05)
+================================================================================
+
+• Razón Social y Nombre Comercial:
+  - Nombre Legal: Multiservicios Tecnoindustrial Acosta S.A.C.
+  - Nombre Comercial: MTA Software.
+  - Modelo de Negocio: Híbrido de alto valor con dos sectores sinérgicos:
+    * Sector Metalmecánico Tradicional: Servicios tecnoindustriales, matricería, soldadura y torneado mecánico en planta física.
+    * División de TI (MTA Software): Unidad de ingeniería de software profesional orientada al modelo B2B (Business-to-Business), proveyendo soluciones tecnológicas a medida (plataformas web, apps móviles y sistemas ERP empresariales) para clientes que buscan automatizar y escalar.
+
+• Estructura Organizacional del Área de TI (Investigada en Slide 04):
+  - Modalidad Operativa: Colectivo de ingeniería ágil 100% remoto distribuido geográficamente.
+  - Composición Total: 14 Colaboradores Técnicos:
+    * 4 Encargados Técnicos / Jefes de Área (Supervisores):
+      1. LEAD-01: Líder de Arquitectura Cloud (AWS & Estrategia de Infraestructura).
+      2. LEAD-02: Líder de Backend (Node.js, APIs RESTful y Base de Datos).
+      3. LEAD-03: Líder de Frontend (React, Next.js y Experiencia de Usuario).
+      4. LEAD-04: Líder de QA & DevOps (Git, Control de Calidad y Pipelines de Staging).
+    * 10 Practicantes de Ingeniería de Sistemas / Software (Nodos de Desarrollo y Testing):
+      - P01 & P02: Frontend Developers (React, Vite, Next.js).
+      - P03: Fullstack Developer (TypeScript, servicios cloud).
+      - P04 & P05: Backend Developers (Node.js, APIs RESTful).
+      - P06: UI/UX Designer & Assets Manager (Figma, Tailwind, activos gráficos).
+      - P07: QA Engineer (Pruebas unitarias, funcionales con Jest y validación de Staging).
+      - P08: Database Administrator (Diseño relacional, consultas SQL, PostgreSQL).
+      - P09: DevOps Junior (Control de versiones Git, integración y despliegue continuo).
+      - P10: Cloud Operator / Support (Supervisión operativa, monitoreo de presupuestos y métricas).
+  - Stack Tecnológico Dominado: React, Next.js, TypeScript y Node.js para frontend, servicios backend y APIs RESTful.
+
+• Portafolio de Proyectos Activos (Slide 05):
+  1. Software Comercial Externo (Clientes B2B):
+     - Strato Studio: Plataforma corporativa y portafolio interactivo de alta demanda visual para agencia de growth marketing y contenido. (Estado: En Producción).
+     - VIISION: Plataforma web corporativa con landing pages de alta conversión y módulo básico de ERP para gestión de clientes. (Estado: En Producción).
+  2. Software de Desarrollo Interno Propio (Core Crítico):
+     - Workspace MTA: Ecosistema administrativo y ERP interno centralizado de MTA Software (fase final de construcción). Controla el registro automatizado de asistencia (entradas/salidas), calificaciones académicas de los 10 practicantes y seguimiento de avance de proyectos comerciales con métricas en tiempo real.
+     - Nivel de Criticidad: SISTEMA NÚCLEO. Su caída paraliza por completo la administración interna de la empresa y la supervisión de los practicantes.
+
+================================================================================
+2. ANÁLISIS DE LA INFRAESTRUCTURA ACTUAL Y DIAGNÓSTICO (BLOQUE 2 · SLIDES 06 - 08)
+================================================================================
+
+• Configuración Tecnológica Actual (Slide 06):
+  - Alojamiento en Hostinger Compartido (Plan Business): Servidor web monolítico único donde conviven de manera indivisa las aplicaciones comerciales de clientes externos y el ERP interno Workspace MTA.
+  - Centro de Datos Único (Single Data Center): Sin redundancia geográfica ni distribución entre múltiples zonas físicas.
+  - Control de Versiones: Repositorio central en GitHub donde los desarrolladores sincronizan ramas mediante Git, pero sin integración ni entrega continua (sin pipelines CI/CD).
+  - Pruebas Fragmentadas en "Localhost": Cada practicante compila y prueba el código aisladamente en su propia computadora portátil. No existe un entorno de Staging ni pruebas unificado en la nube.
+
+• Dinámica del Flujo de Trabajo (Slide 07):
+  - Flujo manual en 5 pasos:
+    Paso 1: Clonar repositorio en laptop personal.
+    Paso 2: Crear rama de trabajo local.
+    Paso 3: Testing en localhost con datos simulados o bases de datos no sincronizadas.
+    Paso 4: Push directo al repositorio central en GitHub.
+    Paso 5: Despliegue manual directo a Hostinger por parte de los encargados.
+  - Problema Sistemático: Detona el recurrente error operativo: "En mi máquina funciona, pero en producción colapsa" (Error 500), por discrepancias drásticas entre los entornos locales (Node/OS/variables) y el servidor compartido.
+
+• Los 3 Problemas Críticos / Auditoría de Limitaciones (Slide 08):
+  1. Falta de Flexibilidad y Escalabilidad (Recursos Fijos Compartidos):
+     Hostinger asigna CPU y memoria RAM rígidas compartidas con clientes externos ajenos a la empresa. Es incapaz de absorber picos de concurrencia cuando los practicantes marcan asistencia simultáneamente o cuando los clientes consultan dashboards en Workspace MTA, saturando el servidor y degradando los tiempos de respuesta.
+  2. Ausencia de Tolerancia a Fallos y Alta Disponibilidad (Único Punto de Falla - SPOF):
+     Toda la operación de MTA depende de un único servidor en un centro de datos sin redundancia. Si Hostinger sufre una caída eléctrica o una sobrecarga física, colapsan al unísono el ERP interno y todas las plataformas de clientes, provocando parálisis operativa total y pérdida de reputación comercial.
+  3. Brechas de Seguridad y Cuello de Botella Operativo (Credenciales Centralizadas):
+     Los 10 practicantes NO disponen de accesos directos al servidor por motivos de seguridad; las credenciales maestras (cuenta root de Hostinger) se concentran exclusivamente en los 4 encargados, quienes las comparten entre sí. Esto genera un grave cuello de botella operativo (los líderes deben efectuar manualmente cada pase a producción) y anula cualquier trazabilidad o auditoría individual. Además, la carencia de un entorno de Staging aislado expone la base de datos de producción a corrupciones accidentales y fugas de variables sensibles.
+
+================================================================================
+3. PROPUESTA CONCEPTUAL EN FUNDAMENTOS AWS (BLOQUE 3 · SLIDES 09 - 12)
+================================================================================
+
+• Marco Metodológico: AWS Cloud Adoption Framework - CAF (Slide 09):
+  Fundamenta la migración estructurada transformando dos perspectivas clave del marco de adopción de AWS:
+  - Perspectiva de Tecnología:
+    * Antes: 10 entornos localhost fragmentados y 1 único servidor compartido vulnerable en Hostinger.
+    * Después: Ecosistema unificado en AWS con infraestructura administrada, arquitectura de red aislada y alta disponibilidad.
+  - Perspectiva de Procesos:
+    * Antes: Pases manuales a producción sin homologación previa.
+    * Después: Flujos estandarizados con entornos reales de Staging en la nube y despliegues controlados.
+
+• Modelo Económico y Gobernanza Financiera (Slide 10):
+  - Transición a Pay-As-You-Go: Se erradica el costo fijo ineficiente de Hostinger ($35.00 USD/mes obligatorio haya o no tráfico). En AWS se abona exclusivamente por los recursos consumidos por segundo/petición, abatiendo el TCO (Total Cost of Ownership) sin inversión inicial de capital (CapEx a OpEx).
+  - Elección Estratégica de Región: `us-east-1` (Norte de Virginia, EE. UU.):
+    * Justificación Económica: Es la región con las tarifas base más reducidas de todo el catálogo global de AWS.
+    * Descarte de São Paulo (`sa-east-1`): Se evaluó la región brasileña, pero sus tarifas son entre 40% y 60% más onerosas por impuestos locales (ICMS) y aranceles de importación.
+    * Conectividad Directa con Perú: Conectada a Lima mediante cables submarinos del Pacífico (SAm-1 y SAC) con latencia base de ~80-90 ms, la cual es abatida perimetralmente con CDN.
+  - Matriz Económica Detallada Servicio por Servicio en us-east-1:
+    1. Amazon S3 (Almacenamiento Frontend & Assets):
+       * Free Tier: 5 GB estándar, 20,000 peticiones GET y 2,000 peticiones PUT gratuitas al mes.
+       * Uso MTA: ~1.2 GB en 3 proyectos (Strato Studio, VIISION y Workspace MTA).
+       * Costo mensual: $0.00 USD (100% Free Tier). Margen de 3.8 GB libres.
+       * SLA: 99.99% Disponibilidad y 11 nueves de durabilidad.
+    2. Amazon CloudFront (CDN Edge Global en Sudamérica):
+       * Free Tier: 1 TB (1,000 GB) de salida a internet y 10,000,000 peticiones HTTP/S gratuitas mensuales de por vida.
+       * Uso MTA: ~20 GB al mes transferidos (< 2.5% del límite gratuito).
+       * Costo mensual: $0.00 USD (Gratis permanente). Entrega activos a usuarios en Lima en 15 - 30 ms.
+    3. Amazon RDS PostgreSQL (Base de Datos Administrada ERP):
+       * Free Tier: 750 horas mensuales de instancia db.t3.micro + 20 GB de almacenamiento SSD GP2/GP3.
+       * Uso MTA: 720 horas continuas (1 mes 24/7 sin interrupción).
+       * Costo mensual: $0.00 USD (100% Free Tier). Multi-AZ con réplica y failover automático (SLA 99.95%).
+    4. Amazon EC2 (Servidor Cómputo Backend & Staging):
+       * Free Tier: 750 horas mensuales de t2.micro/t3.micro + 30 GB EBS.
+       * Uso MTA: 720 horas continuas (1 servidor activo 24/7 para APIs Node.js y pruebas en la nube).
+       * Costo mensual: $0.00 USD (100% Free Tier).
+    5. Amazon Route 53 (Enrutamiento DNS Global con SLA 100%):
+       * Tarifa base: $0.50 USD / mes por Zona Alojada (Hosted Zone).
+       * Uso MTA: 1 Zona Alojada para los dominios corporativos de MTA Software.
+       * Costo mensual: $0.50 USD.
+    6. AWS IAM & CloudTrail (Seguridad, Identidad y Auditoría):
+       * Cobertura: Totalmente gratuito de por vida sin límites de usuarios ni grupos.
+       * Uso MTA: 10 identidades de practicantes con Mínimo Privilegio + MFA en cuenta root.
+       * Costo mensual: $0.00 USD.
+    7. AWS Budgets & CloudWatch (Gobernanza Financiera y Alertas):
+       * Cobertura: 2 presupuestos activos gratuitos + métricas básicas de CloudWatch.
+       * Uso MTA: 1 presupuesto activo configurado a $10.00 USD con notificaciones automáticas SNS.
+       * Costo mensual: $0.00 USD.
+  - Resumen Comparativo de Costo y Ahorro:
+    * Costo mensual inicial en AWS: $0.50 USD / mes (solo la tarifa base de DNS Route 53).
+    * Costo anterior en Hostinger: $35.00 USD / mes ($420.00 USD al año).
+    * Ahorro directo para MTA Software: $34.50 USD / mes (98.5% de reducción del gasto operativo).
+  - AWS Budgets (Límite Estricto a $10.00 USD):
+    Configuración de alertas automáticas tempranas vía Amazon SNS (correo y SMS) y CloudWatch al alcanzar el 80% ($8.00 USD) y 100% ($10.00 USD) del consumo proyectado, garantizando que jamás se generen cargos imprevistos en la tarjeta de crédito.
+
+• Modelo de Seguridad, Identidad y Gobierno con AWS IAM (Slide 11):
+  - Modelo de Responsabilidad Compartida:
+    * Seguridad "DE" la nube (Responsabilidad de AWS): Protección física de centros de datos, servidores de cómputo, almacenamiento, hardware de red e hipervisores.
+    * Seguridad "EN" la nube (Responsabilidad de MTA Software): Cifrado de datos en reposo y tránsito, configuración de cortafuegos (Security Groups), gestión de credenciales y políticas de acceso.
+  - Sellado de la Cuenta Root (Raíz):
+    La cuenta maestra de AWS se asegura con autenticación multifactor (MFA física/virtual) bajo resguardo estricto de gerencia; queda estrictamente prohibida para tareas operativas cotidianas.
+  - Descentralización con 10 Identidades IAM Individuales (Principio de Mínimo Privilegio / Zero Trust):
+    Se disuelve el cuello de botella de los 4 encargados creando 10 usuarios IAM específicos para los practicantes, otorgando accesos estrictamente granulares mediante políticas JSON:
+    * Desarrolladores Frontend: Permisos restringidos a buckets específicos de Amazon S3 y purgas de caché en Amazon CloudFront (sin acceso a bases de datos ni redes).
+    * Desarrolladores Backend: Acceso acotado a entornos de Staging y microservicios, sin autorización para modificar tablas de producción ni configuraciones perimetrales de VPC.
+    * Administrador de Base de Datos: Operación exclusiva sobre Amazon RDS mediante credenciales gestionadas y túneles cifrados.
+    * Trazabilidad Total: Auditoría de cada llamada a la API y cada acción individual mediante AWS CloudTrail.
+  - SLA de Disponibilidad de AWS IAM: Al ser un servicio de alcance global, cuenta con una disponibilidad garantizada por diseño sin punto único de bloqueo regional.
+
+• Arquitectura de Red Propuesta y Topología Perimetral Resiliente (Slide 12):
+  Diseño perimetral multicapa desplegado en la región `us-east-1` con tolerancia a fallos y garantías SLA:
+  1. Amazon VPC (Virtual Private Cloud) Multi-AZ: Red privada virtual aislada (bloque CIDR 10.0.0.0/16) distribuida en dos Zonas de Disponibilidad físicas independientes:
+     * `us-east-1a`: Subred Pública A (balanceador/bastion) + Subred Privada A (servicios backend y base de datos primaria).
+     * `us-east-1b`: Subred Pública B + Subred Privada B (nodo standby / réplica de datos para conmutación por error - failover automático).
+  2. Subredes Públicas y Privadas:
+     * Subredes Públicas: Conectadas a Internet Gateway (IGW) para tráfico web externo.
+     * Subredes Privadas: Estrictamente aisladas de internet; en ellas reside la base de datos PostgreSQL de Workspace MTA, inaccesible directamente desde el exterior.
+  3. Security Groups (Grupos de Seguridad Stateful L4):
+     Cortafuegos a nivel de instancia que aíslan la base de datos Amazon RDS (SLA de disponibilidad del 99.95% en Multi-AZ), autorizando únicamente conexiones en el puerto 5432 provenientes exclusivamente de la capa de backend reconocida.
+  4. Amazon Route 53 (DNS Gestionado Global):
+     Servicio de nombres de dominio con garantía contractual de disponibilidad del 100% SLA (cero caídas toleradas), con chequeos de salud automatizados y enrutamiento por menor latencia.
+  5. Amazon CloudFront (CDN Perimetral con SLA 99.9%):
+     Red global de distribución de contenido con Puntos de Presencia (Edge Locations) en Sudamérica (Lima, Bogotá, Santiago). Almacena en caché el frontend y activos estáticos de los proyectos de MTA, entregándolos a usuarios en Perú con latencias ultrabajas de solo 15 a 30 milisegundos sin necesidad de viajar a los servidores en Norteamérica en cada solicitud.
+  - Simulación de Flujo Perimetral End-to-End:
+    Paso 1: Navegador cliente emite petición HTTPS por puerto 443.
+    Paso 2: CloudFront responde desde la caché perimetral Edge (+14 ms).
+    Paso 3: Route 53 resuelve el registro DNS optimizado (+8 ms).
+    Paso 4: Amazon VPC inspecciona y segmenta el tráfico privado (+3 ms).
+    Paso 5: Security Group valida el puerto 5432 y filtra accesos extraños (+1 ms).
+    Paso 6: Amazon RDS procesa la consulta de datos en reposo cifrado (+4 ms).
+    Resultado: Código 200 OK completado en 30 milisegundos con alta disponibilidad comprobada.
+
+================================================================================
+4. CONTINUIDAD CURRICULAR Y ROADMAP DEL PROYECTO (SLIDES 13 - 14)
+================================================================================
+
+• Etapa 01: Diagnóstico y Fundamentos Cloud (Completada ✅ - Semana 6):
+  - Hitos Alcanzados:
+    1. Diagnóstico situacional exhaustivo de MTA Software y levantamiento de limitaciones en Hostinger.
+    2. Justificación metodológica basada en las perspectivas de Tecnología y Procesos del AWS CAF.
+    3. Formulación del modelo de gobernanza financiera TCO (Pay-As-You-Go, Free Tier y AWS Budgets a $10 USD en us-east-1).
+    4. Diseño del marco de identidad descentralizado con AWS IAM (Principio de Mínimo Privilegio, 10 usuarios de practicantes y sellado root con MFA).
+    5. Arquitectura conceptual de red resiliente y perimetral (Amazon VPC Multi-AZ en us-east-1, Route 53 con SLA 100% y CloudFront con SLA 99.9%).
+
+• Etapa 02: Servicios Core, Almacenamiento y Base de Datos (Siguiente Hito ⚡ - Semana 7):
+  - Entregables y Aprovisionamiento Práctico en Consola AWS:
+    1. Cómputo Elástico: Despliegue de instancias Amazon EC2 con volúmenes EBS optimizados y evaluación de funciones serverless mediante AWS Lambda para tareas asíncronas.
+    2. Almacenamiento Unificado: Implementación de buckets en Amazon S3, almacenamiento compartido de archivos con Amazon EFS y archivado a largo plazo con ciclo de vida en S3 Glacier.
+    3. Base de Datos Administrada: Despliegue de Amazon RDS (PostgreSQL/MySQL) con soporte Multi-AZ para el motor relacional de Workspace MTA.
+    4. Despliegue de Entorno de Staging: Configuración de un entorno de pre-producción idéntico a producción en la nube, erradicando definitivamente las discrepancias de desarrollo en localhost.
