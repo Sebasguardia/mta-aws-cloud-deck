@@ -124,8 +124,8 @@ Abre `http://localhost:5173`. Navegación: flechas del teclado, swipe (mobile) o
 | 09  | Framework CAF                 | 🟩 La Propuesta Cloud |
 | 10  | Modelo económico              | 🟩 La Propuesta Cloud |
 | 11  | Seguridad y gobierno (IAM)    | 🟩 La Propuesta Cloud |
-| 12  | Arquitectura de red propuesta | 🟩 La Propuesta Cloud |
-| 13  | Roadmap                       | —                     |
+| 12  | Arquitectura de red propuesta (Pilares) | 🟩 La Propuesta Cloud |
+| 13  | Diagrama de arquitectura de red (Interactivo) | 🟩 La Propuesta Cloud |
 | 14  | Cierre                        | —                     |
 
 Guion completo de cada una → [`logica.md`](./logica.md).

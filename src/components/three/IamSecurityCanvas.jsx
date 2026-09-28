@@ -24,6 +24,30 @@ export function IamSecurityCanvas({ isActive = true, isRoot = false, selectedUse
   const containerRef = useRef(null);
   const animFrameId = useRef(null);
 
+  // Mantener referencias mutables para no destruir ni reiniciar la escena 3D WebGL
+  const isRootRef = useRef(isRoot);
+  const selectedUserIdRef = useRef(selectedUserId);
+  const targetRotationYRef = useRef(0);
+  const rotationBoostRef = useRef(0);
+
+  useEffect(() => {
+    isRootRef.current = isRoot;
+  }, [isRoot]);
+
+  useEffect(() => {
+    selectedUserIdRef.current = selectedUserId;
+    if (selectedUserId) {
+      // Girar suavemente la constelación 3D para encarar de frente al practicante seleccionado
+      const index = selectedUserId - 1;
+      const nodeCount = 10;
+      // Posición angular del nodo en la matriz circular
+      const nodeAngle = (index / nodeCount) * Math.PI * 2;
+      // Para que el nodo mire al frente (eje Z positivo hacia la cámara), rotamos el grupo
+      targetRotationYRef.current = -nodeAngle;
+      rotationBoostRef.current = 0.5; // Impulso dinámico al seleccionar
+    }
+  }, [selectedUserId]);
+
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -103,7 +127,7 @@ export function IamSecurityCanvas({ isActive = true, isRoot = false, selectedUse
         Math.sin(angleRoot) * 0.7
       );
 
-      // Estado IAM: Matriz circular de radio 2.8 con micro-elevación armónica
+      // Estado IAM: Matriz circular de radio 2.9 con micro-elevación armónica
       const angleIam = (i / nodeCount) * Math.PI * 2;
       const radiusIam = 2.9;
       const posIam = new THREE.Vector3(
@@ -206,10 +230,11 @@ export function IamSecurityCanvas({ isActive = true, isRoot = false, selectedUse
     });
     resizeObserver.observe(container);
 
-    // ── 9. Loop de animación con Lerp de Morphing ──
+    // ── 9. Loop de animación con Lerp continuo y rotación reactiva suave ──
     const clock = new THREE.Clock();
     let isRunning = true;
-    let morphProgress = isRoot ? 0 : 1;
+    let morphProgress = isRootRef.current ? 0 : 1;
+    let currentBaseRotationY = 0;
 
     const animate = () => {
       if (!isRunning) return;
@@ -217,17 +242,34 @@ export function IamSecurityCanvas({ isActive = true, isRoot = false, selectedUse
 
       if (!isActive) return;
 
+      const delta = clock.getDelta();
       const elapsed = clock.getElapsedTime();
+      const currentIsRoot = isRootRef.current;
+      const currentSelectedId = selectedUserIdRef.current;
 
       // Parallax inercial
       mouseX += (targetMouseX - mouseX) * 0.05;
       mouseY += (targetMouseY - mouseY) * 0.05;
 
-      const targetProg = isRoot ? 0 : 1;
+      const targetProg = currentIsRoot ? 0 : 1;
       morphProgress += (targetProg - morphProgress) * 0.08;
 
+      // Rotación suave del grupo 3D:
+      // Si hay un usuario seleccionado, lerpeamos hacia su ángulo frontal con un giro suave
+      if (currentSelectedId && !currentIsRoot) {
+        // Reducir impulso suavemente
+        rotationBoostRef.current *= 0.92;
+        // Interpolación fluida hacia el ángulo del usuario seleccionado
+        currentBaseRotationY += (targetRotationYRef.current - currentBaseRotationY) * 0.06;
+        // Agregamos una ligera oscilación sutil
+        rootGroup.rotation.y = currentBaseRotationY + Math.sin(elapsed * 0.8) * 0.08 + mouseX;
+      } else {
+        // Rotación libre continua estándar
+        currentBaseRotationY += delta * (0.2 + morphProgress * 0.15);
+        rootGroup.rotation.y = currentBaseRotationY + mouseX;
+      }
+
       rootGroup.position.set(0, 0, 0);
-      rootGroup.rotation.y = elapsed * (0.15 + morphProgress * 0.15) + mouseX;
       rootGroup.rotation.x = Math.sin(elapsed * 0.3) * 0.04 - mouseY;
 
       // Dinámica según Modo Root vs Modo IAM
@@ -261,7 +303,7 @@ export function IamSecurityCanvas({ isActive = true, isRoot = false, selectedUse
         node.mesh.position.y += Math.sin(elapsed * 2.5 + node.index) * 0.035;
         node.mesh.rotation.y = elapsed * (0.7 + node.index * 0.1);
 
-        const isCurrentSelected = selectedUserId === node.id;
+        const isCurrentSelected = currentSelectedId === node.id;
 
         if (morphProgress < 0.5) {
           node.mat.color.lerp(new THREE.Color(0x882222), 0.1);
@@ -270,15 +312,16 @@ export function IamSecurityCanvas({ isActive = true, isRoot = false, selectedUse
           node.mesh.scale.set(1, 1, 1);
         } else {
           if (isCurrentSelected) {
-            node.mat.color.lerp(new THREE.Color(0xf5f1e8), 0.2);
-            node.lineMat.color.lerp(new THREE.Color(0xf5f1e8), 0.2);
-            node.lineMat.opacity = 0.85;
-            node.mesh.scale.set(1.4, 1.4, 1.4);
+            // Destacar brillantemente el nodo seleccionado
+            node.mat.color.lerp(new THREE.Color(0xfff3a0), 0.25);
+            node.lineMat.color.lerp(new THREE.Color(0xd4a017), 0.25);
+            node.lineMat.opacity = 0.95;
+            node.mesh.scale.lerp(new THREE.Vector3(1.5, 1.5, 1.5), 0.2);
           } else {
             node.mat.color.lerp(new THREE.Color(0x6e8e59), 0.1);
             node.lineMat.color.lerp(new THREE.Color(0xd4a017), 0.1);
             node.lineMat.opacity = 0.35;
-            node.mesh.scale.set(1, 1, 1);
+            node.mesh.scale.lerp(new THREE.Vector3(1, 1, 1), 0.15);
           }
         }
 
@@ -315,7 +358,7 @@ export function IamSecurityCanvas({ isActive = true, isRoot = false, selectedUse
       }
       renderer.dispose();
     };
-  }, [isActive, isRoot, selectedUserId]);
+  }, [isActive]);
 
   return (
     <div

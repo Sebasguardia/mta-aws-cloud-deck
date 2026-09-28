@@ -23,6 +23,36 @@ html, body, #root {
   background-color: var(--ink) !important;
   overflow: hidden;
   position: relative;
+  cursor: default !important;
+}
+
+/* ── PREVENIR QUE EL MOUSE O CURSOR SE OCULTE BAJO CUALQUIER CIRCUNSTANCIA ── */
+html,
+body,
+#root,
+.reveal,
+.reveal.no-cursor,
+.reveal.no-cursor *,
+.reveal .slides,
+.reveal .slides section,
+.reveal .slides section * {
+  cursor: default !important;
+}
+
+/* Forzar que todos los botones, enlaces y elementos con onClick tengan cursor pointer siempre */
+button,
+button *,
+[role="button"],
+[role="button"] *,
+a,
+a *,
+input,
+select,
+textarea,
+.cursor-pointer,
+[onClick],
+[onClick] * {
+  cursor: pointer !important;
 }
 
 /*

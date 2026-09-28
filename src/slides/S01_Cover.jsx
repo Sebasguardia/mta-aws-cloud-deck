@@ -73,10 +73,9 @@ export function S01_Cover({ isActive: propActive } = {}) {
   });
 
   const panels = [
-    { label: "EMPRESA", value: "MTA Software", sub: "Multiservicios Tecnoindustrial Acosta S.A.C." },
+    { label: "CURSO", value: projectMeta.course, sub: "SENATI · Formación Profesional" },
     { label: "INSTRUCTOR", value: projectMeta.instructor.name, sub: projectMeta.instructor.role },
-    { label: "LEAD ARCHITECT", value: projectMeta.teamLead.name, sub: projectMeta.teamLead.role },
-    { label: "EQUIPO", value: `${projectMeta.internsCount} Practicantes`, sub: "Modalidad 100% Remota" },
+    { label: "CASO DE ESTUDIO", value: "MTA Software", sub: "Multiservicios Tecnoindustrial Acosta S.A.C. (Área TI: 4 Encargados + 10 Practicantes)" },
   ];
 
   return (
@@ -130,11 +129,11 @@ export function S01_Cover({ isActive: propActive } = {}) {
       ══════════════════════════════════════════ */}
       <div
         style={{
-          flex: "0 0 60%",
+          flex: "0 0 57%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          padding: "3rem 3rem 3rem 5rem",
+          padding: "2.5rem 2.5rem 2.5rem 4.5rem",
           position: "relative",
           zIndex: 1,
         }}
@@ -144,7 +143,7 @@ export function S01_Cover({ isActive: propActive } = {}) {
           variants={fadeUp(0.05)}
           initial="hidden"
           animate={entered ? "visible" : "hidden"}
-          style={{ marginBottom: "1.2rem" }}
+          style={{ marginBottom: "1rem" }}
         >
           <span
             style={{
@@ -171,31 +170,31 @@ export function S01_Cover({ isActive: propActive } = {}) {
           animate={entered ? "visible" : "hidden"}
           style={{
             fontFamily: "Yellowtail, cursive",
-            fontSize: "clamp(1.4rem, 2.5vw, 2.4rem)",
+            fontSize: "clamp(1.4rem, 2.3vw, 2.2rem)",
             color: "#e8a0bf",
             lineHeight: 1.1,
-            marginBottom: "0.5rem",
+            marginBottom: "0.4rem",
             opacity: 0.9,
           }}
         >
           {c.scriptTag}
         </motion.p>
 
-        {/* Título Display — protagonista, controlado para 2 líneas max */}
+        {/* Título Display */}
         <motion.h1
           variants={fadeUp(0.24)}
           initial="hidden"
           animate={entered ? "visible" : "hidden"}
           style={{
             fontFamily: "'Archivo Black', 'Arial Black', sans-serif",
-            fontSize: "clamp(2rem, 3.6vw, 3.4rem)",
+            fontSize: "clamp(1.8rem, 3.2vw, 3rem)",
             color: "#F5F1E8",
             letterSpacing: "-0.025em",
-            lineHeight: 1.0,
+            lineHeight: 1.05,
             textTransform: "uppercase",
-            marginBottom: "1.2rem",
+            marginBottom: "1rem",
             maxWidth: "680px",
-            fontWeight: 400, /* Archivo Black is a display font — weight 400 IS black */
+            fontWeight: 400,
           }}
         >
           {c.title}
@@ -215,7 +214,7 @@ export function S01_Cover({ isActive: propActive } = {}) {
             width: "100%",
             maxWidth: 480,
             background: "#D4A017",
-            marginBottom: "1.2rem",
+            marginBottom: "1rem",
           }}
           aria-hidden="true"
         />
@@ -227,11 +226,11 @@ export function S01_Cover({ isActive: propActive } = {}) {
           animate={entered ? "visible" : "hidden"}
           style={{
             fontFamily: "Inter, sans-serif",
-            fontSize: "clamp(0.88rem, 1.1vw, 1.12rem)",
+            fontSize: "clamp(0.85rem, 1vw, 1.05rem)",
             color: "rgba(245,241,232,0.72)",
-            lineHeight: 1.6,
+            lineHeight: 1.5,
             maxWidth: "520px",
-            marginBottom: "0.6rem",
+            marginBottom: "0.5rem",
           }}
         >
           {c.lead}
@@ -248,7 +247,7 @@ export function S01_Cover({ isActive: propActive } = {}) {
             letterSpacing: "0.14em",
             textTransform: "uppercase",
             color: "rgba(212,160,23,0.7)",
-            marginBottom: "1.8rem",
+            marginBottom: "1.4rem",
           }}
         >
           {c.companyTag} · {c.academicNotice}
@@ -256,7 +255,7 @@ export function S01_Cover({ isActive: propActive } = {}) {
 
         {/* Chips stagger spring */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-          {["SENATI", "AWS CPE", "ETAPA 01", `${projectMeta.internsCount} PRACTICANTES`].map((chip, i) => (
+          {["SENATI", "AWS CLOUD", "5 INTEGRANTES", "CASO MTA SOFTWARE"].map((chip, i) => (
             <motion.span
               key={chip}
               initial={{ opacity: 0, transform: "translateY(6px)" }}
@@ -301,13 +300,13 @@ export function S01_Cover({ isActive: propActive } = {}) {
         initial="hidden"
         animate={entered ? "visible" : "hidden"}
         style={{
-          flex: "0 0 40%",
+          flex: "0 0 43%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           borderLeft: "2px solid rgba(212,160,23,0.25)",
           background: "rgba(212,160,23,0.03)",
-          padding: "3rem 2.5rem",
+          padding: "2.2rem 2.2rem",
           position: "relative",
           zIndex: 1,
           gap: "0",
@@ -321,7 +320,7 @@ export function S01_Cover({ isActive: propActive } = {}) {
             bottom: "1rem",
             right: "1.5rem",
             fontFamily: "'Archivo Black', sans-serif",
-            fontSize: "clamp(7rem, 14vw, 16rem)",
+            fontSize: "clamp(6rem, 12vw, 14rem)",
             color: "rgba(245,241,232,0.035)",
             letterSpacing: "-0.05em",
             lineHeight: 1,
@@ -340,7 +339,7 @@ export function S01_Cover({ isActive: propActive } = {}) {
             letterSpacing: "0.2em",
             textTransform: "uppercase",
             color: "rgba(212,160,23,0.6)",
-            marginBottom: "1.8rem",
+            marginBottom: "1.2rem",
             display: "flex",
             alignItems: "center",
             gap: "0.6rem",
@@ -355,14 +354,14 @@ export function S01_Cover({ isActive: propActive } = {}) {
               background: "#D4A017",
             }}
           />
-          FICHA TÉCNICA DEL PROYECTO
+          FICHA TÉCNICA DE LA INVESTIGACIÓN
         </div>
 
-        {/* Grid de datos del proyecto */}
+        {/* Grid de datos de la investigación */}
         <div
           style={{
-            display: "grid",
-            gridTemplateRows: "repeat(4, auto)",
+            display: "flex",
+            flexDirection: "column",
             gap: "0",
             border: "1px solid rgba(212,160,23,0.2)",
           }}
@@ -380,23 +379,19 @@ export function S01_Cover({ isActive: propActive } = {}) {
                   : { opacity: 0 }
               }
               style={{
-                padding: "0.9rem 1.1rem",
-                borderBottom:
-                  i < panels.length - 1
-                    ? "1px solid rgba(212,160,23,0.15)"
-                    : "none",
-                background:
-                  i % 2 === 0 ? "rgba(245,241,232,0.02)" : "transparent",
+                padding: "0.65rem 0.95rem",
+                borderBottom: "1px solid rgba(212,160,23,0.15)",
+                background: i % 2 === 0 ? "rgba(245,241,232,0.02)" : "transparent",
               }}
             >
               <p
                 style={{
                   fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.6rem",
+                  fontSize: "0.58rem",
                   letterSpacing: "0.15em",
                   textTransform: "uppercase",
                   color: "rgba(212,160,23,0.7)",
-                  marginBottom: "0.3rem",
+                  margin: "0 0 0.15rem 0",
                 }}
               >
                 {item.label}
@@ -404,11 +399,11 @@ export function S01_Cover({ isActive: propActive } = {}) {
               <p
                 style={{
                   fontFamily: "'Archivo Black', 'Arial Black', sans-serif",
-                  fontSize: "0.95rem",
+                  fontSize: "0.85rem",
                   color: "#F5F1E8",
                   letterSpacing: "-0.01em",
                   lineHeight: 1.15,
-                  marginBottom: "0.15rem",
+                  margin: "0 0 0.15rem 0",
                   fontWeight: 400,
                 }}
               >
@@ -417,15 +412,80 @@ export function S01_Cover({ isActive: propActive } = {}) {
               <p
                 style={{
                   fontFamily: "Inter, sans-serif",
-                  fontSize: "0.72rem",
+                  fontSize: "0.68rem",
                   color: "rgba(245,241,232,0.45)",
-                  lineHeight: 1.3,
+                  lineHeight: 1.2,
+                  margin: 0,
                 }}
               >
                 {item.sub}
               </p>
             </motion.div>
           ))}
+
+          {/* Bloque especial de los 5 integrantes del grupo de investigación */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={
+              entered
+                ? {
+                    opacity: 1,
+                    transition: { duration: 0.35, delay: 0.7 },
+                  }
+                : { opacity: 0 }
+            }
+            style={{
+              padding: "0.75rem 0.95rem",
+              background: "rgba(212,160,23,0.04)",
+            }}
+          >
+            <p
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: "0.58rem",
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                color: "#D4A017",
+                margin: "0 0 0.45rem 0",
+                fontWeight: 700,
+              }}
+            >
+              EQUIPO DE INVESTIGACIÓN (5 INTEGRANTES)
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.22rem" }}>
+              {projectMeta.academic.researchTeam.map((m, idx) => (
+                <div
+                  key={m.id}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: "0.63rem",
+                    color: "rgba(245,241,232,0.85)",
+                    borderBottom: idx < 4 ? "1px dashed rgba(245,241,232,0.08)" : "none",
+                    paddingBottom: "0.18rem",
+                  }}
+                >
+                  <span>
+                    <strong style={{ color: "#D4A017", marginRight: "0.35rem" }}>
+                      0{idx + 1}.
+                    </strong>
+                    {m.name}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: "0.54rem",
+                      color: "rgba(245,241,232,0.4)",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    SENATI
+                  </span>
+                </div>
+              ))}
+            </div>
+          </motion.div>
         </div>
 
         {/* Status indicator */}
@@ -434,7 +494,7 @@ export function S01_Cover({ isActive: propActive } = {}) {
           initial="hidden"
           animate={entered ? "visible" : "hidden"}
           style={{
-            marginTop: "1.5rem",
+            marginTop: "1.2rem",
             display: "flex",
             alignItems: "center",
             gap: "0.5rem",
@@ -456,7 +516,7 @@ export function S01_Cover({ isActive: propActive } = {}) {
               animation: "pulse 2s infinite",
             }}
           />
-          ETAPA 01 · DIAGNÓSTICO ACTIVO
+          ETAPA 01 · INVESTIGACIÓN ACADÉMICA
         </motion.div>
       </motion.div>
 

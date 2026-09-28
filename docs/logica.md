@@ -198,12 +198,12 @@ flowchart LR
 
 | Campo         | Detalle                                                                                                                                                                                                                                                                                                                                       |
 | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 📝 Contenido  | Modelo de Responsabilidad Compartida AWS. Se elimina el uso de cuentas/contraseñas raíz compartidas. **10 usuarios IAM individuales** (uno por practicante), principio de privilegios mínimos (ej. separación frontend vs administración de base de datos)                                                                                    |
-| 🎯 Objetivo   | Mostrar la madurez de seguridad que trae la propuesta                                                                                                                                                                                                                                                                                         |
+| 📝 Contenido  | Modelo de Responsabilidad Compartida AWS. Eliminación de credenciales maestras centralizadas en los 4 encargados. **10 usuarios IAM individuales** (uno por practicante) para descentralizar y eliminar el cuello de botella de despliegues, aplicando el principio de privilegios mínimos (ej. separación frontend vs administración de base de datos)                                                                                    |
+| 🎯 Objetivo   | Mostrar la madurez de seguridad y agilidad operativa que trae la propuesta                                                                                                                                                                                                                                                                                         |
 | 🎞️ Entrada    | Reutiliza el grid de 10 avatares del slide 04 — hace un **"morph"** (shared element transition, `view-transition-api` o FLIP con Framer Motion) desde "practicantes del equipo" a "usuarios IAM individuales"                                                                                                                                 |
 | 🔀 Transición | `data-transition="slide"`                                                                                                                                                                                                                                                                                                                     |
-| 🕹️ Dinámica   | ⭐ Toggle **"1 cuenta root compartida"** ↔ **"10 usuarios IAM"**: en modo root, los 10 avatares están apilados detrás de un solo candado (riesgo, en rojo); al activar IAM, se separan con `stagger` en una grilla, cada uno con su propio candado y una etiqueta de permiso (`Frontend` / `Backend` / `DB Admin`) que se puede click-asignar |
-| 🎨 Nota       | Uso de color semántico: rojo = riesgo/compartido, verde/ámbar = seguro/individual                                                                                                                                                                                                                                                             |
+| 🕹️ Dinámica   | ⭐ Toggle **"Hostinger: Acceso Centralizado"** ↔ **"AWS IAM: 10 usuarios IAM"**: en modo root, se evidencia el cuello de botella (los 10 practicantes sin acceso y los 4 encargados saturados); al activar IAM, se separan con `stagger` en una grilla, cada uno con su propio escudo y una etiqueta de permiso (`Frontend` / `Backend` / `DB Admin`) que se puede inspeccionar |
+| 🎨 Nota       | Uso de color semántico: rojo = riesgo/centralizado en 4, verde/ámbar = seguro/autonomía con privilegios mínimos                                                                                                                                                                                                                                                             |
 
 ### 12 · Arquitectura de red propuesta
 
@@ -220,14 +220,14 @@ flowchart LR
 
 ## 13 · Roadmap / próximos pasos
 
-| Campo         | Detalle                                                                                           |
-| ------------- | ------------------------------------------------------------------------------------------------- |
-| 📝 Contenido  | Línea de tiempo de próximas etapas del curso (Etapa 2, 3... placeholder)                          |
-| 🎯 Objetivo   | Cerrar con visión de continuidad                                                                  |
-| 🎞️ Entrada    | Timeline horizontal con nodos que se conectan con una línea que se "dibuja" (`stroke-dashoffset`) |
-| 🔀 Transición | `data-transition="fade"`                                                                          |
-| 🕹️ Dinámica   | Hover en cada hito muestra preview de qué se verá en esa etapa                                    |
-| 🎨 Nota       | Aquí se reintroduce el tagline en script font, cerrando el círculo visual con la Portada          |
+| Campo         | Detalle                                                                                                                                                                                                                           |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 📝 Contenido  | Línea de tiempo estructurada en **2 Etapas curriculares de SENATI**: **Etapa 01 (Completada - Semana 6)**: Diagnóstico, CAF, TCO, IAM y VPC. **Etapa 02 (Siguiente Hito - Semana 7)**: Cómputo EC2, Almacenamiento S3/EFS/Glacier y BD Administrada RDS. |
+| 🎯 Objetivo   | Demostrar dominio del syllabus del proyecto institucional de SENATI y visión clara del siguiente paso práctico.                                                                                                                   |
+| 🎞️ Entrada    | Timeline interactivo de 2 estaciones conectadas por riel de datos curvo en 3D (`RoadmapContinuityCanvas`).                                                                                                                       |
+| 🔀 Transición | `data-transition="fade"`                                                                                                                                                                                                          |
+| 🕹️ Dinámica   | Selector interactivo entre Etapa 01 y Etapa 02 con tarjeta flotante explicativa de entregables y animación 3D de prisma/bloque arquitectónico y servidor EC2 + base de datos.                                                    |
+| 🎨 Nota       | Estilo industrial brutalista, sin recarga ni parpadeo 3D WebGL (control por refs mutables).                                                                                                                                        |
 
 ## 14 · Cierre
 

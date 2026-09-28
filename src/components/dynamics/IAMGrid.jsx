@@ -84,7 +84,7 @@ export function IAMGrid() {
                 Contraseña Maestra en Servidor Compartido
               </h4>
               <p className="text-[11px] text-white/70 mt-1.5 leading-relaxed font-sans">
-                Tanto el Jefe de Desarrollo como los 10 practicantes utilizan las mismas credenciales de acceso global. Cero trazabilidad en caso de borrado accidental de bases de datos.
+                Tanto los 4 Encargados como los 10 practicantes de MTA Software utilizan las mismas credenciales de acceso global. Cero trazabilidad en caso de borrado accidental de bases de datos.
               </p>
 
               {/* Stack de avatares superpuestos en riesgo */}

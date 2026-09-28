@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { slidesContent } from "../data/content.es.js";
 import { useSlideActive } from "../hooks/useSlideActive.js";
 import { PortfolioMonolithCanvas } from "../components/three/PortfolioMonolithCanvas.jsx";
+import { CanvasTransitionWrapper } from "../components/motion/CanvasTransitionWrapper.jsx";
 
 const c = slidesContent.s05_portafolio;
 
@@ -158,15 +159,15 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
       />
 
       {/* ══════════════════════════════════════════════════════════
-          COLUMNA IZQUIERDA (50%): Contenido Editorial & Selector
+          COLUMNA IZQUIERDA (46%): Contenido Editorial & Selector
       ══════════════════════════════════════════════════════════ */}
       <div
         style={{
-          flex: "0 0 50%",
+          flex: "0 0 46%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          padding: "2.8rem 3.5rem 2.8rem 4.8rem",
+          padding: "2.5rem 2.8rem 2.5rem 4.4rem",
           position: "relative",
           zIndex: 2,
           gap: "1.1rem",
@@ -672,11 +673,11 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
       </div>
 
       {/* ══════════════════════════════════════════════════════════
-          COLUMNA DERECHA (50%): Escenario 3D Pantalla Completa
+          COLUMNA DERECHA (54%): Escenario 3D Pantalla Completa
       ══════════════════════════════════════════════════════════ */}
       <div
         style={{
-          flex: "0 0 50%",
+          flex: "0 0 54%",
           position: "relative",
           display: "flex",
           alignItems: "center",
@@ -686,8 +687,15 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
           overflow: "hidden",
         }}
       >
-        {/* Canvas 3D de Monolitos que abarca toda la mitad derecha */}
-        <PortfolioMonolithCanvas isActive={isActive} activeIndex={activeProjectIdx} />
+        {/* Canvas 3D de Monolitos con Texturas Reales, Beacon de Riesgo y selección directa */}
+        <PortfolioMonolithCanvas
+          isActive={isActive}
+          activeIndex={activeProjectIdx}
+          onSelectProject={(id) => {
+            setActiveProjectIdx(id);
+            setIsWorkspaceFlipped(false);
+          }}
+        />
 
         {/* HUD overlay superior derecho */}
         <div

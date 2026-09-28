@@ -215,10 +215,10 @@ export function S02_Agenda({ isActive: propActive } = {}) {
           style={{ height: 2, background: "#D4A017", width: "100%", maxWidth: 280 }}
         />
 
-        {/* ── Tarjetas de bloque — Grid 3 columnas ── */}
+        {/* ── Tarjetas de bloque — Grid 4 columnas ── */}
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
+          gridTemplateColumns: "repeat(4, 1fr)",
           gap: "1px",
           background: "rgba(245,241,232,0.08)",
         }}>
@@ -241,14 +241,14 @@ export function S02_Agenda({ isActive: propActive } = {}) {
                 style={{
                   background: isHovered ? "rgba(245,241,232,0.06)" : "#0a0a0a",
                   border: "none",
-                  padding: "1.5rem 1.75rem",
+                  padding: "1.1rem 1.25rem",
                   cursor: "pointer",
                   textAlign: "left",
                   position: "relative",
                   overflow: "hidden",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "0.55rem",
+                  gap: "0.45rem",
                   borderTop: `3px solid ${isHovered || isZooming ? acc.border : "rgba(245,241,232,0.1)"}`,
                   boxShadow: isZooming ? `0 0 35px ${acc.glow}` : "none",
                   transform: isZooming
@@ -334,10 +334,10 @@ export function S02_Agenda({ isActive: propActive } = {}) {
                 {/* Descripción */}
                 <p style={{
                   fontFamily: "Inter, sans-serif",
-                  fontSize: "0.76rem",
+                  fontSize: "0.7rem",
                   color: "rgba(245,241,232,0.52)",
-                  lineHeight: 1.55,
-                  maxWidth: "340px",
+                  lineHeight: 1.45,
+                  maxWidth: "300px",
                 }}>
                   {block.description}
                 </p>

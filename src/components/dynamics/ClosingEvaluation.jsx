@@ -12,6 +12,7 @@ import {
   TrendingDown,
   Layers,
   Zap,
+  GraduationCap,
 } from "lucide-react";
 import { Button } from "../ui/Button";
 import { Badge } from "../ui/Badge";
@@ -23,8 +24,8 @@ import { projectMeta } from "../../data/team";
  *
  * Permite al jurado / expositor alternar entre:
  * 1. "PUNTOS CLAVE" (Síntesis de logros de la Etapa 01: Hostinger vs AWS, TCO $0 Free Tier, VPC & IAM).
- * 2. "EQUIPO DE INGENIERÍA" (Lista interactiva de los 10 practicantes y sus roles de especialidad).
- * 3. "PREGUNTAS FRECUENTES" (3 preguntas técnicas clave con respuestas inmediatas para el jurado).
+ * 2. "EQUIPO INVESTIGADOR" (Los 5 estudiantes de SENATI autores de la investigación).
+ * 3. "FAQ JURADO" (3 preguntas técnicas clave con respuestas inmediatas para el jurado).
  */
 export function ClosingEvaluation({ onCelebrate }) {
   const [activeTab, setActiveTab] = useState("summary"); // 'summary' | 'team' | 'faq'
@@ -34,21 +35,21 @@ export function ClosingEvaluation({ onCelebrate }) {
     {
       icon: TrendingDown,
       title: "Optimización TCO",
-      desc: "De $35/mes fijos en Hostinger a $0 en AWS Free Tier con límite de alerta a $10.",
+      desc: "De $35/mes fijos en Hostinger a $0 en AWS Free Tier con límite de alerta preventiva a $10.",
       color: "#6e8e59",
       code: "COST_SAVINGS: 100%",
     },
     {
       icon: ShieldCheck,
       title: "Gobierno Zero Trust",
-      desc: "Eliminación de la cuenta Root compartida con 10 usuarios IAM con privilegios mínimos.",
+      desc: "Eliminación de la cuenta Root compartida entre los 4 encargados y los 10 practicantes de MTA.",
       color: "#d4a017",
       code: "SECURITY: ROOT_LOCKED",
     },
     {
       icon: Layers,
       title: "Topología Segura",
-      desc: "Diseño de Amazon VPC con subredes privadas para bases de datos y CDN CloudFront.",
+      desc: "Diseño de Amazon VPC con subredes privadas para bases de datos y CDN CloudFront en el borde.",
       color: "#e8a0bf",
       code: "ISOLATION: VPC_PRIVATE",
     },
@@ -60,11 +61,11 @@ export function ClosingEvaluation({ onCelebrate }) {
       a: "Hostinger es un hosting compartido que mezcla bases de datos y aplicaciones de los 3 productos en un único punto de fallo (SPOF). En AWS, con la capa gratuita y el modelo Pay-As-You-Go, MTA operará con costo $0 en tráfico actual, obteniendo aislamiento por VPC y alta disponibilidad.",
     },
     {
-      q: "¿Cómo garantizan que 10 practicantes no generen sobrecostos?",
-      a: "Implementando AWS Budgets con alertas automatizadas vía SNS al alcanzar $10, limitando credenciales IAM a servicios específicos sin permisos para levantar instancias costosas sin aprobación del líder.",
+      q: "¿Cómo se previene el riesgo de sobrecostos y accesos indebidos?",
+      a: "Implementando AWS Budgets con alertas automatizadas vía SNS al alcanzar $10, y políticas IAM granulares para los 4 encargados y 10 practicantes sin permisos de creación de recursos no autorizados.",
     },
     {
-      q: "¿Cuál es el siguiente paso en la Etapa 02?",
+      q: "¿Cuál es el siguiente paso en la Etapa 02 de la investigación?",
       a: "Aprovisionamiento real de la infraestructura en la consola AWS: creación de VPC con CloudFormation, configuración de Security Groups y despliegue del entorno de staging para Strato Studio.",
     },
   ];
@@ -125,7 +126,7 @@ export function ClosingEvaluation({ onCelebrate }) {
             transition: "all 0.15s ease",
           }}
         >
-          [ 10 PRACTICANTES ]
+          [ 5 INTEGRANTES SENATI ]
         </button>
 
         <button
@@ -231,58 +232,82 @@ export function ClosingEvaluation({ onCelebrate }) {
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.18 }}
             style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
+              display: "flex",
+              flexDirection: "column",
               gap: "0.35rem",
-              maxHeight: "140px",
-              overflowY: "auto",
-              paddingRight: "0.25rem",
             }}
           >
-            {projectMeta.teamMembers.map((m) => (
-              <div
-                key={m.id}
-                style={{
-                  padding: "0.35rem 0.5rem",
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid rgba(245,241,232,0.08)",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.1rem",
-                }}
-              >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                  <span
-                    style={{
-                      fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.6rem",
-                      fontWeight: 700,
-                      color: "#F5F1E8",
-                    }}
-                  >
-                    #{String(m.id).padStart(2, "0")} {m.name}
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.52rem",
-                      color: "#6e8e59",
-                    }}
-                  >
-                    {m.role}
-                  </span>
-                </div>
-                <span
+            <div
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: "0.58rem",
+                color: "#6e8e59",
+                background: "rgba(110,142,89,0.1)",
+                border: "1px solid rgba(110,142,89,0.3)",
+                padding: "0.25rem 0.5rem",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <span>EQUIPO DE INVESTIGACIÓN ACADÉMICA</span>
+              <span>DOCENTE: {projectMeta.instructor.name}</span>
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "0.35rem",
+              }}
+            >
+              {projectMeta.academic.researchTeam.map((m) => (
+                <div
+                  key={m.id}
                   style={{
-                    fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.52rem",
-                    color: "rgba(245,241,232,0.45)",
+                    padding: "0.4rem 0.55rem",
+                    background: "rgba(255,255,255,0.03)",
+                    border: "1px solid rgba(245,241,232,0.1)",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.45rem",
                   }}
                 >
-                  IAM: {m.iamRole}
-                </span>
-              </div>
-            ))}
+                  <GraduationCap size={13} style={{ color: "#d4a017", flexShrink: 0 }} />
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    <span
+                      style={{
+                        fontFamily: "'Archivo Black', sans-serif",
+                        fontSize: "0.66rem",
+                        color: "#F5F1E8",
+                      }}
+                    >
+                      {m.name}
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "'JetBrains Mono', monospace",
+                        fontSize: "0.52rem",
+                        color: "rgba(245,241,232,0.5)",
+                      }}
+                    >
+                      SENATI · Integrante
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div
+              style={{
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: "0.55rem",
+                color: "rgba(245,241,232,0.45)",
+                marginTop: "0.1rem",
+              }}
+            >
+              * Empresa investigada: MTA Software (Área de TI: 4 Encargados + 10 Practicantes Remotos)
+            </div>
           </motion.div>
         )}
 

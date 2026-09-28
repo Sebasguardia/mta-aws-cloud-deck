@@ -18,6 +18,7 @@ import { slidesContent } from "../data/content.es.js";
 import { useSlideActive } from "../hooks/useSlideActive.js";
 import { useSharedDeckState } from "../hooks/useSharedDeckState.js";
 import { CafTransformationCanvas } from "../components/three/CafTransformationCanvas.jsx";
+import { CanvasTransitionWrapper } from "../components/motion/CanvasTransitionWrapper.jsx";
 import { Badge } from "../components/ui/Badge.jsx";
 import { easings } from "../lib/easings.js";
 
@@ -604,7 +605,7 @@ export function S09_CAF({ isActive: propActive } = {}) {
           </div>
         </div>
 
-        {/* Canvas 3D Three.js */}
+        {/* Canvas 3D Three.js (Desmontado condicional GPU) */}
         <div
           style={{
             width: "100%",
@@ -613,10 +614,12 @@ export function S09_CAF({ isActive: propActive } = {}) {
             zIndex: 5,
           }}
         >
-          <CafTransformationCanvas
-            isActive={isActive}
-            isAfter={isAfter}
-          />
+          <CanvasTransitionWrapper isActive={isActive}>
+            <CafTransformationCanvas
+              isActive={isActive}
+              isAfter={isAfter}
+            />
+          </CanvasTransitionWrapper>
         </div>
 
         {/* HUD Inferior de los 10 Practicantes Coordinados */}

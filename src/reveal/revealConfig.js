@@ -27,6 +27,10 @@ export const revealConfig = {
   touch: true,
   overview: true,
 
+  // El cursor del mouse NUNCA se oculta
+  hideInactiveCursor: false,
+  hideCursorTime: 0,
+
   /*
    * DIMENSIONES: "100%" le dice a Reveal que use el tamaño real del contenedor.
    * minScale/maxScale = 1 desactiva el zoom/scaling de Reveal — nuestros

@@ -14,8 +14,12 @@ import { S09_CAF } from "./slides/S09_CAF.jsx";
 import { S10_Economia } from "./slides/S10_Economia.jsx";
 import { S11_IAM } from "./slides/S11_IAM.jsx";
 import { S12_Arquitectura } from "./slides/S12_Arquitectura.jsx";
-import { S13_Roadmap } from "./slides/S13_Roadmap.jsx";
-import { S14_Cierre } from "./slides/S14_Cierre.jsx";
+import { S13_DiagramaRed } from "./slides/S13_DiagramaRed.jsx";
+import { S14_Computo } from "./slides/S14_Computo.jsx";
+import { S15_Almacenamiento } from "./slides/S15_Almacenamiento.jsx";
+import { S16_BasesDatos } from "./slides/S16_BasesDatos.jsx";
+import { S17_Cierre } from "./slides/S17_Cierre.jsx";
+// S14_Cierre eliminada — reemplazada por los 4 slides del Entregable 2 (S14–S17)
 
 /**
  * App — punto de ensamblado del deck.
@@ -93,11 +97,22 @@ function App() {
         {/* Slide 12 — Arquitectura de Red Propuesta (Hero) */}
         <S12_Arquitectura isActive={activeSlide === 11} />
 
-        {/* Slide 13 — Roadmap de Adopción Cloud */}
-        <S13_Roadmap isActive={activeSlide === 12} />
+        {/* Slide 13 — Diagrama de Arquitectura de Red Propuesto (Nivel Conceptual) */}
+        <S13_DiagramaRed isActive={activeSlide === 12} />
 
-        {/* Slide 14 — Cierre del Deck y Preguntas */}
-        <S14_Cierre isActive={activeSlide === 13} />
+        {/* ─────────────── ENTREGABLE 2 · SEMANA 7 ─────────────── */}
+
+        {/* Slide 14 — Diseño de Cómputo y Servidores Cloud (EC2, EBS, Lambda, Beanstalk) */}
+        <S14_Computo isActive={activeSlide === 13} />
+
+        {/* Slide 15 — Estrategia de Almacenamiento y Archivo (S3, EFS, S3 Glacier) */}
+        <S15_Almacenamiento isActive={activeSlide === 14} />
+
+        {/* Slide 16 — Bases de Datos Administradas (RDS, Aurora, DynamoDB) */}
+        <S16_BasesDatos isActive={activeSlide === 15} />
+
+        {/* Slide 17 — Cierre Final: Síntesis Etapas 01 & 02 + Preguntas */}
+        <S17_Cierre isActive={activeSlide === 16} />
       </RevealDeck>
 
       {/* ── Preloader: cortina cinematográfica encima del deck ── */}

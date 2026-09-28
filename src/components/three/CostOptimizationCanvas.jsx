@@ -24,6 +24,18 @@ export function CostOptimizationCanvas({
   const containerRef = useRef(null);
   const animFrameId = useRef(null);
 
+  // Referencias mutables para evitar destruir y recrear el lienzo WebGL al mover el slider
+  const usersRef = useRef(simulatedUsers);
+  const alertRef = useRef(isAlert);
+
+  useEffect(() => {
+    usersRef.current = simulatedUsers;
+  }, [simulatedUsers]);
+
+  useEffect(() => {
+    alertRef.current = isAlert;
+  }, [isAlert]);
+
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -117,7 +129,7 @@ export function CostOptimizationCanvas({
       opacity: 0.85,
     });
     const savingsMesh = new THREE.LineSegments(savingsWire, savingsMat);
-    awsGroup.add(savingsMesh);
+    rootGroup.add(savingsMesh);
 
     // Anillo de Alerta de Presupuesto AWS Budgets ($10 USD Umbral)
     const budgetRingGeo = new THREE.TorusGeometry(1.2, 0.02, 16, 48);
@@ -202,6 +214,8 @@ export function CostOptimizationCanvas({
       if (!isActive) return;
 
       const elapsed = clock.getElapsedTime();
+      const currentUsers = usersRef.current;
+      const currentAlert = alertRef.current;
 
       // Mouse Parallax
       mouseX += (targetMouseX - mouseX) * 0.05;
@@ -211,21 +225,23 @@ export function CostOptimizationCanvas({
       rootGroup.rotation.x = Math.sin(elapsed * 0.3) * 0.04 - mouseY;
 
       // Cálculo de altura objetivo según usuarios simulados
-      // 0 a 1000 usuarios = Free Tier (altura mínima 0.3)
-      // 1000 a 5000 usuarios = Escala de 0.3 a 3.8
+      // 0 a 1000 usuarios = Free Tier (altura mínima 0.4)
+      // 1000 a 5000 usuarios = Escala de 0.4 a 3.8
       let targetHeight = 0.4;
-      if (simulatedUsers > 1000) {
-        targetHeight = 0.4 + ((simulatedUsers - 1000) / 4000) * 3.4;
+      if (currentUsers > 1000) {
+        targetHeight = 0.4 + ((currentUsers - 1000) / 4000) * 3.4;
       }
       currentScaleY += (targetHeight - currentScaleY) * 0.08;
 
       awsGroup.scale.set(1, currentScaleY, 1);
-      savingsMesh.position.y = currentScaleY + 0.4;
+
+      // Posicionar la figura 3D (icosaedro) en la cima del pilar sin deformar su escala
+      savingsMesh.position.set(awsGroup.position.x, -2.2 + currentScaleY + 0.45, 0);
       savingsMesh.rotation.y = elapsed * 1.5;
       savingsMesh.rotation.x = elapsed * 0.8;
 
       // Color dinámico según alerta y estado de Free Tier
-      if (isAlert) {
+      if (currentAlert) {
         // Alerta de exceso de presupuesto: Rojo alerta con sacudida
         awsMat.color.lerp(new THREE.Color(0xc6432b), 0.1);
         savingsMat.color.lerp(new THREE.Color(0xc6432b), 0.1);
@@ -233,7 +249,7 @@ export function CostOptimizationCanvas({
 
         const jitter = (Math.random() - 0.5) * 0.04;
         awsGroup.position.x = 2.0 + jitter;
-      } else if (simulatedUsers <= 1000) {
+      } else if (currentUsers <= 1000) {
         // Free Tier Activo ($0): Verde seguro
         awsMat.color.lerp(new THREE.Color(0x6e8e59), 0.1);
         savingsMat.color.lerp(new THREE.Color(0x6e8e59), 0.1);
@@ -274,7 +290,7 @@ export function CostOptimizationCanvas({
       }
       renderer.dispose();
     };
-  }, [isActive, simulatedUsers, isAlert]);
+  }, [isActive]);
 
   return (
     <div
