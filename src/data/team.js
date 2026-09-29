@@ -2,8 +2,8 @@
 export const projectMeta = {
   institution: "SENATI",
   course: "TECNOLOGÍA CLOUD CON AWS",
-  stageNumber: "ETAPA 01",
-  stageTitle: "Diagnóstico de la Empresa y Fundamentos Cloud",
+  stageNumber: "ETAPAS 01 Y 02",
+  stageTitle: "Diagnóstico, Fundamentos Cloud y Servicios Core AWS",
   
   // Datos del trabajo de investigación y equipo académico de SENATI
   academic: {

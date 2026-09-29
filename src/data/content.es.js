@@ -11,7 +11,7 @@ export const slidesContent = {
   },
 
   s01_cover: {
-    badge: "TECNOLOGÍA CLOUD CON AWS · ETAPA 01",
+    badge: "TECNOLOGÍA CLOUD CON AWS · ETAPAS 01 Y 02",
     scriptTag: "Trabajo de Investigación",
     title: "DIAGNÓSTICO DE LA EMPRESA Y FUNDAMENTOS CLOUD",
     lead: "Caso de Estudio: Modernización de Infraestructura para MTA Software",
@@ -25,13 +25,13 @@ export const slidesContent = {
     badge: "HOJA DE RUTA",
     scriptTag: "Estructura del Deck",
     title: "AGENDA DE LA PRESENTACIÓN",
-    subtitle: "3 bloques temáticos diseñados para diagnosticar el problema y fundamentar la arquitectura cloud",
+    subtitle: "4 bloques temáticos: diagnóstico del problema, fundamentos cloud y servicios core AWS para MTA Software",
     blocks: [
       {
         num: "01",
         title: "LA EMPRESA",
         script: "Quiénes somos",
-        description: "Modelo de negocio híbrido B2B, área de TI investigada (4 encargados + 10 practicantes) y portafolio de proyectos.",
+        description: "Modelo de negocio híbrido B2B, área de TI investigada (4 encargados + 10 practicantes) y portafolio de proyectos activos.",
         targetSlide: 2,
         accent: "var(--olive)",
       },
@@ -45,10 +45,18 @@ export const slidesContent = {
       },
       {
         num: "03",
-        title: "LA PROPUESTA CLOUD",
-        script: "La solución",
-        description: "Marco CAF, modelo económico Pay-as-you-go, gobierno IAM y arquitectura de red resiliente con VPC, Route 53 y CloudFront.",
+        title: "PROPUESTA CLOUD",
+        script: "La solución · Etapa 01",
+        description: "Marco CAF, modelo económico Pay-as-you-go, gobierno IAM con Mínimo Privilegio y arquitectura de red VPC Multi-AZ con Route 53 y CloudFront.",
         targetSlide: 8,
+        accent: "var(--gold)",
+      },
+      {
+        num: "04",
+        title: "SERVICIOS CORE",
+        script: "Implementación · Etapa 02",
+        description: "Cómputo con Amazon EC2 + Lambda, almacenamiento S3 / EFS / Glacier y base de datos administrada RDS PostgreSQL / Aurora.",
+        targetSlide: 13,
         accent: "var(--gold)",
       },
     ],
@@ -285,6 +293,17 @@ export const slidesContent = {
     ],
   },
 
+  s13_diagramaRed: {
+    sectionNum: "03",
+    badge: "BLOQUE 3 · LA PROPUESTA CLOUD",
+    scriptTag: "Diagrama Conceptual de Red",
+    title: "DIAGRAMA DE ARQUITECTURA DE RED PROPUESTO",
+    subtitle: "Diseño perimetral de Amazon VPC con subredes públicas y privadas, Route 53, CloudFront y Security Groups",
+    region: "us-east-1 (N. Virginia) · Multi-AZ",
+    vpcCidr: "10.0.0.0/16",
+    summary: "Topología conceptual de red que garantiza alta disponibilidad, aislamiento de base de datos y entrega en milisegundos para Workspace MTA y proyectos de clientes.",
+  },
+
   s13_roadmap: {
     badge: "CONTINUIDAD DEL PROYECTO",
     scriptTag: "Línea de Tiempo",
@@ -320,14 +339,41 @@ export const slidesContent = {
     ],
   },
 
-  s14_cierre: {
-    badge: "CONCLUSIÓN · ETAPA 01",
+  s14_computo: {
+    sectionNum: "04",
+    badge: "BLOQUE 4 · ENTREGABLE 2",
+    scriptTag: "Capa de Computación",
+    title: "DISEÑO DE CÓMPUTO Y SERVIDORES CLOUD",
+    subtitle: "Selección y dimensionamiento de Amazon EC2 con volúmenes EBS, y evaluación de arquitecturas Serverless y Contenedores",
+    techSummary: "Transición de servidores locales y Hostinger hacia instancias elásticas Amazon EC2 optimizadas (t4g.small / t3.medium) con almacenamiento SSD gp3, complementadas con AWS Lambda para tareas asíncronas.",
+  },
+
+  s15_almacenamiento: {
+    sectionNum: "04",
+    badge: "BLOQUE 4 · ENTREGABLE 2",
+    scriptTag: "Estrategia de Datos",
+    title: "ESTRATEGIA DE ALMACENAMIENTO Y ARCHIVO",
+    subtitle: "Almacenamiento de objetos con Amazon S3, sistema de archivos compartido Amazon EFS y archivado en S3 Glacier",
+    techSummary: "Separación de assets estáticos y backups hacia Amazon S3, compartición de código y dependencias en Amazon EFS para los 10 practicantes, y retención histórica en S3 Glacier.",
+  },
+
+  s16_basesDatos: {
+    sectionNum: "04",
+    badge: "BLOQUE 4 · ENTREGABLE 2",
+    scriptTag: "Persistencia Administrada",
+    title: "BASES DE DATOS ADMINISTRADAS EN AWS",
+    subtitle: "Selección y justificación técnica: Motores relacionales Amazon RDS / Aurora frente a NoSQL con Amazon DynamoDB",
+    techSummary: "Elección de Amazon RDS PostgreSQL / Aurora Multi-AZ como motor principal para garantizar transaccionalidad ACID y relaciones complejas en Workspace MTA, descartando NoSQL para el core ERP.",
+  },
+
+  s17_cierre: {
+    badge: "CONCLUSIÓN · ETAPAS 01 Y 02",
     scriptTag: "Cierre de Investigación",
     title: "GRACIAS POR SU ATENCIÓN",
-    subtitle: "Propuesta de arquitectura en la nube escalable, segura y económica para MTA Software",
+    subtitle: "Propuesta arquitectónica integral en AWS Cloud para MTA Software — Redes, Cómputo, Almacenamiento y Bases de Datos",
     teamLead: "Docente: " + projectMeta.instructor.name,
     teamSummary: "5 Integrantes · Equipo de Investigación SENATI",
     institution: "SENATI · " + projectMeta.course,
-    callToAction: "Espacio abierto para preguntas del jurado",
+    callToAction: "Espacio abierto para preguntas del jurado calificador",
   },
 };
