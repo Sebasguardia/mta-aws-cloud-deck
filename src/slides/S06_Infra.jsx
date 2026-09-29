@@ -146,10 +146,10 @@ export function S06_Infra({ isActive: propActive } = {}) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          padding: "2.8rem 3.5rem 2.8rem 4.8rem",
+          padding: "2rem 3.5rem 2rem 4.5rem",
           position: "relative",
           zIndex: 2,
-          gap: "1.1rem",
+          gap: "0.95rem",
         }}
       >
         {/* Header Editorial */}
@@ -163,14 +163,14 @@ export function S06_Infra({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
-                letterSpacing: "0.2em",
+                fontSize: "0.80rem",
+                letterSpacing: "0.18em",
                 textTransform: "uppercase",
-                fontWeight: 700,
+                fontWeight: 500,
                 color: "#c6432b",
                 background: "rgba(198,67,43,0.08)",
                 border: "1px solid rgba(198,67,43,0.35)",
-                padding: "0.25rem 0.65rem",
+                padding: "0.3rem 0.75rem",
               }}
             >
               [ {c.badge} ]
@@ -178,9 +178,10 @@ export function S06_Infra({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.62rem",
-                letterSpacing: "0.15em",
-                color: "rgba(245,241,232,0.4)",
+                fontSize: "0.78rem",
+                letterSpacing: "0.12em",
+                color: "rgba(245,241,232,0.48)",
+                fontWeight: 400,
               }}
             >
               SEC_06 // LEGACY_INFRASTRUCTURE
@@ -193,10 +194,11 @@ export function S06_Infra({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Yellowtail, cursive",
-              fontSize: "clamp(1.3rem, 2vw, 1.8rem)",
+              fontSize: "clamp(1.4rem, 2.3vw, 2.05rem)",
               color: "#e8a0bf",
               lineHeight: 1.1,
               margin: "0.15rem 0 0 0",
+              fontWeight: 400,
             }}
           >
             {c.scriptTag}
@@ -208,12 +210,13 @@ export function S06_Infra({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "'Archivo Black', 'Arial Black', sans-serif",
-              fontSize: "clamp(1.8rem, 2.8vw, 2.7rem)",
+              fontSize: "clamp(1.85rem, 2.85vw, 2.75rem)",
               color: "#F5F1E8",
               letterSpacing: "-0.025em",
               lineHeight: 1.05,
               textTransform: "uppercase",
               margin: 0,
+              fontWeight: 400,
             }}
           >
             {c.title}
@@ -225,10 +228,11 @@ export function S06_Infra({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Inter, sans-serif",
-              fontSize: "0.85rem",
-              color: "rgba(245,241,232,0.65)",
-              lineHeight: 1.45,
+              fontSize: "1.02rem",
+              color: "rgba(245,241,232,0.76)",
+              lineHeight: 1.5,
               margin: 0,
+              fontWeight: 400,
             }}
           >
             {c.subtitle}
@@ -245,7 +249,7 @@ export function S06_Infra({ isActive: propActive } = {}) {
         />
 
         {/* ── 3 Componentes Tácticos del Diagnóstico ── */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
           {c.components.map((item, idx) => {
             const isSelected = activeComponentIdx === idx;
             const risk = getRiskColor(item.riskLevel);
@@ -256,18 +260,18 @@ export function S06_Infra({ isActive: propActive } = {}) {
                 variants={fadeUp(0.3 + idx * 0.08)}
                 initial="hidden"
                 animate={entered ? "visible" : "hidden"}
-                whileHover={{ scale: 1.02, x: 4 }}
+                whileHover={{ scale: 1.015, x: 4 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveComponentIdx(idx)}
                 style={{
                   background: isSelected ? "rgba(245,241,232,0.07)" : "rgba(245,241,232,0.02)",
                   border: `1px solid ${isSelected ? risk.border : "rgba(245,241,232,0.09)"}`,
                   borderLeft: `4px solid ${risk.border}`,
-                  padding: isSelected ? "0.95rem 1.2rem" : "0.85rem 1.1rem",
+                  padding: isSelected ? "0.85rem 1.2rem" : "0.75rem 1.1rem",
                   cursor: "pointer",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "0.35rem",
+                  gap: "0.3rem",
                   boxShadow: isSelected ? `0 0 20px ${risk.bg}` : "none",
                   transition: "padding 0.25s ease, background 0.2s ease, border 0.2s ease, box-shadow 0.25s ease",
                 }}
@@ -277,8 +281,9 @@ export function S06_Infra({ isActive: propActive } = {}) {
                     <span
                       style={{
                         fontFamily: "'Archivo Black', sans-serif",
-                        fontSize: "0.88rem",
+                        fontSize: "1.02rem",
                         color: "#F5F1E8",
+                        fontWeight: 400,
                       }}
                     >
                       {item.title}
@@ -286,11 +291,12 @@ export function S06_Infra({ isActive: propActive } = {}) {
                     <span
                       style={{
                         fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: "0.58rem",
-                        color: "rgba(245,241,232,0.5)",
+                        fontSize: "0.76rem",
+                        color: "rgba(245,241,232,0.65)",
                         background: "rgba(245,241,232,0.04)",
-                        padding: "0.15rem 0.45rem",
-                        border: "1px solid rgba(245,241,232,0.1)",
+                        padding: "0.18rem 0.55rem",
+                        border: "1px solid rgba(245,241,232,0.12)",
+                        fontWeight: 400,
                       }}
                     >
                       {item.badge}
@@ -300,12 +306,13 @@ export function S06_Infra({ isActive: propActive } = {}) {
                   <span
                     style={{
                       fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.62rem",
-                      fontWeight: 700,
+                      fontSize: "0.76rem",
+                      fontWeight: 500,
                       color: risk.text,
                       background: risk.bg,
                       border: `1px solid ${risk.border}`,
-                      padding: "0.18rem 0.5rem",
+                      padding: "0.22rem 0.6rem",
+                      letterSpacing: "0.05em",
                     }}
                   >
                     RIESGO: {item.riskLevel}
@@ -315,10 +322,11 @@ export function S06_Infra({ isActive: propActive } = {}) {
                 <p
                   style={{
                     fontFamily: "Inter, sans-serif",
-                    fontSize: "0.76rem",
-                    color: "rgba(245,241,232,0.65)",
-                    lineHeight: 1.4,
+                    fontSize: "0.90rem",
+                    color: "rgba(245,241,232,0.74)",
+                    lineHeight: 1.48,
                     margin: 0,
+                    fontWeight: 400,
                   }}
                 >
                   {item.desc}
@@ -336,7 +344,7 @@ export function S06_Infra({ isActive: propActive } = {}) {
           style={{
             border: `1px solid ${isFaultActive ? "#c6432b" : "rgba(245,241,232,0.12)"}`,
             background: isFaultActive ? "rgba(198,67,43,0.1)" : "rgba(245,241,232,0.02)",
-            padding: "0.85rem 1.2rem",
+            padding: "0.75rem 1.2rem",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -347,9 +355,9 @@ export function S06_Infra({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.68rem",
+                fontSize: "0.80rem",
                 color: isFaultActive ? "#c6432b" : "#D4A017",
-                fontWeight: 700,
+                fontWeight: 500,
                 letterSpacing: "0.1em",
               }}
             >
@@ -358,8 +366,9 @@ export function S06_Infra({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "Inter, sans-serif",
-                fontSize: "0.78rem",
-                color: "rgba(245,241,232,0.85)",
+                fontSize: "0.92rem",
+                color: "rgba(245,241,232,0.92)",
+                fontWeight: 400,
               }}
             >
               ¿Qué pasa si Hostinger sufre una caída de servicio?
@@ -373,9 +382,9 @@ export function S06_Infra({ isActive: propActive } = {}) {
               border: `1px solid ${isFaultActive ? "#c6432b" : "rgba(245,241,232,0.3)"}`,
               color: "#F5F1E8",
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.68rem",
-              fontWeight: 700,
-              padding: "0.5rem 1rem",
+              fontSize: "0.80rem",
+              fontWeight: 500,
+              padding: "0.55rem 1.15rem",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
@@ -434,10 +443,10 @@ export function S06_Infra({ isActive: propActive } = {}) {
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.62rem",
-              letterSpacing: "0.2em",
+              fontSize: "0.80rem",
+              letterSpacing: "0.15em",
               color: isFaultActive ? "#c6432b" : "#D4A017",
-              fontWeight: 700,
+              fontWeight: 500,
             }}
           >
             {isFaultActive ? "SYSTEM_ALERT // SEVERITY_HIGH" : "LEGACY_NODE // MONOLITH_HOST"}
@@ -445,8 +454,9 @@ export function S06_Infra({ isActive: propActive } = {}) {
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.58rem",
-              color: "rgba(245,241,232,0.4)",
+              fontSize: "0.74rem",
+              color: "rgba(245,241,232,0.52)",
+              fontWeight: 400,
             }}
           >
             STATUS: {isFaultActive ? "OFFLINE / UNRESPONSIVE" : "SHARED_CPU_SATURATED"}
@@ -461,23 +471,24 @@ export function S06_Infra({ isActive: propActive } = {}) {
             bottom: "2.5rem",
             right: "3rem",
             border: `1px solid ${isFaultActive ? "#c6432b" : "rgba(245,241,232,0.12)"}`,
-            background: "rgba(10,10,10,0.75)",
+            background: "rgba(10,10,10,0.85)",
             backdropFilter: "blur(8px)",
-            padding: "0.65rem 1rem",
+            padding: "0.85rem 1.25rem",
             display: "flex",
             flexDirection: "column",
-            gap: "0.25rem",
+            gap: "0.35rem",
             zIndex: 10,
-            maxWidth: "300px",
+            maxWidth: "360px",
             boxShadow: isFaultActive ? "0 0 25px rgba(198,67,43,0.35)" : "none",
           }}
         >
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.62rem",
+              fontSize: "0.80rem",
               color: isFaultActive ? "#c6432b" : "#D4A017",
-              fontWeight: 700,
+              fontWeight: 500,
+              letterSpacing: "0.05em",
             }}
           >
             {isFaultActive ? "[ COLAPSO EN CADENA ]" : "[ ANATOMÍA DEL RIESGO ]"}
@@ -485,9 +496,10 @@ export function S06_Infra({ isActive: propActive } = {}) {
           <span
             style={{
               fontFamily: "Inter, sans-serif",
-              fontSize: "0.72rem",
-              color: "rgba(245,241,232,0.75)",
-              lineHeight: 1.35,
+              fontSize: "0.88rem",
+              color: "rgba(245,241,232,0.85)",
+              lineHeight: 1.48,
+              fontWeight: 400,
             }}
           >
             {isFaultActive

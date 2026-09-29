@@ -200,10 +200,10 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          padding: "2.5rem 3rem 2.5rem 4.8rem",
+          padding: "2.1rem 3rem 2.1rem 4.5rem",
           position: "relative",
           zIndex: 2,
-          gap: "1rem",
+          gap: "0.85rem",
         }}
       >
         {/* Header Editorial */}
@@ -217,14 +217,14 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
-                letterSpacing: "0.2em",
+                fontSize: "0.80rem",
+                letterSpacing: "0.18em",
                 textTransform: "uppercase",
-                fontWeight: 700,
+                fontWeight: 500,
                 color: "#c6432b",
                 background: "rgba(198,67,43,0.12)",
                 border: "1px solid rgba(198,67,43,0.4)",
-                padding: "0.25rem 0.65rem",
+                padding: "0.28rem 0.75rem",
               }}
             >
               [ {c.badge} ]
@@ -232,9 +232,10 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.62rem",
-                letterSpacing: "0.15em",
-                color: "rgba(245,241,232,0.45)",
+                fontSize: "0.76rem",
+                letterSpacing: "0.12em",
+                color: "rgba(245,241,232,0.48)",
+                fontWeight: 400,
               }}
             >
               SEC_08 // CRITICAL_LIMITATIONS_AUDIT
@@ -247,10 +248,11 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Yellowtail, cursive",
-              fontSize: "clamp(1.3rem, 2vw, 1.8rem)",
+              fontSize: "clamp(1.4rem, 2.3vw, 2.05rem)",
               color: "#e8a0bf",
               lineHeight: 1.1,
               margin: "0.15rem 0 0 0",
+              fontWeight: 400,
             }}
           >
             {c.scriptTag}
@@ -268,6 +270,7 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
               lineHeight: 1.05,
               textTransform: "uppercase",
               margin: 0,
+              fontWeight: 400,
             }}
           >
             {c.title}
@@ -278,11 +281,12 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
             initial="hidden"
             animate={entered ? "visible" : "hidden"}
             style={{
-              fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: "clamp(0.85rem, 1.05vw, 0.95rem)",
-              color: "rgba(245,241,232,0.65)",
+              fontFamily: "Inter, sans-serif",
+              fontSize: "clamp(0.94rem, 1.1vw, 1.02rem)",
+              color: "rgba(245,241,232,0.76)",
               margin: "0.2rem 0 0 0",
-              lineHeight: 1.4,
+              lineHeight: 1.5,
+              fontWeight: 400,
             }}
           >
             {c.subtitle}
@@ -290,7 +294,7 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
         </div>
 
         {/* Acordeón / Tarjetas de los 3 Problemas Críticos */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
           {c.problems.map((prob, idx) => {
             const isSelected = selectedProblem === idx;
             const IconComponent = problemIcons[idx] || AlertTriangle;
@@ -305,7 +309,7 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
                 whileHover={{ x: 3 }}
                 transition={{ duration: 0.15, ease: easings.snappy }}
                 style={{
-                  padding: "0.85rem 1.15rem",
+                  padding: "0.8rem 1.15rem",
                   background: isSelected
                     ? "rgba(198,67,43,0.08)"
                     : "rgba(255,255,255,0.02)",
@@ -325,15 +329,15 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
                     <span
                       style={{
                         fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: "0.75rem",
-                        fontWeight: 900,
-                        color: isSelected ? "#c6432b" : "rgba(245,241,232,0.4)",
+                        fontSize: "0.84rem",
+                        fontWeight: 500,
+                        color: isSelected ? "#c6432b" : "rgba(245,241,232,0.45)",
                       }}
                     >
                       {prob.num}
                     </span>
                     <IconComponent
-                      size={17}
+                      size={18}
                       style={{
                         color: isSelected ? "#c6432b" : "rgba(245,241,232,0.5)",
                         flexShrink: 0,
@@ -342,11 +346,12 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
                     <h3
                       style={{
                         fontFamily: "'Archivo Black', sans-serif",
-                        fontSize: "0.88rem",
-                        color: isSelected ? "#F5F1E8" : "rgba(245,241,232,0.85)",
+                        fontSize: "1.0rem",
+                        color: isSelected ? "#F5F1E8" : "rgba(245,241,232,0.9)",
                         textTransform: "uppercase",
                         margin: 0,
-                        letterSpacing: "0.02em",
+                        letterSpacing: "0.01em",
+                        fontWeight: 400,
                       }}
                     >
                       {prob.title}
@@ -356,14 +361,15 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
                   <span
                     style={{
                       fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.58rem",
-                      padding: "0.2rem 0.5rem",
+                      fontSize: "0.72rem",
+                      padding: "0.22rem 0.55rem",
                       border: isSelected
                         ? "1px solid rgba(198,67,43,0.5)"
                         : "1px solid rgba(245,241,232,0.15)",
-                      color: isSelected ? "#c6432b" : "rgba(245,241,232,0.5)",
+                      color: isSelected ? "#c6432b" : "rgba(245,241,232,0.6)",
                       textTransform: "uppercase",
-                      letterSpacing: "0.08em",
+                      letterSpacing: "0.06em",
+                      fontWeight: 400,
                     }}
                   >
                     {prob.tag}
@@ -381,11 +387,12 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
                     >
                       <p
                         style={{
-                          fontFamily: "system-ui, -apple-system, sans-serif",
-                          fontSize: "0.8rem",
-                          color: "rgba(245,241,232,0.75)",
-                          lineHeight: 1.45,
-                          margin: "0.6rem 0 0.5rem 0",
+                          fontFamily: "Inter, sans-serif",
+                          fontSize: "0.90rem",
+                          color: "rgba(245,241,232,0.78)",
+                          lineHeight: 1.48,
+                          margin: "0.55rem 0 0.45rem 0",
+                          fontWeight: 400,
                         }}
                       >
                         {prob.desc}
@@ -395,7 +402,7 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
                           display: "flex",
                           alignItems: "center",
                           gap: "0.5rem",
-                          padding: "0.45rem 0.65rem",
+                          padding: "0.45rem 0.75rem",
                           background: "rgba(0,0,0,0.45)",
                           border: "1px solid rgba(198,67,43,0.3)",
                         }}
@@ -403,9 +410,9 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
                         <span
                           style={{
                             fontFamily: "'JetBrains Mono', monospace",
-                            fontSize: "0.62rem",
+                            fontSize: "0.76rem",
                             color: "#c6432b",
-                            fontWeight: 700,
+                            fontWeight: 500,
                             letterSpacing: "0.05em",
                           }}
                         >
@@ -414,8 +421,9 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
                         <span
                           style={{
                             fontFamily: "'JetBrains Mono', monospace",
-                            fontSize: "0.68rem",
+                            fontSize: "0.82rem",
                             color: "#F5F1E8",
+                            fontWeight: 400,
                           }}
                         >
                           {prob.impact}
@@ -435,13 +443,13 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
           initial="hidden"
           animate={entered ? "visible" : "hidden"}
           style={{
-            padding: "0.9rem 1.2rem",
+            padding: "0.85rem 1.2rem",
             background: "rgba(10,10,10,0.9)",
             border: isServerDown ? "1.5px solid #c6432b" : "1px solid rgba(245,241,232,0.15)",
             boxShadow: isServerDown ? "4px 4px 0px #c6432b" : "4px 4px 0px rgba(0,0,0,0.8)",
             display: "flex",
             flexDirection: "column",
-            gap: "0.6rem",
+            gap: "0.55rem",
           }}
         >
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -458,10 +466,10 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
               <span
                 style={{
                   fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.65rem",
-                  letterSpacing: "0.15em",
+                  fontSize: "0.78rem",
+                  letterSpacing: "0.12em",
                   color: isServerDown ? "#c6432b" : "#d4a017",
-                  fontWeight: 700,
+                  fontWeight: 500,
                   textTransform: "uppercase",
                 }}
               >
@@ -473,10 +481,10 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
               <div
                 style={{
                   fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.75rem",
+                  fontSize: "0.86rem",
                   color: "#c6432b",
-                  fontWeight: 800,
-                  letterSpacing: "0.1em",
+                  fontWeight: 600,
+                  letterSpacing: "0.08em",
                 }}
               >
                 TIEMPO CAÍDO: {formatTime(outageSeconds)}
@@ -492,6 +500,7 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
                 icon={RefreshCw}
                 onClick={restoreServer}
                 className="w-full justify-center"
+                style={{ fontSize: "0.80rem" }}
               >
                 RESTAURAR SERVIDOR Y SISTEMAS
               </Button>
@@ -502,6 +511,7 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
                 icon={AlertTriangle}
                 onClick={triggerServerCrash}
                 className="w-full justify-center"
+                style={{ fontSize: "0.80rem" }}
               >
                 SIMULAR CAÍDA DEL SERVIDOR ÚNICO
               </Button>
@@ -541,14 +551,15 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-            <Server size={14} style={{ color: isServerDown ? "#c6432b" : "#d4a017" }} />
+            <Server size={16} style={{ color: isServerDown ? "#c6432b" : "#d4a017" }} />
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
+                fontSize: "0.78rem",
                 letterSpacing: "0.15em",
-                color: isServerDown ? "#c6432b" : "rgba(245,241,232,0.6)",
+                color: isServerDown ? "#c6432b" : "rgba(245,241,232,0.65)",
                 textTransform: "uppercase",
+                fontWeight: 400,
               }}
             >
               HOSTINGER SHARED RACK // SPOF
@@ -558,11 +569,12 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
           <div
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.6rem",
-              padding: "0.2rem 0.5rem",
+              fontSize: "0.74rem",
+              padding: "0.25rem 0.65rem",
               background: isServerDown ? "rgba(198,67,43,0.2)" : "rgba(0,0,0,0.6)",
               border: isServerDown ? "1px solid #c6432b" : "1px solid rgba(245,241,232,0.15)",
               color: isServerDown ? "#c6432b" : "#d4a017",
+              fontWeight: 500,
             }}
           >
             {isServerDown ? "STATUS: OUT_OF_SERVICE" : "STATUS: CRITICAL_OVERLOAD"}
@@ -603,29 +615,30 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
           {/* Nodo 1: Workspace MTA */}
           <div
             style={{
-              padding: "0.55rem 0.75rem",
+              padding: "0.65rem 0.85rem",
               background: isServerDown ? "rgba(198,67,43,0.15)" : "rgba(14,14,14,0.75)",
               border: isServerDown ? "1px solid #c6432b" : "1px solid rgba(245,241,232,0.15)",
               backdropFilter: "blur(6px)",
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "rgba(245,241,232,0.6)" }}>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "rgba(245,241,232,0.68)", fontWeight: 400 }}>
                 ERP MTA
               </span>
               {isServerDown ? (
-                <XCircle size={11} style={{ color: "#c6432b" }} />
+                <XCircle size={14} style={{ color: "#c6432b" }} />
               ) : (
-                <CheckCircle2 size={11} style={{ color: "#6e8e59" }} />
+                <CheckCircle2 size={14} style={{ color: "#6e8e59" }} />
               )}
             </div>
             <div
               style={{
                 fontFamily: "'Archivo Black', sans-serif",
-                fontSize: "0.72rem",
+                fontSize: "0.84rem",
                 color: isServerDown ? "#c6432b" : "#F5F1E8",
-                marginTop: "0.2rem",
+                marginTop: "0.25rem",
                 textTransform: "uppercase",
+                fontWeight: 400,
               }}
             >
               {isServerDown ? "CONGELADO" : "OPERATIVO"}
@@ -635,29 +648,30 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
           {/* Nodo 2: Strato Studio */}
           <div
             style={{
-              padding: "0.55rem 0.75rem",
+              padding: "0.65rem 0.85rem",
               background: isServerDown ? "rgba(198,67,43,0.15)" : "rgba(14,14,14,0.75)",
               border: isServerDown ? "1px solid #c6432b" : "1px solid rgba(245,241,232,0.15)",
               backdropFilter: "blur(6px)",
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "rgba(245,241,232,0.6)" }}>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "rgba(245,241,232,0.68)", fontWeight: 400 }}>
                 STRATO B2B
               </span>
               {isServerDown ? (
-                <XCircle size={11} style={{ color: "#c6432b" }} />
+                <XCircle size={14} style={{ color: "#c6432b" }} />
               ) : (
-                <CheckCircle2 size={11} style={{ color: "#6e8e59" }} />
+                <CheckCircle2 size={14} style={{ color: "#6e8e59" }} />
               )}
             </div>
             <div
               style={{
                 fontFamily: "'Archivo Black', sans-serif",
-                fontSize: "0.72rem",
+                fontSize: "0.84rem",
                 color: isServerDown ? "#c6432b" : "#F5F1E8",
-                marginTop: "0.2rem",
+                marginTop: "0.25rem",
                 textTransform: "uppercase",
+                fontWeight: 400,
               }}
             >
               {isServerDown ? "CAÍDA WEB" : "OPERATIVO"}
@@ -667,29 +681,30 @@ export function S08_Limitaciones({ isActive: propActive } = {}) {
           {/* Nodo 3: VIISION */}
           <div
             style={{
-              padding: "0.55rem 0.75rem",
+              padding: "0.65rem 0.85rem",
               background: isServerDown ? "rgba(198,67,43,0.15)" : "rgba(14,14,14,0.75)",
               border: isServerDown ? "1px solid #c6432b" : "1px solid rgba(245,241,232,0.15)",
               backdropFilter: "blur(6px)",
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "rgba(245,241,232,0.6)" }}>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "rgba(245,241,232,0.68)", fontWeight: 400 }}>
                 VIISION
               </span>
               {isServerDown ? (
-                <XCircle size={11} style={{ color: "#c6432b" }} />
+                <XCircle size={14} style={{ color: "#c6432b" }} />
               ) : (
-                <CheckCircle2 size={11} style={{ color: "#6e8e59" }} />
+                <CheckCircle2 size={14} style={{ color: "#6e8e59" }} />
               )}
             </div>
             <div
               style={{
                 fontFamily: "'Archivo Black', sans-serif",
-                fontSize: "0.72rem",
+                fontSize: "0.84rem",
                 color: isServerDown ? "#c6432b" : "#F5F1E8",
-                marginTop: "0.2rem",
+                marginTop: "0.25rem",
                 textTransform: "uppercase",
+                fontWeight: 400,
               }}
             >
               {isServerDown ? "CAÍDA DEMO" : "OPERATIVO"}

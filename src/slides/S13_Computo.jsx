@@ -17,7 +17,7 @@ const c = slidesContent.s14_computo;
 
 export function S14_Computo({ isActive: propActive } = {}) {
   const shouldReduceMotion = useReducedMotion();
-  const hookActive = useSlideActive(13);
+  const hookActive = useSlideActive(12);
   const sectionRef = useRef(null);
   const [domActive, setDomActive] = useState(false);
 
@@ -138,29 +138,29 @@ export function S14_Computo({ isActive: propActive } = {}) {
       />
 
       {/* ══════════════ COLUMNA IZQUIERDA (50%) ══════════════ */}
-      <div style={{ flex: "0 0 50%", display: "flex", flexDirection: "column", justifyContent: "center", padding: "2.5rem 3rem 2.5rem 4.8rem", position: "relative", zIndex: 2, gap: "0.85rem" }}>
+      <div style={{ flex: "0 0 50%", display: "flex", flexDirection: "column", justifyContent: "center", padding: "2.1rem 2.8rem 2.1rem 4.5rem", position: "relative", zIndex: 2, gap: "0.85rem" }}>
 
         {/* Header editorial */}
         <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
-          <motion.div variants={fadeUp(0.04)} initial="hidden" animate={entered ? "visible" : "hidden"} style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 700, color: "#d4a017", background: "rgba(212,160,23,0.12)", border: "1px solid rgba(212,160,23,0.4)", padding: "0.25rem 0.65rem" }}>
+          <motion.div variants={fadeUp(0.04)} initial="hidden" animate={entered ? "visible" : "hidden"} style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.80rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 500, color: "#d4a017", background: "rgba(212,160,23,0.12)", border: "1px solid rgba(212,160,23,0.4)", padding: "0.28rem 0.75rem" }}>
               [ {c.badge} ]
             </span>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", letterSpacing: "0.15em", color: "rgba(245,241,232,0.45)" }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.75rem", letterSpacing: "0.12em", color: "rgba(245,241,232,0.6)", fontWeight: 400 }}>
               SEC_14 // CLOUD_COMPUTE_SERVERS
             </span>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "#7a9b5c", background: "rgba(122,155,92,0.15)", border: "1px solid rgba(122,155,92,0.35)", padding: "0.15rem 0.45rem", fontWeight: 700 }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.70rem", color: "#7a9b5c", background: "rgba(122,155,92,0.15)", border: "1px solid rgba(122,155,92,0.35)", padding: "0.2rem 0.55rem", fontWeight: 500 }}>
               EC2 · EBS · DOCKER · LAMBDA
             </span>
           </motion.div>
 
           <motion.p variants={fadeUp(0.08)} initial="hidden" animate={entered ? "visible" : "hidden"}
-            style={{ fontFamily: "Yellowtail, cursive", fontSize: "clamp(1.3rem, 2vw, 1.8rem)", color: "#e8a0bf", lineHeight: 1.1, margin: "0.15rem 0 0 0" }}>
+            style={{ fontFamily: "Yellowtail, cursive", fontSize: "clamp(1.4rem, 2.3vw, 2.05rem)", color: "#e8a0bf", lineHeight: 1.1, margin: "0.15rem 0 0 0", fontWeight: 400 }}>
             {c.scriptTag}
           </motion.p>
 
           <motion.h1 variants={fadeUp(0.12)} initial="hidden" animate={entered ? "visible" : "hidden"}
-            style={{ fontFamily: "'Archivo Black', 'Arial Black', sans-serif", fontSize: "clamp(1.6rem, 2.3vw, 2.2rem)", color: "#F5F1E8", letterSpacing: "-0.025em", lineHeight: 1.05, textTransform: "uppercase", margin: 0 }}>
+            style={{ fontFamily: "'Archivo Black', 'Arial Black', sans-serif", fontSize: "clamp(1.7rem, 2.6vw, 2.5rem)", color: "#F5F1E8", letterSpacing: "-0.025em", lineHeight: 1.05, textTransform: "uppercase", margin: 0, fontWeight: 400 }}>
             {c.title}
           </motion.h1>
 
@@ -173,19 +173,19 @@ export function S14_Computo({ isActive: propActive } = {}) {
           />
 
           <motion.p variants={fadeUp(0.16)} initial="hidden" animate={entered ? "visible" : "hidden"}
-            style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "clamp(0.85rem, 1.05vw, 0.95rem)", color: "rgba(245,241,232,0.65)", margin: 0, lineHeight: 1.4 }}>
+            style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", fontSize: "clamp(0.94rem, 1.1vw, 1.02rem)", color: "rgba(245,241,232,0.78)", margin: 0, lineHeight: 1.5, fontWeight: 400 }}>
             {c.subtitle}
           </motion.p>
         </div>
 
         {/* Selector de 4 Opciones */}
         <motion.div variants={fadeUp(0.22)} initial="hidden" animate={entered ? "visible" : "hidden"}
-          style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.4rem", background: "rgba(18,18,18,0.9)", border: "1.5px solid rgba(245,241,232,0.15)", padding: "0.35rem" }}>
+          style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.45rem", background: "rgba(18,18,18,0.9)", border: "1.5px solid rgba(245,241,232,0.15)", padding: "0.4rem" }}>
           {Object.values(computeOptions).map((tech) => {
             const isSelected = selectedTech === tech.id;
             return (
               <button key={tech.id} type="button" onClick={() => setSelectedTech(tech.id)}
-                style={{ background: isSelected ? "#d4a017" : "transparent", color: isSelected ? "#0A0A0A" : "rgba(245,241,232,0.7)", border: isSelected ? "1px solid #d4a017" : "1px solid rgba(245,241,232,0.1)", padding: "0.4rem 0.3rem", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", fontWeight: 700, cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.2rem", transition: "all 0.18s ease", position: "relative", overflow: "hidden" }}>
+                style={{ background: isSelected ? "#d4a017" : "transparent", color: isSelected ? "#0A0A0A" : "rgba(245,241,232,0.75)", border: isSelected ? "1px solid #d4a017" : "1px solid rgba(245,241,232,0.1)", padding: "0.45rem 0.35rem", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", fontWeight: 500, cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem", transition: "all 0.18s ease", position: "relative", overflow: "hidden" }}>
                 {/* Animated selection glow */}
                 {isSelected && (
                   <motion.div
@@ -194,8 +194,8 @@ export function S14_Computo({ isActive: propActive } = {}) {
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}
-                <tech.icon size={13} style={{ position: "relative", zIndex: 1 }} />
-                <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", position: "relative", zIndex: 1 }}>
+                <tech.icon size={15} style={{ position: "relative", zIndex: 1 }} />
+                <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", position: "relative", zIndex: 1, letterSpacing: "0.03em" }}>
                   {tech.id.toUpperCase()}
                 </span>
               </button>
@@ -205,22 +205,22 @@ export function S14_Computo({ isActive: propActive } = {}) {
 
         {/* Telemetría live */}
         <motion.div variants={fadeUp(0.28)} initial="hidden" animate={entered ? "visible" : "hidden"}
-          style={{ padding: "0.45rem 0.75rem", background: "#0A0A0A", border: "1px solid rgba(245,241,232,0.12)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          style={{ padding: "0.6rem 0.85rem", background: "#0A0A0A", border: "1px solid rgba(245,241,232,0.12)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
             {/* Pulsing dot */}
             <motion.div
               animate={{ opacity: pulse ? 1 : 0.3, scale: pulse ? 1.2 : 0.9 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
-              style={{ width: 7, height: 7, borderRadius: "50%", background: "#7a9b5c", flexShrink: 0 }}
+              style={{ width: 8, height: 8, borderRadius: "50%", background: "#7a9b5c", flexShrink: 0 }}
             />
-            <Activity size={13} style={{ color: "#d4a017", flexShrink: 0 }} />
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#d4a017", fontWeight: 700 }}>COMPUTE STATUS:</span>
+            <Activity size={15} style={{ color: "#d4a017", flexShrink: 0 }} />
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#d4a017", fontWeight: 600 }}>COMPUTE STATUS:</span>
             <AnimatePresence mode="wait">
               <motion.span
                 key={selectedTech + "-spec"}
                 initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }}
                 transition={{ duration: 0.2 }}
-                style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "#F5F1E8" }}>
+                style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.70rem", color: "#F5F1E8", fontWeight: 400 }}>
                 {current.specs}
               </motion.span>
             </AnimatePresence>
@@ -230,18 +230,18 @@ export function S14_Computo({ isActive: propActive } = {}) {
               key={selectedTech + "-cost"}
               initial={{ opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -8 }}
               transition={{ duration: 0.2 }}
-              style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#7a9b5c", fontWeight: 800 }}>
+              style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.70rem", color: "#7a9b5c", fontWeight: 600 }}>
               {current.cost}
             </motion.span>
           </AnimatePresence>
         </motion.div>
 
         {/* Matriz de Instancias EC2 */}
-        <motion.div variants={fadeUp(0.34)} initial="hidden" animate={entered ? "visible" : "hidden"} style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "#d4a017", letterSpacing: "0.1em", fontWeight: 700 }}>
+        <motion.div variants={fadeUp(0.34)} initial="hidden" animate={entered ? "visible" : "hidden"} style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: "#d4a017", letterSpacing: "0.1em", fontWeight: 600 }}>
             CONFIGURACIÓN PROPUESTA PARA MTA SOFTWARE:
           </span>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.45rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.55rem" }}>
             {Object.entries(instanceProfiles).map(([key, inst], idx) => {
               const isSelectedInst = instanceSize === key;
               return (
@@ -249,22 +249,22 @@ export function S14_Computo({ isActive: propActive } = {}) {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
                   transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                  style={{ padding: "0.55rem 0.65rem", background: isSelectedInst ? "rgba(212,160,23,0.12)" : "rgba(255,255,255,0.02)", border: isSelectedInst ? "1.5px solid #d4a017" : "1px solid rgba(245,241,232,0.12)", cursor: "pointer", display: "flex", flexDirection: "column", gap: "0.2rem" }}>
+                  style={{ padding: "0.65rem 0.75rem", background: isSelectedInst ? "rgba(212,160,23,0.12)" : "rgba(255,255,255,0.02)", border: isSelectedInst ? "1.5px solid #d4a017" : "1px solid rgba(245,241,232,0.12)", cursor: "pointer", display: "flex", flexDirection: "column", gap: "0.25rem" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", fontWeight: 700, color: isSelectedInst ? "#d4a017" : "#F5F1E8" }}>{key}</span>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#7a9b5c", fontWeight: 700 }}>{inst.cost}</span>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", fontWeight: 600, color: isSelectedInst ? "#d4a017" : "#F5F1E8" }}>{key}</span>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "#7a9b5c", fontWeight: 600 }}>{inst.cost}</span>
                   </div>
-                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.52rem", color: "rgba(245,241,232,0.55)" }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "rgba(245,241,232,0.65)", fontWeight: 400 }}>
                     {inst.vCPU} vCPU · {inst.ram} · {inst.iops} IOPS
                   </div>
-                  <div style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.62rem", color: isSelectedInst ? "#F5F1E8" : "rgba(245,241,232,0.4)" }}>
+                  <div style={{ fontFamily: "Inter, system-ui, sans-serif", fontSize: "0.72rem", color: isSelectedInst ? "#F5F1E8" : "rgba(245,241,232,0.6)", fontWeight: 400, lineHeight: 1.3 }}>
                     {inst.role}
                   </div>
                   {/* Animated selection bar */}
                   {isSelectedInst && (
                     <motion.div
                       layoutId="instance-bar"
-                      style={{ height: 2, background: "#d4a017", borderRadius: 1, marginTop: "0.15rem" }}
+                      style={{ height: 2, background: "#d4a017", borderRadius: 1, marginTop: "0.2rem" }}
                       transition={{ type: "spring", stiffness: 500, damping: 30 }}
                     />
                   )}
@@ -276,14 +276,14 @@ export function S14_Computo({ isActive: propActive } = {}) {
       </div>
 
       {/* ══════════════ COLUMNA DERECHA (50%) ══════════════ */}
-      <div style={{ flex: "0 0 50%", position: "relative", display: "flex", flexDirection: "column", justifyContent: "center", padding: "2.5rem 4rem 2.5rem 1rem", zIndex: 2, gap: "0.75rem" }}>
+      <div style={{ flex: "0 0 50%", position: "relative", display: "flex", flexDirection: "column", justifyContent: "center", padding: "2.1rem 3.5rem 2.1rem 1rem", zIndex: 2, gap: "0.75rem" }}>
 
         {/* Cabecera técnica */}
         <motion.div variants={fadeUp(0.1)} initial="hidden" animate={entered ? "visible" : "hidden"}
-          style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.3rem 0.6rem", background: "#101010", border: "1px solid rgba(245,241,232,0.12)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <Cpu size={13} style={{ color: "#d4a017" }} />
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", letterSpacing: "0.15em", color: "rgba(245,241,232,0.7)", textTransform: "uppercase", fontWeight: 700 }}>
+          style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.4rem 0.8rem", background: "#101010", border: "1px solid rgba(245,241,232,0.12)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
+            <Cpu size={15} style={{ color: "#d4a017" }} />
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", letterSpacing: "0.15em", color: "rgba(245,241,232,0.8)", textTransform: "uppercase", fontWeight: 500 }}>
               EVALUACIÓN DE ARQUITECTURAS MODERNAS // SEMANA 7
             </span>
           </div>
@@ -291,7 +291,7 @@ export function S14_Computo({ isActive: propActive } = {}) {
             <motion.span key={selectedTech + "-suit"}
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#7a9b5c", fontWeight: 700 }}>
+              style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "#7a9b5c", fontWeight: 600 }}>
               {current.suitability}
             </motion.span>
           </AnimatePresence>
@@ -305,27 +305,27 @@ export function S14_Computo({ isActive: propActive } = {}) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -16, scale: 0.97 }}
             transition={{ duration: shouldReduceMotion ? 0.1 : 0.38, ease: [0.16, 1, 0.3, 1] }}
-            style={{ background: "#0c0c0c", border: `2px solid ${current.color}55`, padding: "0.9rem", display: "flex", flexDirection: "column", gap: "0.65rem" }}>
+            style={{ background: "#0c0c0c", border: `2px solid ${current.color}55`, padding: "1rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
 
             {/* Icon + Name */}
-            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
               <motion.div
                 initial={{ scale: 0, rotate: -20 }} animate={{ scale: 1, rotate: 0 }}
                 transition={{ type: "spring", stiffness: 400, damping: 20, delay: 0.05 }}
-                style={{ width: 36, height: 36, background: `${current.color}22`, border: `1px solid ${current.color}`, display: "flex", alignItems: "center", justifyContent: "center", color: current.color }}>
-                <current.icon size={20} />
+                style={{ width: 42, height: 42, background: `${current.color}22`, border: `1px solid ${current.color}`, display: "flex", alignItems: "center", justifyContent: "center", color: current.color, flexShrink: 0 }}>
+                <current.icon size={22} />
               </motion.div>
               <div>
-                <h3 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.95rem", color: "#F5F1E8", margin: 0, textTransform: "uppercase" }}>
+                <h3 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "1.05rem", color: "#F5F1E8", margin: 0, textTransform: "uppercase", fontWeight: 400 }}>
                   {current.name}
                 </h3>
-                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: current.color, fontWeight: 700 }}>
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: current.color, fontWeight: 500 }}>
                   {current.category}
                 </span>
               </div>
             </div>
 
-            <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.74rem", color: "rgba(245,241,232,0.85)", lineHeight: 1.4, margin: 0 }}>
+            <p style={{ fontFamily: "Inter, system-ui, sans-serif", fontSize: "0.84rem", color: "rgba(245,241,232,0.88)", lineHeight: 1.48, margin: 0, fontWeight: 400 }}>
               {current.desc}
             </p>
 
@@ -333,14 +333,14 @@ export function S14_Computo({ isActive: propActive } = {}) {
             <motion.div
               initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.1 }}
-              style={{ background: "#121212", border: "1px solid rgba(245,241,232,0.1)", padding: "0.5rem 0.65rem", display: "flex", flexDirection: "column", gap: "0.2rem" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                <HardDrive size={12} style={{ color: "#d4a017" }} />
-                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "#d4a017", fontWeight: 700 }}>
+              style={{ background: "#121212", border: "1px solid rgba(245,241,232,0.1)", padding: "0.6rem 0.8rem", display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
+                <HardDrive size={14} style={{ color: "#d4a017" }} />
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: "#d4a017", fontWeight: 600 }}>
                   ALMACENAMIENTO DE BLOQUES (AMAZON EBS GP3):
                 </span>
               </div>
-              <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "rgba(245,241,232,0.75)", margin: 0, lineHeight: 1.3 }}>
+              <p style={{ fontFamily: "Inter, system-ui, sans-serif", fontSize: "0.78rem", color: "rgba(245,241,232,0.85)", margin: 0, lineHeight: 1.4, fontWeight: 400 }}>
                 {current.ebsDetail}
               </p>
             </motion.div>
@@ -349,11 +349,11 @@ export function S14_Computo({ isActive: propActive } = {}) {
             <motion.div
               initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.18 }}
-              style={{ borderLeft: "3px solid #d4a017", background: "rgba(212,160,23,0.06)", padding: "0.45rem 0.65rem" }}>
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#d4a017", fontWeight: 700, display: "block", marginBottom: "0.15rem" }}>
+              style={{ borderLeft: "3.5px solid #d4a017", background: "rgba(212,160,23,0.06)", padding: "0.55rem 0.8rem" }}>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "#d4a017", fontWeight: 600, display: "block", marginBottom: "0.2rem" }}>
                 CASO DE APLICACIÓN EN MTA SOFTWARE:
               </span>
-              <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "#F5F1E8", margin: 0, lineHeight: 1.35 }}>
+              <p style={{ fontFamily: "Inter, system-ui, sans-serif", fontSize: "0.78rem", color: "#F5F1E8", margin: 0, lineHeight: 1.4, fontWeight: 400 }}>
                 {current.mtaCase}
               </p>
             </motion.div>
@@ -362,11 +362,11 @@ export function S14_Computo({ isActive: propActive } = {}) {
             <motion.div
               initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.3, delay: 0.26 }}
-              style={{ borderLeft: "3px solid #7a9b5c", background: "rgba(122,155,92,0.06)", padding: "0.45rem 0.65rem" }}>
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#7a9b5c", fontWeight: 700, display: "block", marginBottom: "0.15rem" }}>
+              style={{ borderLeft: "3.5px solid #7a9b5c", background: "rgba(122,155,92,0.06)", padding: "0.55rem 0.8rem" }}>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "#7a9b5c", fontWeight: 600, display: "block", marginBottom: "0.2rem" }}>
                 SUPERACIÓN DE LA LIMITACIÓN ACTUAL:
               </span>
-              <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "#F5F1E8", margin: 0, lineHeight: 1.35 }}>
+              <p style={{ fontFamily: "Inter, system-ui, sans-serif", fontSize: "0.78rem", color: "#F5F1E8", margin: 0, lineHeight: 1.4, fontWeight: 400 }}>
                 {current.hostingerAdvantage}
               </p>
             </motion.div>
@@ -375,9 +375,9 @@ export function S14_Computo({ isActive: propActive } = {}) {
 
         {/* Footer */}
         <motion.div variants={fadeUp(0.45)} initial="hidden" animate={entered ? "visible" : "hidden"}
-          style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "rgba(245,241,232,0.45)", display: "flex", justifyContent: "space-between" }}>
+          style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "rgba(245,241,232,0.55)", display: "flex", justifyContent: "space-between", fontWeight: 400 }}>
           <span>ENTREGABLE 2 · CAPA DE CÓMPUTO</span>
-          <span style={{ color: "#d4a017" }}>SEMANA 7 · SENATI</span>
+          <span style={{ color: "#d4a017", fontWeight: 500 }}>SEMANA 7 · SENATI</span>
         </motion.div>
       </div>
     </section>

@@ -17,7 +17,7 @@ const c = slidesContent.s15_almacenamiento;
 
 export function S15_Almacenamiento({ isActive: propActive } = {}) {
   const shouldReduceMotion = useReducedMotion();
-  const hookActive = useSlideActive(14);
+  const hookActive = useSlideActive(13);
   const sectionRef = useRef(null);
   const [domActive, setDomActive] = useState(false);
 
@@ -136,28 +136,28 @@ export function S15_Almacenamiento({ isActive: propActive } = {}) {
       />
 
       {/* ══════════════ COLUMNA IZQUIERDA ══════════════ */}
-      <div style={{ flex: "0 0 50%", display: "flex", flexDirection: "column", justifyContent: "center", padding: "2.5rem 3rem 2.5rem 4.8rem", position: "relative", zIndex: 2, gap: "0.85rem" }}>
+      <div style={{ flex: "0 0 50%", display: "flex", flexDirection: "column", justifyContent: "center", padding: "2.1rem 2.8rem 2.1rem 4.5rem", position: "relative", zIndex: 2, gap: "0.85rem" }}>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
-          <motion.div variants={fadeUp(0.04)} initial="hidden" animate={entered ? "visible" : "hidden"} style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 700, color: "#d4a017", background: "rgba(212,160,23,0.12)", border: "1px solid rgba(212,160,23,0.4)", padding: "0.25rem 0.65rem" }}>
+          <motion.div variants={fadeUp(0.04)} initial="hidden" animate={entered ? "visible" : "hidden"} style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.80rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 500, color: "#d4a017", background: "rgba(212,160,23,0.12)", border: "1px solid rgba(212,160,23,0.4)", padding: "0.28rem 0.75rem" }}>
               [ {c.badge} ]
             </span>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", letterSpacing: "0.15em", color: "rgba(245,241,232,0.45)" }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.76rem", letterSpacing: "0.12em", color: "rgba(245,241,232,0.65)", fontWeight: 400 }}>
               SEC_15 // STORAGE_AND_ARCHIVE
             </span>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "#7a9b5c", background: "rgba(122,155,92,0.15)", border: "1px solid rgba(122,155,92,0.35)", padding: "0.15rem 0.45rem", fontWeight: 700 }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#7a9b5c", background: "rgba(122,155,92,0.15)", border: "1px solid rgba(122,155,92,0.35)", padding: "0.24rem 0.6rem", fontWeight: 500 }}>
               S3 · EFS · GLACIER
             </span>
           </motion.div>
 
           <motion.p variants={fadeUp(0.08)} initial="hidden" animate={entered ? "visible" : "hidden"}
-            style={{ fontFamily: "Yellowtail, cursive", fontSize: "clamp(1.3rem, 2vw, 1.8rem)", color: "#e8a0bf", lineHeight: 1.1, margin: "0.15rem 0 0 0" }}>
+            style={{ fontFamily: "Yellowtail, cursive", fontSize: "clamp(1.4rem, 2.3vw, 2.05rem)", color: "#e8a0bf", lineHeight: 1.1, margin: "0.15rem 0 0 0", fontWeight: 400 }}>
             {c.scriptTag}
           </motion.p>
 
           <motion.h1 variants={fadeUp(0.12)} initial="hidden" animate={entered ? "visible" : "hidden"}
-            style={{ fontFamily: "'Archivo Black', 'Arial Black', sans-serif", fontSize: "clamp(1.6rem, 2.3vw, 2.2rem)", color: "#F5F1E8", letterSpacing: "-0.025em", lineHeight: 1.05, textTransform: "uppercase", margin: 0 }}>
+            style={{ fontFamily: "'Archivo Black', 'Arial Black', sans-serif", fontSize: "clamp(1.7rem, 2.6vw, 2.5rem)", color: "#F5F1E8", letterSpacing: "-0.025em", lineHeight: 1.05, textTransform: "uppercase", margin: 0, fontWeight: 400 }}>
             {c.title}
           </motion.h1>
 
@@ -169,27 +169,27 @@ export function S15_Almacenamiento({ isActive: propActive } = {}) {
           />
 
           <motion.p variants={fadeUp(0.16)} initial="hidden" animate={entered ? "visible" : "hidden"}
-            style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "clamp(0.85rem, 1.05vw, 0.95rem)", color: "rgba(245,241,232,0.65)", margin: 0, lineHeight: 1.4 }}>
+            style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", fontSize: "clamp(0.94rem, 1.1vw, 1.02rem)", color: "rgba(245,241,232,0.78)", margin: 0, lineHeight: 1.5, fontWeight: 400 }}>
             {c.subtitle}
           </motion.p>
         </div>
 
         {/* Selector de 3 servicios */}
         <motion.div variants={fadeUp(0.22)} initial="hidden" animate={entered ? "visible" : "hidden"}
-          style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.4rem", background: "rgba(18,18,18,0.9)", border: "1.5px solid rgba(245,241,232,0.15)", padding: "0.35rem" }}>
+          style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.45rem", background: "rgba(18,18,18,0.9)", border: "1.5px solid rgba(245,241,232,0.15)", padding: "0.45rem" }}>
           {Object.values(storageServices).map((s) => {
             const isSelected = selectedStorage === s.id;
             return (
               <button key={s.id} type="button" onClick={() => setSelectedStorage(s.id)}
-                style={{ background: isSelected ? "#d4a017" : "transparent", color: isSelected ? "#0A0A0A" : "rgba(245,241,232,0.7)", border: isSelected ? "1px solid #d4a017" : "1px solid rgba(245,241,232,0.1)", padding: "0.45rem 0.35rem", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", fontWeight: 700, cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.2rem", transition: "all 0.18s ease", position: "relative", overflow: "hidden" }}>
+                style={{ background: isSelected ? "#d4a017" : "transparent", color: isSelected ? "#0A0A0A" : "rgba(245,241,232,0.85)", border: isSelected ? "1px solid #d4a017" : "1px solid rgba(245,241,232,0.12)", padding: "0.55rem 0.4rem", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.76rem", fontWeight: isSelected ? 600 : 500, cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.28rem", transition: "all 0.18s ease", position: "relative", overflow: "hidden" }}>
                 {isSelected && (
                   <motion.div layoutId="storage-selector-glow"
                     style={{ position: "absolute", inset: 0, background: "rgba(212,160,23,0.15)" }}
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}
-                <s.icon size={14} style={{ position: "relative", zIndex: 1 }} />
-                <span style={{ position: "relative", zIndex: 1 }}>{s.id.toUpperCase()}</span>
+                <s.icon size={17} style={{ position: "relative", zIndex: 1 }} />
+                <span style={{ position: "relative", zIndex: 1, letterSpacing: "0.04em" }}>{s.id.toUpperCase()}</span>
               </button>
             );
           })}
@@ -197,42 +197,42 @@ export function S15_Almacenamiento({ isActive: propActive } = {}) {
 
         {/* Simulador de Ciclo de Vida con contador animado */}
         <motion.div variants={fadeUp(0.28)} initial="hidden" animate={entered ? "visible" : "hidden"}
-          style={{ padding: "0.7rem 0.85rem", background: "#0c0c0c", border: "1.5px solid rgba(212,160,23,0.35)", display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+          style={{ padding: "0.85rem 1rem", background: "#0c0c0c", border: "1.5px solid rgba(212,160,23,0.35)", display: "flex", flexDirection: "column", gap: "0.55rem" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#d4a017", fontWeight: 700 }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.76rem", color: "#d4a017", fontWeight: 600 }}>
               POLÍTICA DE CICLO DE VIDA (S3 LIFECYCLE RULE):
             </span>
             {/* Animated savings counter */}
-            <div style={{ display: "flex", alignItems: "baseline", gap: "0.2rem" }}>
+            <div style={{ display: "flex", alignItems: "baseline", gap: "0.25rem" }}>
               <motion.span
                 key={targetSavings}
-                style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.9rem", color: targetSavings > 0 ? "#7a9b5c" : "rgba(245,241,232,0.4)", fontWeight: 800 }}>
+                style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "1.1rem", color: targetSavings > 0 ? "#7a9b5c" : "rgba(245,241,232,0.4)", fontWeight: 600 }}>
                 {displaySavings}%
               </motion.span>
               {targetSavings > 0 && (
-                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.52rem", color: "#7a9b5c" }}>AHORRO</span>
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: "#7a9b5c", fontWeight: 600 }}>AHORRO</span>
               )}
             </div>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
             {lifecycleSteps.map((p) => {
               const isActive2 = lifecycleDay >= p.day;
               const isCurrent = lifecycleDay === p.day;
               return (
                 <motion.button key={p.day} type="button" onClick={() => setLifecycleDay(p.day)}
                   whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}
-                  style={{ flex: 1, background: isActive2 ? "rgba(212,160,23,0.15)" : "#141414", border: isCurrent ? "1.5px solid #d4a017" : isActive2 ? "1px solid rgba(212,160,23,0.5)" : "1px solid rgba(245,241,232,0.12)", color: isActive2 ? "#d4a017" : "rgba(245,241,232,0.5)", padding: "0.35rem 0.3rem", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.52rem", fontWeight: 700, cursor: "pointer", transition: "all 0.2s ease" }}>
+                  style={{ flex: 1, background: isActive2 ? "rgba(212,160,23,0.15)" : "#141414", border: isCurrent ? "1.5px solid #d4a017" : isActive2 ? "1px solid rgba(212,160,23,0.5)" : "1px solid rgba(245,241,232,0.12)", color: isActive2 ? "#d4a017" : "rgba(245,241,232,0.65)", padding: "0.5rem 0.35rem", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", fontWeight: 500, cursor: "pointer", transition: "all 0.2s ease" }}>
                   <div>{p.label}</div>
-                  <div style={{ fontSize: "0.48rem", opacity: 0.7, marginTop: "0.1rem" }}>{p.tier}</div>
+                  <div style={{ fontSize: "0.66rem", opacity: 0.85, marginTop: "0.15rem", fontWeight: 400 }}>{p.tier}</div>
                 </motion.button>
               );
             })}
           </div>
 
-          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "rgba(245,241,232,0.65)", display: "flex", justifyContent: "space-between", borderTop: "1px dashed rgba(245,241,232,0.12)", paddingTop: "0.3rem" }}>
-            <span>NIVEL ACTIVO: <strong style={{ color: "#F5F1E8" }}>{currentLifecycle.tier}</strong></span>
-            <span>COSTO ESTIMADO: <strong style={{ color: "#7a9b5c" }}>{currentLifecycle.cost}</strong></span>
+          <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "rgba(245,241,232,0.8)", display: "flex", justifyContent: "space-between", borderTop: "1px dashed rgba(245,241,232,0.15)", paddingTop: "0.4rem", fontWeight: 400 }}>
+            <span>NIVEL ACTIVO: <strong style={{ color: "#F5F1E8", fontWeight: 600 }}>{currentLifecycle.tier}</strong></span>
+            <span>COSTO ESTIMADO: <strong style={{ color: "#7a9b5c", fontWeight: 600 }}>{currentLifecycle.cost}</strong></span>
           </div>
         </motion.div>
 
@@ -245,31 +245,31 @@ export function S15_Almacenamiento({ isActive: propActive } = {}) {
           ].map((item, i) => (
             <motion.div key={i} whileHover={{ scale: 1.02, borderColor: item.color }}
               transition={{ type: "spring", stiffness: 400, damping: 25 }}
-              style={{ padding: "0.6rem 0.75rem", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(245,241,232,0.12)", borderLeft: `3px solid ${item.color}`, cursor: "default" }}>
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: item.color, fontWeight: 700, display: "block" }}>{item.title}</span>
-              <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.65rem", color: "rgba(245,241,232,0.75)", margin: "0.2rem 0 0 0", lineHeight: 1.25 }}>{item.desc}</p>
+              style={{ padding: "0.75rem 0.9rem", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(245,241,232,0.12)", borderLeft: `3px solid ${item.color}`, cursor: "default" }}>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.78rem", color: item.color, fontWeight: 600, display: "block" }}>{item.title}</span>
+              <p style={{ fontFamily: "Inter, system-ui, sans-serif", fontSize: "0.82rem", color: "rgba(245,241,232,0.85)", margin: "0.25rem 0 0 0", lineHeight: 1.4, fontWeight: 400 }}>{item.desc}</p>
             </motion.div>
           ))}
         </motion.div>
       </div>
 
       {/* ══════════════ COLUMNA DERECHA ══════════════ */}
-      <div style={{ flex: "0 0 50%", position: "relative", display: "flex", flexDirection: "column", justifyContent: "center", padding: "2.5rem 4rem 2.5rem 1rem", zIndex: 2, gap: "0.75rem" }}>
+      <div style={{ flex: "0 0 50%", position: "relative", display: "flex", flexDirection: "column", justifyContent: "center", padding: "2.1rem 3.5rem 2.1rem 1rem", zIndex: 2, gap: "0.75rem" }}>
 
         <motion.div variants={fadeUp(0.1)} initial="hidden" animate={entered ? "visible" : "hidden"}
-          style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.3rem 0.6rem", background: "#101010", border: "1px solid rgba(245,241,232,0.12)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.45rem 0.85rem", background: "#101010", border: "1px solid rgba(245,241,232,0.12)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
             <motion.div animate={{ opacity: pulse ? 1 : 0.3, scale: pulse ? 1.2 : 0.9 }} transition={{ duration: 0.5 }}
-              style={{ width: 7, height: 7, borderRadius: "50%", background: "#7a9b5c" }} />
-            <HardDrive size={13} style={{ color: "#d4a017" }} />
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", letterSpacing: "0.15em", color: "rgba(245,241,232,0.7)", textTransform: "uppercase", fontWeight: 700 }}>
+              style={{ width: 8, height: 8, borderRadius: "50%", background: "#7a9b5c" }} />
+            <HardDrive size={16} style={{ color: "#d4a017" }} />
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.78rem", letterSpacing: "0.14em", color: "rgba(245,241,232,0.85)", textTransform: "uppercase", fontWeight: 500 }}>
               DATA RETENTION & STORAGE MATRIX // SEMANA 7
             </span>
           </div>
           <AnimatePresence mode="wait">
             <motion.span key={selectedStorage + "-price"}
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
-              style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#7a9b5c", fontWeight: 700 }}>
+              style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "#7a9b5c", fontWeight: 600 }}>
               {current.pricing}
             </motion.span>
           </AnimatePresence>
@@ -282,56 +282,56 @@ export function S15_Almacenamiento({ isActive: propActive } = {}) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -16, scale: 0.97 }}
             transition={{ duration: shouldReduceMotion ? 0.1 : 0.38, ease: [0.16, 1, 0.3, 1] }}
-            style={{ background: "#0c0c0c", border: `2px solid ${current.color}55`, padding: "0.9rem", display: "flex", flexDirection: "column", gap: "0.65rem" }}>
+            style={{ background: "#0c0c0c", border: `2px solid ${current.color}55`, padding: "1.1rem 1.15rem", display: "flex", flexDirection: "column", gap: "0.8rem" }}>
 
-            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.85rem" }}>
               <motion.div
                 initial={{ scale: 0, rotate: -20 }} animate={{ scale: 1, rotate: 0 }}
                 transition={{ type: "spring", stiffness: 400, damping: 20, delay: 0.05 }}
-                style={{ width: 36, height: 36, background: `${current.color}22`, border: `1px solid ${current.color}`, display: "flex", alignItems: "center", justifyContent: "center", color: current.color }}>
-                <current.icon size={20} />
+                style={{ width: 44, height: 44, background: `${current.color}22`, border: `1px solid ${current.color}`, display: "flex", alignItems: "center", justifyContent: "center", color: current.color, flexShrink: 0 }}>
+                <current.icon size={23} />
               </motion.div>
               <div>
-                <h3 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.95rem", color: "#F5F1E8", margin: 0, textTransform: "uppercase" }}>{current.name}</h3>
-                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: current.color, fontWeight: 700 }}>{current.category}</span>
+                <h3 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "1.1rem", color: "#F5F1E8", margin: 0, textTransform: "uppercase", fontWeight: 400 }}>{current.name}</h3>
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: current.color, fontWeight: 500 }}>{current.category}</span>
               </div>
             </div>
 
-            <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.74rem", color: "rgba(245,241,232,0.85)", lineHeight: 1.4, margin: 0 }}>
+            <p style={{ fontFamily: "Inter, system-ui, sans-serif", fontSize: "0.88rem", color: "rgba(245,241,232,0.9)", lineHeight: 1.5, margin: 0, fontWeight: 400 }}>
               {current.desc}
             </p>
 
             <motion.div initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: 0.1 }}
-              style={{ borderLeft: "3px solid #d4a017", background: "rgba(212,160,23,0.06)", padding: "0.45rem 0.65rem" }}>
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#d4a017", fontWeight: 700, display: "block", marginBottom: "0.15rem" }}>
+              style={{ borderLeft: "3.5px solid #d4a017", background: "rgba(212,160,23,0.06)", padding: "0.6rem 0.85rem" }}>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "#d4a017", fontWeight: 600, display: "block", marginBottom: "0.22rem" }}>
                 PROPUESTA DE USO EN MTA SOFTWARE:
               </span>
-              <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "#F5F1E8", margin: 0, lineHeight: 1.35 }}>{current.mtaPurpose}</p>
+              <p style={{ fontFamily: "Inter, system-ui, sans-serif", fontSize: "0.82rem", color: "#F5F1E8", margin: 0, lineHeight: 1.44, fontWeight: 400 }}>{current.mtaPurpose}</p>
             </motion.div>
 
             <motion.div initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: 0.18 }}
-              style={{ background: "#121212", border: "1px solid rgba(245,241,232,0.1)", padding: "0.5rem 0.65rem", display: "flex", flexDirection: "column", gap: "0.2rem" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                <Clock size={12} style={{ color: "#d4a017" }} />
-                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "#d4a017", fontWeight: 700 }}>POLÍTICA DE RETENCIÓN Y ARCHIVADO:</span>
+              style={{ background: "#121212", border: "1px solid rgba(245,241,232,0.1)", padding: "0.65rem 0.85rem", display: "flex", flexDirection: "column", gap: "0.28rem" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <Clock size={15} style={{ color: "#d4a017" }} />
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#d4a017", fontWeight: 600 }}>POLÍTICA DE RETENCIÓN Y ARCHIVADO:</span>
               </div>
-              <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "rgba(245,241,232,0.75)", margin: 0, lineHeight: 1.3 }}>{current.retentionPolicy}</p>
+              <p style={{ fontFamily: "Inter, system-ui, sans-serif", fontSize: "0.82rem", color: "rgba(245,241,232,0.88)", margin: 0, lineHeight: 1.44, fontWeight: 400 }}>{current.retentionPolicy}</p>
             </motion.div>
 
             <motion.div initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: 0.26 }}
-              style={{ borderLeft: "3px solid #7a9b5c", background: "rgba(122,155,92,0.06)", padding: "0.45rem 0.65rem" }}>
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#7a9b5c", fontWeight: 700, display: "block", marginBottom: "0.15rem" }}>
+              style={{ borderLeft: "3.5px solid #7a9b5c", background: "rgba(122,155,92,0.06)", padding: "0.6rem 0.85rem" }}>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "#7a9b5c", fontWeight: 600, display: "block", marginBottom: "0.22rem" }}>
                 SUPERACIÓN DEL HOSPEDAJE TRADICIONAL:
               </span>
-              <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "#F5F1E8", margin: 0, lineHeight: 1.35 }}>{current.advantageHostinger}</p>
+              <p style={{ fontFamily: "Inter, system-ui, sans-serif", fontSize: "0.82rem", color: "#F5F1E8", margin: 0, lineHeight: 1.44, fontWeight: 400 }}>{current.advantageHostinger}</p>
             </motion.div>
           </motion.div>
         </AnimatePresence>
 
         <motion.div variants={fadeUp(0.45)} initial="hidden" animate={entered ? "visible" : "hidden"}
-          style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "rgba(245,241,232,0.45)", display: "flex", justifyContent: "space-between" }}>
+          style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.70rem", color: "rgba(245,241,232,0.6)", display: "flex", justifyContent: "space-between", fontWeight: 400 }}>
           <span>ENTREGABLE 2 · ESTRATEGIA DE STORAGE</span>
-          <span style={{ color: "#d4a017" }}>SEMANA 7 · SENATI</span>
+          <span style={{ color: "#d4a017", fontWeight: 500 }}>SEMANA 7 · SENATI</span>
         </motion.div>
       </div>
     </section>

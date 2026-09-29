@@ -181,7 +181,7 @@ export function S11_IAM({ isActive: propActive } = {}) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          padding: "2.5rem 3rem 2.5rem 4.8rem",
+          padding: "2.1rem 2.8rem 2.1rem 4.5rem",
           position: "relative",
           zIndex: 2,
           gap: "0.85rem",
@@ -198,14 +198,14 @@ export function S11_IAM({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
-                letterSpacing: "0.2em",
+                fontSize: "0.80rem",
+                letterSpacing: "0.15em",
                 textTransform: "uppercase",
-                fontWeight: 700,
+                fontWeight: 500,
                 color: isRoot ? "#c6432b" : "#6e8e59",
                 background: isRoot ? "rgba(198,67,43,0.12)" : "rgba(110,142,89,0.12)",
                 border: isRoot ? "1px solid rgba(198,67,43,0.4)" : "1px solid rgba(110,142,89,0.4)",
-                padding: "0.25rem 0.65rem",
+                padding: "0.28rem 0.75rem",
                 transition: "all 0.3s ease",
               }}
             >
@@ -214,9 +214,10 @@ export function S11_IAM({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.62rem",
-                letterSpacing: "0.15em",
-                color: "rgba(245,241,232,0.45)",
+                fontSize: "0.75rem",
+                letterSpacing: "0.12em",
+                color: "rgba(245,241,232,0.6)",
+                fontWeight: 400,
               }}
             >
               SEC_11 // IDENTITY_AND_ACCESS_MANAGEMENT
@@ -229,10 +230,11 @@ export function S11_IAM({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Yellowtail, cursive",
-              fontSize: "clamp(1.3rem, 2vw, 1.8rem)",
+              fontSize: "clamp(1.4rem, 2.3vw, 2.05rem)",
               color: "#e8a0bf",
               lineHeight: 1.1,
               margin: "0.15rem 0 0 0",
+              fontWeight: 400,
             }}
           >
             {c.scriptTag}
@@ -244,12 +246,13 @@ export function S11_IAM({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "'Archivo Black', 'Arial Black', sans-serif",
-              fontSize: "clamp(1.7rem, 2.5vw, 2.4rem)",
+              fontSize: "clamp(1.7rem, 2.6vw, 2.5rem)",
               color: "#F5F1E8",
               letterSpacing: "-0.025em",
               lineHeight: 1.05,
               textTransform: "uppercase",
               margin: 0,
+              fontWeight: 400,
             }}
           >
             {c.title}
@@ -260,11 +263,12 @@ export function S11_IAM({ isActive: propActive } = {}) {
             initial="hidden"
             animate={entered ? "visible" : "hidden"}
             style={{
-              fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: "clamp(0.85rem, 1.05vw, 0.95rem)",
-              color: "rgba(245,241,232,0.65)",
-              margin: "0.2rem 0 0 0",
-              lineHeight: 1.4,
+              fontFamily: "Inter, system-ui, -apple-system, sans-serif",
+              fontSize: "clamp(0.94rem, 1.1vw, 1.02rem)",
+              color: "rgba(245,241,232,0.78)",
+              margin: "0.25rem 0 0 0",
+              lineHeight: 1.5,
+              fontWeight: 400,
             }}
           >
             {c.subtitle}
@@ -280,29 +284,29 @@ export function S11_IAM({ isActive: propActive } = {}) {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            padding: "0.45rem 0.6rem",
+            padding: "0.5rem 0.75rem",
             background: "rgba(18,18,18,0.9)",
             border: "1.5px solid rgba(245,241,232,0.15)",
             boxShadow: "4px 4px 0px #000000",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", paddingLeft: "0.4rem" }}>
-            <Key size={14} style={{ color: isRoot ? "#c6432b" : "#6e8e59" }} />
+          <div style={{ display: "flex", alignItems: "center", gap: "0.55rem", paddingLeft: "0.2rem" }}>
+            <Key size={15} style={{ color: isRoot ? "#c6432b" : "#6e8e59" }} />
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.62rem",
-                letterSpacing: "0.15em",
-                color: "rgba(245,241,232,0.7)",
+                fontSize: "0.76rem",
+                letterSpacing: "0.12em",
+                color: "rgba(245,241,232,0.85)",
                 textTransform: "uppercase",
-                fontWeight: 700,
+                fontWeight: 500,
               }}
             >
               POLÍTICA DE GOBIERNO
             </span>
           </div>
 
-          <div style={{ display: "flex", gap: "0.3rem" }}>
+          <div style={{ display: "flex", gap: "0.4rem" }}>
             <button
               type="button"
               onClick={() => {
@@ -311,15 +315,16 @@ export function S11_IAM({ isActive: propActive } = {}) {
               }}
               style={{
                 fontFamily: "'Archivo Black', sans-serif",
-                fontSize: "0.65rem",
+                fontSize: "0.74rem",
                 textTransform: "uppercase",
-                padding: "0.4rem 0.85rem",
-                letterSpacing: "0.05em",
+                padding: "0.45rem 0.95rem",
+                letterSpacing: "0.04em",
                 cursor: "pointer",
                 border: "1px solid",
-                borderColor: isRoot ? "#c6432b" : "rgba(245,241,232,0.1)",
+                borderColor: isRoot ? "#c6432b" : "rgba(245,241,232,0.12)",
                 background: isRoot ? "#c6432b" : "transparent",
-                color: isRoot ? "#FFFFFF" : "rgba(245,241,232,0.5)",
+                color: isRoot ? "#FFFFFF" : "rgba(245,241,232,0.6)",
+                fontWeight: 400,
                 transition: "all 0.15s ease",
               }}
             >
@@ -336,15 +341,16 @@ export function S11_IAM({ isActive: propActive } = {}) {
               }}
               style={{
                 fontFamily: "'Archivo Black', sans-serif",
-                fontSize: "0.65rem",
+                fontSize: "0.74rem",
                 textTransform: "uppercase",
-                padding: "0.4rem 0.85rem",
-                letterSpacing: "0.05em",
+                padding: "0.45rem 0.95rem",
+                letterSpacing: "0.04em",
                 cursor: "pointer",
                 border: "1px solid",
-                borderColor: !isRoot ? "#6e8e59" : "rgba(245,241,232,0.1)",
+                borderColor: !isRoot ? "#6e8e59" : "rgba(245,241,232,0.12)",
                 background: !isRoot ? "#6e8e59" : "transparent",
-                color: !isRoot ? "#0A0A0A" : "rgba(245,241,232,0.5)",
+                color: !isRoot ? "#0A0A0A" : "rgba(245,241,232,0.6)",
+                fontWeight: 400,
                 transition: "all 0.15s ease",
               }}
             >
@@ -361,30 +367,31 @@ export function S11_IAM({ isActive: propActive } = {}) {
           style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
-            gap: "0.55rem",
+            gap: "0.65rem",
           }}
         >
           {/* Pilar 1: Bloqueo de Cuenta Root */}
           <div
             style={{
-              padding: "0.6rem 0.75rem",
+              padding: "0.65rem 0.85rem",
               background: "rgba(198,67,43,0.06)",
               border: "1px solid rgba(198,67,43,0.35)",
               borderTop: "2px solid #c6432b",
               display: "flex",
               flexDirection: "column",
-              gap: "0.25rem",
+              gap: "0.3rem",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-              <Lock size={12} style={{ color: "#c6432b" }} />
+            <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
+              <Lock size={14} style={{ color: "#c6432b" }} />
               <span
                 style={{
                   fontFamily: "'Archivo Black', sans-serif",
-                  fontSize: "0.66rem",
+                  fontSize: "0.82rem",
                   color: "#F5F1E8",
                   textTransform: "uppercase",
                   letterSpacing: "0.02em",
+                  fontWeight: 400,
                 }}
               >
                 1. BLOQUEO CUENTA ROOT
@@ -392,11 +399,12 @@ export function S11_IAM({ isActive: propActive } = {}) {
             </div>
             <p
               style={{
-                fontFamily: "system-ui, sans-serif",
-                fontSize: "0.68rem",
-                color: "rgba(245,241,232,0.75)",
-                lineHeight: 1.35,
+                fontFamily: "Inter, system-ui, sans-serif",
+                fontSize: "0.82rem",
+                color: "rgba(245,241,232,0.85)",
+                lineHeight: 1.45,
                 margin: 0,
+                fontWeight: 400,
               }}
             >
               La cuenta raíz de AWS se sella con autenticación multifactor (MFA) física y se almacena bajo custodia estricta; prohibida para despliegues diarios.
@@ -406,24 +414,25 @@ export function S11_IAM({ isActive: propActive } = {}) {
           {/* Pilar 2: Principio de Mínimo Privilegio */}
           <div
             style={{
-              padding: "0.6rem 0.75rem",
+              padding: "0.65rem 0.85rem",
               background: "rgba(110,142,89,0.06)",
               border: "1px solid rgba(110,142,89,0.35)",
               borderTop: "2px solid #6e8e59",
               display: "flex",
               flexDirection: "column",
-              gap: "0.25rem",
+              gap: "0.3rem",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-              <ShieldCheck size={13} style={{ color: "#6e8e59" }} />
+            <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
+              <ShieldCheck size={15} style={{ color: "#6e8e59" }} />
               <span
                 style={{
                   fontFamily: "'Archivo Black', sans-serif",
-                  fontSize: "0.66rem",
+                  fontSize: "0.82rem",
                   color: "#F5F1E8",
                   textTransform: "uppercase",
                   letterSpacing: "0.02em",
+                  fontWeight: 400,
                 }}
               >
                 2. MÍNIMO PRIVILEGIO (ZERO TRUST)
@@ -431,11 +440,12 @@ export function S11_IAM({ isActive: propActive } = {}) {
             </div>
             <p
               style={{
-                fontFamily: "system-ui, sans-serif",
-                fontSize: "0.68rem",
-                color: "rgba(245,241,232,0.75)",
-                lineHeight: 1.35,
+                fontFamily: "Inter, system-ui, sans-serif",
+                fontSize: "0.82rem",
+                color: "rgba(245,241,232,0.85)",
+                lineHeight: 1.45,
                 margin: 0,
+                fontWeight: 400,
               }}
             >
               Los 10 practicantes reciben identidades IAM individuales con permisos exactos a su rol (ej: Frontend solo buckets S3 y CloudFront; sin acceso a BD ni redes).
@@ -451,7 +461,7 @@ export function S11_IAM({ isActive: propActive } = {}) {
             initial="hidden"
             animate={entered ? "visible" : "hidden"}
             style={{
-              marginBottom: "0.5rem",
+              marginBottom: "0.55rem",
             }}
           >
             <button
@@ -462,7 +472,7 @@ export function S11_IAM({ isActive: propActive } = {}) {
               }}
               style={{
                 width: "100%",
-                padding: "0.45rem 0.75rem",
+                padding: "0.5rem 0.85rem",
                 background: isRoot ? "rgba(198,67,43,0.22)" : "rgba(20,20,20,0.8)",
                 border: isRoot ? "1.5px solid #c6432b" : "1px dashed rgba(198,67,43,0.4)",
                 cursor: "pointer",
@@ -473,15 +483,15 @@ export function S11_IAM({ isActive: propActive } = {}) {
                 transition: "all 0.15s ease",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                <ShieldAlert size={14} style={{ color: "#c6432b" }} />
+              <div style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
+                <ShieldAlert size={16} style={{ color: "#c6432b" }} />
                 <span
                   style={{
                     fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.65rem",
-                    fontWeight: 800,
+                    fontSize: "0.78rem",
+                    fontWeight: 600,
                     color: isRoot ? "#FFFFFF" : "#c6432b",
-                    letterSpacing: "0.05em",
+                    letterSpacing: "0.04em",
                   }}
                 >
                   AUDITAR CUELLO DE BOTELLA HOSTINGER (CUENTA ROOT CENTRALIZADA)
@@ -490,11 +500,11 @@ export function S11_IAM({ isActive: propActive } = {}) {
               <span
                 style={{
                   fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.56rem",
-                  color: isRoot ? "#FFFFFF" : "rgba(245,241,232,0.6)",
+                  fontSize: "0.70rem",
+                  color: isRoot ? "#FFFFFF" : "rgba(245,241,232,0.8)",
                   background: isRoot ? "#c6432b" : "rgba(198,67,43,0.15)",
-                  padding: "0.15rem 0.45rem",
-                  fontWeight: 700,
+                  padding: "0.2rem 0.55rem",
+                  fontWeight: 500,
                 }}
               >
                 {isRoot ? "CUELLO DE BOTELLA OPERATIVO" : "VER RIESGO DE CENTRALIZACIÓN"}
@@ -518,47 +528,47 @@ export function S11_IAM({ isActive: propActive } = {}) {
                   boxShadow: "4px 4px 0px #c6432b",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "0.45rem",
+                  gap: "0.5rem",
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                    <AlertTriangle size={15} style={{ color: "#c6432b" }} />
-                    <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.78rem", color: "#F5F1E8", textTransform: "uppercase" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
+                    <AlertTriangle size={17} style={{ color: "#c6432b" }} />
+                    <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.88rem", color: "#F5F1E8", textTransform: "uppercase", fontWeight: 400 }}>
                       CUELLO DE BOTELLA // CREDENCIALES CENTRALIZADAS EN 4 ENCARGADOS
                     </span>
                   </div>
                   <span
                     style={{
                       fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.55rem",
+                      fontSize: "0.68rem",
                       color: "#c6432b",
                       background: "rgba(198,67,43,0.2)",
                       border: "1px solid #c6432b",
-                      padding: "0.15rem 0.4rem",
-                      fontWeight: 700,
+                      padding: "0.2rem 0.5rem",
+                      fontWeight: 500,
                     }}
                   >
                     10 SIN ACCESO DIRECTO
                   </span>
                 </div>
 
-                <p style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "0.74rem", color: "rgba(245,241,232,0.85)", lineHeight: 1.4, margin: 0 }}>
+                <p style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", fontSize: "0.84rem", color: "rgba(245,241,232,0.85)", lineHeight: 1.48, margin: 0, fontWeight: 400 }}>
                   En Hostinger, solo los 4 encargados poseen credenciales maestras y las comparten entre sí. Los 10 practicantes carecen de accesos al servidor, generando dependencia, retrasos para desplegar y nula auditoría individual.
                 </p>
 
                 {/* Fila de 10 Avatares Apilados en Riesgo */}
-                <div style={{ display: "flex", alignItems: "center", gap: "0.25rem", marginTop: "0.15rem" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.3rem", marginTop: "0.15rem" }}>
                   {projectMeta.teamMembers.map((member) => (
                     <div
                       key={member.id}
                       style={{
                         flex: 1,
-                        padding: "0.25rem 0",
+                        padding: "0.3rem 0",
                         textAlign: "center",
                         fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: "0.6rem",
-                        fontWeight: 800,
+                        fontSize: "0.72rem",
+                        fontWeight: 600,
                         color: "#c6432b",
                         background: "rgba(0,0,0,0.6)",
                         border: "1px solid rgba(198,67,43,0.4)",
@@ -580,11 +590,11 @@ export function S11_IAM({ isActive: propActive } = {}) {
                 style={{
                   display: "flex",
                   flexDirection: "column",
-                  gap: "0.45rem",
+                  gap: "0.5rem",
                 }}
               >
                 {/* Cuadrícula compacta de los 10 practicantes */}
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "0.4rem" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "0.45rem" }}>
                   {projectMeta.teamMembers.map((member) => {
                     const isSelected = selectedUserForInspection?.id === member.id && !isRoot;
 
@@ -598,30 +608,30 @@ export function S11_IAM({ isActive: propActive } = {}) {
                           setSelectedUserForInspection(member);
                         }}
                         style={{
-                          padding: "0.45rem 0.5rem",
+                          padding: "0.5rem 0.6rem",
                           background: isSelected ? "rgba(212,160,23,0.22)" : "rgba(255,255,255,0.03)",
                           border: isSelected ? "1.5px solid #d4a017" : "1px solid rgba(245,241,232,0.15)",
                           cursor: "pointer",
                           display: "flex",
                           flexDirection: "column",
                           justifyContent: "space-between",
-                          minHeight: 64,
+                          minHeight: 68,
                           boxShadow: isSelected ? "2px 2px 0px #d4a017" : "none",
                           transition: "background 0.15s ease, border-color 0.15s ease",
                         }}
                       >
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: isSelected ? "#d4a017" : "rgba(245,241,232,0.5)", fontWeight: 800 }}>
+                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: isSelected ? "#d4a017" : "rgba(245,241,232,0.65)", fontWeight: 600 }}>
                             P{member.id < 10 ? `0${member.id}` : member.id}
                           </span>
-                          <ShieldCheck size={11} style={{ color: isSelected ? "#d4a017" : "#6e8e59" }} />
+                          <ShieldCheck size={13} style={{ color: isSelected ? "#d4a017" : "#6e8e59" }} />
                         </div>
 
                         <div>
-                          <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.63rem", color: "#F5F1E8", textTransform: "uppercase", lineHeight: 1.1 }}>
+                          <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.76rem", color: "#F5F1E8", textTransform: "uppercase", lineHeight: 1.15, fontWeight: 400 }}>
                             {member.role.split(" ")[0]}
                           </div>
-                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.5rem", color: "rgba(245,241,232,0.5)", display: "block", marginTop: "0.1rem" }}>
+                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "rgba(245,241,232,0.65)", display: "block", marginTop: "0.15rem", fontWeight: 400 }}>
                             {member.iamRole.split("-")[1] || member.iamRole}
                           </span>
                         </div>
@@ -640,23 +650,24 @@ export function S11_IAM({ isActive: propActive } = {}) {
           initial="hidden"
           animate={entered ? "visible" : "hidden"}
           style={{
-            padding: "0.65rem 0.9rem",
+            padding: "0.65rem 0.95rem",
             background: "rgba(0,0,0,0.6)",
             border: "1px solid rgba(245,241,232,0.12)",
             borderLeft: "3px solid #d4a017",
             display: "flex",
             alignItems: "center",
-            gap: "0.65rem",
+            gap: "0.75rem",
           }}
         >
-          <Shield size={18} style={{ color: "#d4a017", flexShrink: 0 }} />
+          <Shield size={20} style={{ color: "#d4a017", flexShrink: 0 }} />
           <p
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.62rem",
-              color: "rgba(245,241,232,0.7)",
-              lineHeight: 1.4,
+              fontSize: "0.78rem",
+              color: "rgba(245,241,232,0.85)",
+              lineHeight: 1.45,
               margin: 0,
+              fontWeight: 400,
             }}
           >
             {c.sharedResponsibility}
@@ -688,20 +699,20 @@ export function S11_IAM({ isActive: propActive } = {}) {
             left: "2.5rem",
             display: "flex",
             alignItems: "center",
-            gap: "0.5rem",
+            gap: "0.55rem",
             zIndex: 10,
             pointerEvents: "none",
           }}
         >
-          <Key size={13} style={{ color: isRoot ? "#c6432b" : "#6e8e59" }} />
+          <Key size={15} style={{ color: isRoot ? "#c6432b" : "#6e8e59" }} />
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.62rem",
+              fontSize: "0.76rem",
               letterSpacing: "0.15em",
-              color: isRoot ? "#c6432b" : "rgba(245,241,232,0.6)",
+              color: isRoot ? "#c6432b" : "rgba(245,241,232,0.75)",
               textTransform: "uppercase",
-              fontWeight: 700,
+              fontWeight: 500,
             }}
           >
             AWS IAM IDENTITY ARCHITECTURE
@@ -715,7 +726,7 @@ export function S11_IAM({ isActive: propActive } = {}) {
             top: "1.8rem",
             right: "2.5rem",
             zIndex: 20,
-            maxWidth: 290,
+            maxWidth: 320,
           }}
         >
           <AnimatePresence mode="wait">
@@ -728,45 +739,45 @@ export function S11_IAM({ isActive: propActive } = {}) {
                 exit={{ opacity: 0, y: -8, scale: 0.95 }}
                 transition={{ duration: 0.2 }}
                 style={{
-                  padding: "0.75rem 0.9rem",
+                  padding: "0.8rem 1rem",
                   background: "rgba(18,10,10,0.92)",
                   border: "1.5px solid #c6432b",
                   boxShadow: "4px 4px 0px #c6432b",
                   backdropFilter: "blur(8px)",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "0.35rem",
+                  gap: "0.4rem",
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                    <ShieldAlert size={14} style={{ color: "#c6432b" }} />
-                    <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.7rem", color: "#F5F1E8", textTransform: "uppercase" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
+                    <ShieldAlert size={16} style={{ color: "#c6432b" }} />
+                    <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.82rem", color: "#F5F1E8", textTransform: "uppercase", fontWeight: 400 }}>
                       CUENTA ROOT // RAÍZ AWS
                     </span>
                   </div>
                   <span
                     style={{
                       fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.52rem",
+                      fontSize: "0.66rem",
                       color: "#c6432b",
                       background: "rgba(198,67,43,0.2)",
                       border: "1px solid #c6432b",
-                      padding: "0.15rem 0.4rem",
-                      fontWeight: 700,
+                      padding: "0.2rem 0.45rem",
+                      fontWeight: 500,
                     }}
                   >
                     RIESGO_ROOT
                   </span>
                 </div>
 
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#F5F1E8" }}>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.76rem", color: "#F5F1E8", fontWeight: 500 }}>
                   root@mta-software.com
                 </div>
 
-                <div style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "rgba(245,241,232,0.8)", lineHeight: 1.35 }}>
-                  <strong style={{ color: "#c6432b" }}>Permiso asignado:</strong> AdministratorAccess (Total).
-                  <div style={{ marginTop: "0.25rem", color: "rgba(245,241,232,0.65)", fontStyle: "italic" }}>
+                <div style={{ fontFamily: "Inter, system-ui, sans-serif", fontSize: "0.80rem", color: "rgba(245,241,232,0.85)", lineHeight: 1.4, fontWeight: 400 }}>
+                  <strong style={{ color: "#c6432b", fontWeight: 600 }}>Permiso asignado:</strong> AdministratorAccess (Total).
+                  <div style={{ marginTop: "0.25rem", color: "rgba(245,241,232,0.7)", fontStyle: "italic" }}>
                     Directiva: Bloqueada con MFA Físico en caja fuerte. No se usa para tareas operativas diarias.
                   </div>
                 </div>
@@ -780,45 +791,45 @@ export function S11_IAM({ isActive: propActive } = {}) {
                 exit={{ opacity: 0, y: -8, scale: 0.95 }}
                 transition={{ duration: 0.2 }}
                 style={{
-                  padding: "0.75rem 0.9rem",
+                  padding: "0.8rem 1rem",
                   background: "rgba(14,14,14,0.92)",
                   border: "1.5px solid #d4a017",
                   boxShadow: "4px 4px 0px #d4a017",
                   backdropFilter: "blur(8px)",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "0.35rem",
+                  gap: "0.4rem",
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                    <UserCheck size={14} style={{ color: "#d4a017" }} />
-                    <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.72rem", color: "#F5F1E8", textTransform: "uppercase" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
+                    <UserCheck size={16} style={{ color: "#d4a017" }} />
+                    <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.84rem", color: "#F5F1E8", textTransform: "uppercase", fontWeight: 400 }}>
                       P{selectedUserForInspection.id < 10 ? `0${selectedUserForInspection.id}` : selectedUserForInspection.id} // {selectedUserForInspection.role}
                     </span>
                   </div>
                   <span
                     style={{
                       fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.52rem",
+                      fontSize: "0.66rem",
                       color: "#6e8e59",
                       background: "rgba(110,142,89,0.18)",
                       border: "1px solid rgba(110,142,89,0.45)",
-                      padding: "0.15rem 0.4rem",
-                      fontWeight: 700,
+                      padding: "0.2rem 0.45rem",
+                      fontWeight: 500,
                     }}
                   >
                     MÍNIMO_PRIVILEGIO_OK
                   </span>
                 </div>
 
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#d4a017" }}>
+                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.76rem", color: "#d4a017", fontWeight: 500 }}>
                   IAM Role: {selectedUserForInspection.iamRole}
                 </div>
 
-                <div style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.7rem", color: "rgba(245,241,232,0.9)", lineHeight: 1.35 }}>
-                  <strong style={{ color: "#F5F1E8" }}>Acceso asignado:</strong>{" "}
-                  <span style={{ fontFamily: "'JetBrains Mono', monospace", color: "#6e8e59", fontWeight: 700 }}>
+                <div style={{ fontFamily: "Inter, system-ui, sans-serif", fontSize: "0.80rem", color: "rgba(245,241,232,0.9)", lineHeight: 1.4, fontWeight: 400 }}>
+                  <strong style={{ color: "#F5F1E8", fontWeight: 600 }}>Acceso asignado:</strong>{" "}
+                  <span style={{ fontFamily: "'JetBrains Mono', monospace", color: "#6e8e59", fontWeight: 600 }}>
                     {selectedUserForInspection.accessLevel}
                   </span>
                 </div>
@@ -826,11 +837,12 @@ export function S11_IAM({ isActive: propActive } = {}) {
                 <div
                   style={{
                     fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.55rem",
-                    color: "rgba(245,241,232,0.5)",
+                    fontSize: "0.70rem",
+                    color: "rgba(245,241,232,0.6)",
                     borderTop: "1px solid rgba(245,241,232,0.1)",
                     paddingTop: "0.3rem",
-                    marginTop: "0.1rem",
+                    marginTop: "0.15rem",
+                    fontWeight: 400,
                   }}
                 >
                   Restricción: Sin acceso a bases de datos de producción ni VPC.
@@ -844,13 +856,14 @@ export function S11_IAM({ isActive: propActive } = {}) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 style={{
-                  padding: "0.5rem 0.75rem",
+                  padding: "0.6rem 0.85rem",
                   background: "rgba(14,14,14,0.8)",
                   border: "1px dashed rgba(245,241,232,0.25)",
                   fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.58rem",
-                  color: "rgba(245,241,232,0.6)",
+                  fontSize: "0.74rem",
+                  color: "rgba(245,241,232,0.75)",
                   backdropFilter: "blur(6px)",
+                  fontWeight: 400,
                 }}
               >
                 👆 Selecciona un practicante para inspeccionar sus permisos IAM.
@@ -882,18 +895,18 @@ export function S11_IAM({ isActive: propActive } = {}) {
           style={{
             position: "absolute",
             bottom: "2rem",
-            left: "3rem",
-            right: "3.5rem",
+            left: "2.8rem",
+            right: "2.8rem",
             zIndex: 10,
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
-            gap: "0.75rem",
+            gap: "0.85rem",
           }}
         >
           <div
             style={{
-              padding: "0.6rem 0.9rem",
-              background: "rgba(14,14,14,0.75)",
+              padding: "0.7rem 1rem",
+              background: "rgba(14,14,14,0.85)",
               border: "1px solid rgba(245,241,232,0.15)",
               backdropFilter: "blur(6px)",
               display: "flex",
@@ -902,21 +915,21 @@ export function S11_IAM({ isActive: propActive } = {}) {
             }}
           >
             <div>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "rgba(245,241,232,0.5)" }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.70rem", color: "rgba(245,241,232,0.6)", fontWeight: 400 }}>
                 SEGURIDAD DE LA NUBE (AWS)
               </div>
-              <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.78rem", color: "#F5F1E8", marginTop: "0.15rem" }}>
+              <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.88rem", color: "#F5F1E8", marginTop: "0.2rem", fontWeight: 400 }}>
                 INFRAESTRUCTURA FÍSICA
               </div>
             </div>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "#6e8e59", fontWeight: 700 }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#6e8e59", fontWeight: 600 }}>
               GARANTIZADA 100%
             </span>
           </div>
 
           <div
             style={{
-              padding: "0.6rem 0.9rem",
+              padding: "0.7rem 1rem",
               background: isRoot ? "rgba(198,67,43,0.15)" : "rgba(110,142,89,0.12)",
               border: isRoot ? "1px solid #c6432b" : "1px solid rgba(110,142,89,0.4)",
               backdropFilter: "blur(6px)",
@@ -926,14 +939,14 @@ export function S11_IAM({ isActive: propActive } = {}) {
             }}
           >
             <div>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: isRoot ? "#c6432b" : "#6e8e59" }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.70rem", color: isRoot ? "#c6432b" : "#6e8e59", fontWeight: 400 }}>
                 SEGURIDAD EN LA NUBE (MTA)
               </div>
-              <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.78rem", color: isRoot ? "#c6432b" : "#F5F1E8", marginTop: "0.15rem" }}>
+              <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.88rem", color: isRoot ? "#c6432b" : "#F5F1E8", marginTop: "0.2rem", fontWeight: 400 }}>
                 {isRoot ? "VULNERABILIDAD ROOT" : "POLÍTICAS DE IAM AUDITADAS"}
               </div>
             </div>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: isRoot ? "#c6432b" : "#6e8e59", fontWeight: 700 }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: isRoot ? "#c6432b" : "#6e8e59", fontWeight: 600 }}>
               {isRoot ? "ALTO RIESGO" : "CERO CONFIANZA OK"}
             </span>
           </div>

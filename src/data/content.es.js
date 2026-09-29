@@ -377,3 +377,6 @@ export const slidesContent = {
     callToAction: "Espacio abierto para preguntas del jurado calificador",
   },
 };
+
+slidesContent.s14_cierre = slidesContent.s17_cierre;
+slidesContent.s16_cierre = slidesContent.s17_cierre;

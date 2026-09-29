@@ -87,41 +87,41 @@ export function ClosingEvaluation({ onCelebrate }) {
         style={{
           display: "flex",
           borderBottom: "1px solid rgba(245,241,232,0.12)",
-          paddingBottom: "0.5rem",
-          gap: "0.4rem",
+          paddingBottom: "0.55rem",
+          gap: "0.45rem",
         }}
       >
         <button
           onClick={() => setActiveTab("summary")}
           style={{
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: "0.62rem",
-            fontWeight: 700,
-            letterSpacing: "0.1em",
+            fontSize: "0.72rem",
+            fontWeight: activeTab === "summary" ? 600 : 500,
+            letterSpacing: "0.08em",
             textTransform: "uppercase",
-            padding: "0.3rem 0.65rem",
-            border: activeTab === "summary" ? "1px solid #d4a017" : "1px solid transparent",
-            background: activeTab === "summary" ? "rgba(212,160,23,0.15)" : "transparent",
-            color: activeTab === "summary" ? "#d4a017" : "rgba(245,241,232,0.5)",
+            padding: "0.38rem 0.75rem",
+            border: activeTab === "summary" ? "1px solid #d4a017" : "1px solid rgba(245,241,232,0.1)",
+            background: activeTab === "summary" ? "rgba(212,160,23,0.18)" : "transparent",
+            color: activeTab === "summary" ? "#d4a017" : "rgba(245,241,232,0.65)",
             cursor: "pointer",
             transition: "all 0.15s ease",
           }}
         >
-          [ SÍNTESIS ETAPA 01 ]
+          [ SÍNTESIS ETAPAS 01 & 02 ]
         </button>
 
         <button
           onClick={() => setActiveTab("team")}
           style={{
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: "0.62rem",
-            fontWeight: 700,
-            letterSpacing: "0.1em",
+            fontSize: "0.72rem",
+            fontWeight: activeTab === "team" ? 600 : 500,
+            letterSpacing: "0.08em",
             textTransform: "uppercase",
-            padding: "0.3rem 0.65rem",
-            border: activeTab === "team" ? "1px solid #6e8e59" : "1px solid transparent",
-            background: activeTab === "team" ? "rgba(110,142,89,0.15)" : "transparent",
-            color: activeTab === "team" ? "#6e8e59" : "rgba(245,241,232,0.5)",
+            padding: "0.38rem 0.75rem",
+            border: activeTab === "team" ? "1px solid #6e8e59" : "1px solid rgba(245,241,232,0.1)",
+            background: activeTab === "team" ? "rgba(110,142,89,0.18)" : "transparent",
+            color: activeTab === "team" ? "#6e8e59" : "rgba(245,241,232,0.65)",
             cursor: "pointer",
             transition: "all 0.15s ease",
           }}
@@ -133,14 +133,14 @@ export function ClosingEvaluation({ onCelebrate }) {
           onClick={() => setActiveTab("faq")}
           style={{
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: "0.62rem",
-            fontWeight: 700,
-            letterSpacing: "0.1em",
+            fontSize: "0.72rem",
+            fontWeight: activeTab === "faq" ? 600 : 500,
+            letterSpacing: "0.08em",
             textTransform: "uppercase",
-            padding: "0.3rem 0.65rem",
-            border: activeTab === "faq" ? "1px solid #e8a0bf" : "1px solid transparent",
-            background: activeTab === "faq" ? "rgba(232,160,191,0.15)" : "transparent",
-            color: activeTab === "faq" ? "#e8a0bf" : "rgba(245,241,232,0.5)",
+            padding: "0.38rem 0.75rem",
+            border: activeTab === "faq" ? "1px solid #e8a0bf" : "1px solid rgba(245,241,232,0.1)",
+            background: activeTab === "faq" ? "rgba(232,160,191,0.18)" : "transparent",
+            color: activeTab === "faq" ? "#e8a0bf" : "rgba(245,241,232,0.65)",
             cursor: "pointer",
             transition: "all 0.15s ease",
           }}
@@ -158,7 +158,7 @@ export function ClosingEvaluation({ onCelebrate }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.18 }}
-            style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+            style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}
           >
             {keyAchievements.map((item, idx) => {
               const IconComp = item.icon;
@@ -168,8 +168,8 @@ export function ClosingEvaluation({ onCelebrate }) {
                   style={{
                     display: "flex",
                     alignItems: "flex-start",
-                    gap: "0.65rem",
-                    padding: "0.45rem 0.6rem",
+                    gap: "0.75rem",
+                    padding: "0.55rem 0.75rem",
                     background: "rgba(255,255,255,0.02)",
                     border: "1px solid rgba(245,241,232,0.08)",
                   }}
@@ -177,20 +177,21 @@ export function ClosingEvaluation({ onCelebrate }) {
                   <div
                     style={{
                       marginTop: "0.15rem",
-                      padding: "0.25rem",
+                      padding: "0.3rem",
                       background: "rgba(0,0,0,0.4)",
                       border: `1px solid ${item.color}`,
                     }}
                   >
-                    <IconComp size={13} style={{ color: item.color }} />
+                    <IconComp size={15} style={{ color: item.color }} />
                   </div>
                   <div style={{ flex: 1 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <span
                         style={{
                           fontFamily: "'Archivo Black', sans-serif",
-                          fontSize: "0.72rem",
+                          fontSize: "0.80rem",
                           color: "#F5F1E8",
+                          fontWeight: 400,
                         }}
                       >
                         {item.title}
@@ -198,9 +199,9 @@ export function ClosingEvaluation({ onCelebrate }) {
                       <span
                         style={{
                           fontFamily: "'JetBrains Mono', monospace",
-                          fontSize: "0.55rem",
+                          fontSize: "0.68rem",
                           color: item.color,
-                          fontWeight: 700,
+                          fontWeight: 600,
                         }}
                       >
                         {item.code}
@@ -208,11 +209,12 @@ export function ClosingEvaluation({ onCelebrate }) {
                     </div>
                     <p
                       style={{
-                        fontFamily: "system-ui, sans-serif",
-                        fontSize: "0.68rem",
-                        color: "rgba(245,241,232,0.65)",
-                        margin: "0.15rem 0 0 0",
-                        lineHeight: 1.35,
+                        fontFamily: "Inter, system-ui, sans-serif",
+                        fontSize: "0.78rem",
+                        color: "rgba(245,241,232,0.8)",
+                        margin: "0.2rem 0 0 0",
+                        lineHeight: 1.4,
+                        fontWeight: 400,
                       }}
                     >
                       {item.desc}
@@ -234,20 +236,21 @@ export function ClosingEvaluation({ onCelebrate }) {
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "0.35rem",
+              gap: "0.45rem",
             }}
           >
             <div
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.58rem",
+                fontSize: "0.70rem",
                 color: "#6e8e59",
                 background: "rgba(110,142,89,0.1)",
                 border: "1px solid rgba(110,142,89,0.3)",
-                padding: "0.25rem 0.5rem",
+                padding: "0.35rem 0.65rem",
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
+                fontWeight: 500,
               }}
             >
               <span>EQUIPO DE INVESTIGACIÓN ACADÉMICA</span>
@@ -258,28 +261,29 @@ export function ClosingEvaluation({ onCelebrate }) {
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
-                gap: "0.35rem",
+                gap: "0.45rem",
               }}
             >
               {projectMeta.academic.researchTeam.map((m) => (
                 <div
                   key={m.id}
                   style={{
-                    padding: "0.4rem 0.55rem",
+                    padding: "0.5rem 0.7rem",
                     background: "rgba(255,255,255,0.03)",
                     border: "1px solid rgba(245,241,232,0.1)",
                     display: "flex",
                     alignItems: "center",
-                    gap: "0.45rem",
+                    gap: "0.55rem",
                   }}
                 >
-                  <GraduationCap size={13} style={{ color: "#d4a017", flexShrink: 0 }} />
+                  <GraduationCap size={15} style={{ color: "#d4a017", flexShrink: 0 }} />
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <span
                       style={{
                         fontFamily: "'Archivo Black', sans-serif",
-                        fontSize: "0.66rem",
+                        fontSize: "0.76rem",
                         color: "#F5F1E8",
+                        fontWeight: 400,
                       }}
                     >
                       {m.name}
@@ -287,8 +291,9 @@ export function ClosingEvaluation({ onCelebrate }) {
                     <span
                       style={{
                         fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: "0.52rem",
-                        color: "rgba(245,241,232,0.5)",
+                        fontSize: "0.64rem",
+                        color: "rgba(245,241,232,0.65)",
+                        fontWeight: 400,
                       }}
                     >
                       SENATI · Integrante
@@ -301,9 +306,10 @@ export function ClosingEvaluation({ onCelebrate }) {
             <div
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.55rem",
-                color: "rgba(245,241,232,0.45)",
-                marginTop: "0.1rem",
+                fontSize: "0.66rem",
+                color: "rgba(245,241,232,0.6)",
+                marginTop: "0.15rem",
+                fontWeight: 400,
               }}
             >
               * Empresa investigada: MTA Software (Área de TI: 4 Encargados + 10 Practicantes Remotos)
@@ -318,9 +324,9 @@ export function ClosingEvaluation({ onCelebrate }) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.18 }}
-            style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}
+            style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
           >
-            <div style={{ display: "flex", gap: "0.3rem" }}>
+            <div style={{ display: "flex", gap: "0.35rem" }}>
               {faqs.map((_, i) => (
                 <button
                   key={i}
@@ -328,12 +334,12 @@ export function ClosingEvaluation({ onCelebrate }) {
                   style={{
                     flex: 1,
                     fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.58rem",
-                    padding: "0.25rem 0",
+                    fontSize: "0.72rem",
+                    padding: "0.35rem 0",
                     background: selectedFaq === i ? "#e8a0bf" : "rgba(232,160,191,0.1)",
                     color: selectedFaq === i ? "#000000" : "#e8a0bf",
                     border: "1px solid #e8a0bf",
-                    fontWeight: 700,
+                    fontWeight: 600,
                     cursor: "pointer",
                   }}
                 >
@@ -344,7 +350,7 @@ export function ClosingEvaluation({ onCelebrate }) {
 
             <div
               style={{
-                padding: "0.5rem 0.65rem",
+                padding: "0.65rem 0.85rem",
                 background: "rgba(232,160,191,0.05)",
                 border: "1px solid rgba(232,160,191,0.3)",
               }}
@@ -352,19 +358,21 @@ export function ClosingEvaluation({ onCelebrate }) {
               <div
                 style={{
                   fontFamily: "'Archivo Black', sans-serif",
-                  fontSize: "0.68rem",
+                  fontSize: "0.78rem",
                   color: "#F5F1E8",
-                  marginBottom: "0.25rem",
+                  marginBottom: "0.3rem",
+                  fontWeight: 400,
                 }}
               >
                 {faqs[selectedFaq].q}
               </div>
               <div
                 style={{
-                  fontFamily: "system-ui, sans-serif",
-                  fontSize: "0.68rem",
-                  color: "rgba(245,241,232,0.7)",
-                  lineHeight: 1.4,
+                  fontFamily: "Inter, system-ui, sans-serif",
+                  fontSize: "0.78rem",
+                  color: "rgba(245,241,232,0.85)",
+                  lineHeight: 1.44,
+                  fontWeight: 400,
                 }}
               >
                 {faqs[selectedFaq].a}

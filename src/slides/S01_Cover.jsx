@@ -10,21 +10,7 @@ const c = slidesContent.s01_cover;
 /**
  * S01 — Portada / Cover Slide — Rediseño "Neo-Brutalist Industrial Print".
  *
- * Layout: asimétrico 2 columnas.
- *  - Izquierda (60%): jerarquía tipográfica completa.
- *  - Derecha (40%): panel de datos técnicos oscuro con borde dorado.
- *
- * Tipografía:
- *  - Script fino (Yellowtail) → tagline emocional de acento.
- *  - Display ultra-bold (Archivo Black) → protagonista, tamaño controlado.
- *  - Mono (JetBrains Mono) → datos técnicos, badges, labels.
- *
- * Animaciones (Emil Kowalski standards):
- *  - Stagger con opacity + translateY(8px). Nunca scale(0).
- *  - Ease cinematic: cubic-bezier(0.22, 1, 0.36, 1).
- *  - Clip-path wipe para la línea dorada.
- *  - Spring bounce sólo en chips (decorativo, rare event).
- *  - prefers-reduced-motion detectado vía useReducedMotion.
+ * Letras agrandadas y sin exceso de negrita para máxima legibilidad.
  */
 export function S01_Cover({ isActive: propActive } = {}) {
   const shouldReduceMotion = useReducedMotion();
@@ -143,20 +129,21 @@ export function S01_Cover({ isActive: propActive } = {}) {
           variants={fadeUp(0.05)}
           initial="hidden"
           animate={entered ? "visible" : "hidden"}
-          style={{ marginBottom: "1rem" }}
+          style={{ marginBottom: "0.85rem" }}
         >
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.68rem",
-              letterSpacing: "0.2em",
+              fontSize: "0.82rem",
+              letterSpacing: "0.18em",
               textTransform: "uppercase",
-              fontWeight: 700,
+              fontWeight: 600,
               color: "#D4A017",
-              background: "rgba(212,160,23,0.1)",
-              border: "1px solid rgba(212,160,23,0.4)",
-              padding: "0.35rem 0.8rem",
+              background: "rgba(212,160,23,0.12)",
+              border: "1px solid rgba(212,160,23,0.45)",
+              padding: "0.45rem 1rem",
               display: "inline-block",
+              borderRadius: "2px",
             }}
           >
             {c.badge}
@@ -170,30 +157,31 @@ export function S01_Cover({ isActive: propActive } = {}) {
           animate={entered ? "visible" : "hidden"}
           style={{
             fontFamily: "Yellowtail, cursive",
-            fontSize: "clamp(1.4rem, 2.3vw, 2.2rem)",
+            fontSize: "clamp(1.7rem, 2.8vw, 2.6rem)",
             color: "#e8a0bf",
-            lineHeight: 1.1,
-            marginBottom: "0.4rem",
-            opacity: 0.9,
+            lineHeight: 1.15,
+            marginBottom: "0.45rem",
+            opacity: 0.95,
+            fontWeight: 400,
           }}
         >
           {c.scriptTag}
         </motion.p>
 
-        {/* Título Display */}
+        {/* Título Display grande pero sin peso pesado */}
         <motion.h1
           variants={fadeUp(0.24)}
           initial="hidden"
           animate={entered ? "visible" : "hidden"}
           style={{
             fontFamily: "'Archivo Black', 'Arial Black', sans-serif",
-            fontSize: "clamp(1.8rem, 3.2vw, 3rem)",
+            fontSize: "clamp(2rem, 3.6vw, 3.4rem)",
             color: "#F5F1E8",
-            letterSpacing: "-0.025em",
-            lineHeight: 1.05,
+            letterSpacing: "-0.02em",
+            lineHeight: 1.08,
             textTransform: "uppercase",
-            marginBottom: "1rem",
-            maxWidth: "680px",
+            marginBottom: "1.1rem",
+            maxWidth: "720px",
             fontWeight: 400,
           }}
         >
@@ -212,9 +200,9 @@ export function S01_Cover({ isActive: propActive } = {}) {
           style={{
             height: 3,
             width: "100%",
-            maxWidth: 480,
+            maxWidth: 520,
             background: "#D4A017",
-            marginBottom: "1rem",
+            marginBottom: "1.1rem",
           }}
           aria-hidden="true"
         />
@@ -226,11 +214,12 @@ export function S01_Cover({ isActive: propActive } = {}) {
           animate={entered ? "visible" : "hidden"}
           style={{
             fontFamily: "Inter, sans-serif",
-            fontSize: "clamp(0.85rem, 1vw, 1.05rem)",
-            color: "rgba(245,241,232,0.72)",
-            lineHeight: 1.5,
-            maxWidth: "520px",
-            marginBottom: "0.5rem",
+            fontSize: "clamp(1rem, 1.25vw, 1.25rem)",
+            color: "rgba(245,241,232,0.85)",
+            lineHeight: 1.55,
+            maxWidth: "580px",
+            marginBottom: "0.8rem",
+            fontWeight: 400,
           }}
         >
           {c.lead}
@@ -243,18 +232,19 @@ export function S01_Cover({ isActive: propActive } = {}) {
           animate={entered ? "visible" : "hidden"}
           style={{
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: "0.68rem",
+            fontSize: "0.82rem",
             letterSpacing: "0.14em",
             textTransform: "uppercase",
-            color: "rgba(212,160,23,0.7)",
-            marginBottom: "1.4rem",
+            color: "rgba(212,160,23,0.85)",
+            marginBottom: "1.6rem",
+            fontWeight: 500,
           }}
         >
           {c.companyTag} · {c.academicNotice}
         </motion.p>
 
-        {/* Chips stagger spring */}
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+        {/* Chips */}
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
           {["SENATI", "AWS CLOUD", "5 INTEGRANTES", "CASO MTA SOFTWARE"].map((chip, i) => (
             <motion.span
               key={chip}
@@ -275,15 +265,16 @@ export function S01_Cover({ isActive: propActive } = {}) {
               }
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
+                fontSize: "0.78rem",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
-                fontWeight: 700,
-                padding: "0.3rem 0.75rem",
-                border: `2px solid ${i < 2 ? "#D4A017" : "rgba(245,241,232,0.25)"}`,
-                color: i < 2 ? "#D4A017" : "rgba(245,241,232,0.55)",
+                fontWeight: 500,
+                padding: "0.4rem 0.9rem",
+                border: `1.5px solid ${i < 2 ? "#D4A017" : "rgba(245,241,232,0.3)"}`,
+                color: i < 2 ? "#D4A017" : "rgba(245,241,232,0.7)",
                 background: i < 2 ? "rgba(212,160,23,0.08)" : "rgba(245,241,232,0.04)",
                 cursor: "default",
+                borderRadius: "2px",
               }}
             >
               {chip}
@@ -306,7 +297,7 @@ export function S01_Cover({ isActive: propActive } = {}) {
           justifyContent: "center",
           borderLeft: "2px solid rgba(212,160,23,0.25)",
           background: "rgba(212,160,23,0.03)",
-          padding: "2.2rem 2.2rem",
+          padding: "2.4rem 2.4rem",
           position: "relative",
           zIndex: 1,
           gap: "0",
@@ -326,6 +317,7 @@ export function S01_Cover({ isActive: propActive } = {}) {
             lineHeight: 1,
             userSelect: "none",
             pointerEvents: "none",
+            fontWeight: 400,
           }}
         >
           01
@@ -335,11 +327,12 @@ export function S01_Cover({ isActive: propActive } = {}) {
         <div
           style={{
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: "0.62rem",
+            fontSize: "0.82rem",
             letterSpacing: "0.2em",
             textTransform: "uppercase",
-            color: "rgba(212,160,23,0.6)",
-            marginBottom: "1.2rem",
+            fontWeight: 500,
+            color: "rgba(212,160,23,0.85)",
+            marginBottom: "1.1rem",
             display: "flex",
             alignItems: "center",
             gap: "0.6rem",
@@ -348,8 +341,8 @@ export function S01_Cover({ isActive: propActive } = {}) {
           <span
             style={{
               display: "inline-block",
-              width: 6,
-              height: 6,
+              width: 7,
+              height: 7,
               borderRadius: "50%",
               background: "#D4A017",
             }}
@@ -363,7 +356,7 @@ export function S01_Cover({ isActive: propActive } = {}) {
             display: "flex",
             flexDirection: "column",
             gap: "0",
-            border: "1px solid rgba(212,160,23,0.2)",
+            border: "1px solid rgba(212,160,23,0.25)",
           }}
         >
           {panels.map((item, i) => (
@@ -379,7 +372,7 @@ export function S01_Cover({ isActive: propActive } = {}) {
                   : { opacity: 0 }
               }
               style={{
-                padding: "0.65rem 0.95rem",
+                padding: "0.75rem 1.1rem",
                 borderBottom: "1px solid rgba(212,160,23,0.15)",
                 background: i % 2 === 0 ? "rgba(245,241,232,0.02)" : "transparent",
               }}
@@ -387,11 +380,12 @@ export function S01_Cover({ isActive: propActive } = {}) {
               <p
                 style={{
                   fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.58rem",
+                  fontSize: "0.78rem",
                   letterSpacing: "0.15em",
                   textTransform: "uppercase",
-                  color: "rgba(212,160,23,0.7)",
-                  margin: "0 0 0.15rem 0",
+                  fontWeight: 500,
+                  color: "rgba(212,160,23,0.85)",
+                  margin: "0 0 0.2rem 0",
                 }}
               >
                 {item.label}
@@ -399,11 +393,11 @@ export function S01_Cover({ isActive: propActive } = {}) {
               <p
                 style={{
                   fontFamily: "'Archivo Black', 'Arial Black', sans-serif",
-                  fontSize: "0.85rem",
+                  fontSize: "1.08rem",
                   color: "#F5F1E8",
                   letterSpacing: "-0.01em",
-                  lineHeight: 1.15,
-                  margin: "0 0 0.15rem 0",
+                  lineHeight: 1.2,
+                  margin: "0 0 0.2rem 0",
                   fontWeight: 400,
                 }}
               >
@@ -412,9 +406,10 @@ export function S01_Cover({ isActive: propActive } = {}) {
               <p
                 style={{
                   fontFamily: "Inter, sans-serif",
-                  fontSize: "0.68rem",
-                  color: "rgba(245,241,232,0.45)",
-                  lineHeight: 1.2,
+                  fontSize: "0.85rem",
+                  fontWeight: 400,
+                  color: "rgba(245,241,232,0.68)",
+                  lineHeight: 1.3,
                   margin: 0,
                 }}
               >
@@ -435,24 +430,24 @@ export function S01_Cover({ isActive: propActive } = {}) {
                 : { opacity: 0 }
             }
             style={{
-              padding: "0.75rem 0.95rem",
+              padding: "0.85rem 1.1rem",
               background: "rgba(212,160,23,0.04)",
             }}
           >
             <p
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.58rem",
+                fontSize: "0.78rem",
                 letterSpacing: "0.15em",
                 textTransform: "uppercase",
                 color: "#D4A017",
-                margin: "0 0 0.45rem 0",
-                fontWeight: 700,
+                margin: "0 0 0.5rem 0",
+                fontWeight: 600,
               }}
             >
               EQUIPO DE INVESTIGACIÓN (5 INTEGRANTES)
             </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.22rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
               {projectMeta.academic.researchTeam.map((m, idx) => (
                 <div
                   key={m.id}
@@ -461,23 +456,25 @@ export function S01_Cover({ isActive: propActive } = {}) {
                     alignItems: "center",
                     justifyContent: "space-between",
                     fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.63rem",
-                    color: "rgba(245,241,232,0.85)",
+                    fontSize: "0.84rem",
+                    fontWeight: 400,
+                    color: "rgba(245,241,232,0.92)",
                     borderBottom: idx < 4 ? "1px dashed rgba(245,241,232,0.08)" : "none",
-                    paddingBottom: "0.18rem",
+                    paddingBottom: "0.22rem",
                   }}
                 >
                   <span>
-                    <strong style={{ color: "#D4A017", marginRight: "0.35rem" }}>
+                    <span style={{ color: "#D4A017", marginRight: "0.45rem", fontWeight: 500 }}>
                       0{idx + 1}.
-                    </strong>
+                    </span>
                     {m.name}
                   </span>
                   <span
                     style={{
-                      fontSize: "0.54rem",
-                      color: "rgba(245,241,232,0.4)",
+                      fontSize: "0.72rem",
+                      color: "rgba(245,241,232,0.55)",
                       textTransform: "uppercase",
+                      fontWeight: 400,
                     }}
                   >
                     SENATI
@@ -497,23 +494,23 @@ export function S01_Cover({ isActive: propActive } = {}) {
             marginTop: "1.2rem",
             display: "flex",
             alignItems: "center",
-            gap: "0.5rem",
+            gap: "0.6rem",
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: "0.62rem",
+            fontSize: "0.74rem",
             letterSpacing: "0.12em",
             textTransform: "uppercase",
-            color: "rgba(122,155,92,0.85)",
+            color: "rgba(122,155,92,0.9)",
+            fontWeight: 500,
           }}
         >
           <span
             style={{
               display: "inline-block",
-              width: 6,
-              height: 6,
+              width: 7,
+              height: 7,
               borderRadius: "50%",
               background: "#7a9b5c",
               boxShadow: "0 0 6px rgba(122,155,92,0.7)",
-              animation: "pulse 2s infinite",
             }}
           />
           ETAPA 01 · INVESTIGACIÓN ACADÉMICA

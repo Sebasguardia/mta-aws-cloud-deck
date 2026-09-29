@@ -309,10 +309,10 @@ export function S10_Economia({ isActive: propActive } = {}) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          padding: "2.5rem 3rem 2.5rem 4.8rem",
+          padding: "2.1rem 3rem 2.1rem 4.5rem",
           position: "relative",
           zIndex: 2,
-          gap: "0.9rem",
+          gap: "0.85rem",
         }}
       >
         {/* Header Editorial */}
@@ -321,19 +321,19 @@ export function S10_Economia({ isActive: propActive } = {}) {
             variants={fadeUp(0.04)}
             initial="hidden"
             animate={entered ? "visible" : "hidden"}
-            style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}
+            style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}
           >
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
-                letterSpacing: "0.2em",
+                fontSize: "0.80rem",
+                letterSpacing: "0.18em",
                 textTransform: "uppercase",
-                fontWeight: 700,
+                fontWeight: 500,
                 color: "#d4a017",
                 background: "rgba(212,160,23,0.12)",
                 border: "1px solid rgba(212,160,23,0.4)",
-                padding: "0.25rem 0.65rem",
+                padding: "0.28rem 0.75rem",
               }}
             >
               [ {c.badge} ]
@@ -341,9 +341,10 @@ export function S10_Economia({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.62rem",
-                letterSpacing: "0.15em",
-                color: "rgba(245,241,232,0.45)",
+                fontSize: "0.76rem",
+                letterSpacing: "0.12em",
+                color: "rgba(245,241,232,0.48)",
+                fontWeight: 400,
               }}
             >
               SEC_10 // FINANCIAL_OPTIMIZATION_TCO
@@ -351,15 +352,15 @@ export function S10_Economia({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.58rem",
+                fontSize: "0.72rem",
                 color: "#6e8e59",
                 background: "rgba(110,142,89,0.15)",
                 border: "1px solid rgba(110,142,89,0.35)",
-                padding: "0.15rem 0.45rem",
-                fontWeight: 700,
+                padding: "0.2rem 0.55rem",
+                fontWeight: 500,
               }}
             >
-              REGIÓN BASE: us-east-1 (N. VIRGINIA)
+              us-east-1 (N. VIRGINIA)
             </span>
           </motion.div>
 
@@ -369,10 +370,11 @@ export function S10_Economia({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Yellowtail, cursive",
-              fontSize: "clamp(1.3rem, 2vw, 1.8rem)",
+              fontSize: "clamp(1.4rem, 2.3vw, 2.05rem)",
               color: "#e8a0bf",
               lineHeight: 1.1,
               margin: "0.15rem 0 0 0",
+              fontWeight: 400,
             }}
           >
             {c.scriptTag}
@@ -390,6 +392,7 @@ export function S10_Economia({ isActive: propActive } = {}) {
               lineHeight: 1.05,
               textTransform: "uppercase",
               margin: 0,
+              fontWeight: 400,
             }}
           >
             {c.title}
@@ -400,11 +403,12 @@ export function S10_Economia({ isActive: propActive } = {}) {
             initial="hidden"
             animate={entered ? "visible" : "hidden"}
             style={{
-              fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: "clamp(0.85rem, 1.05vw, 0.95rem)",
-              color: "rgba(245,241,232,0.65)",
+              fontFamily: "Inter, sans-serif",
+              fontSize: "clamp(0.94rem, 1.1vw, 1.02rem)",
+              color: "rgba(245,241,232,0.76)",
               margin: "0.2rem 0 0 0",
-              lineHeight: 1.4,
+              lineHeight: 1.5,
+              fontWeight: 400,
             }}
           >
             {c.subtitle}
@@ -420,44 +424,45 @@ export function S10_Economia({ isActive: propActive } = {}) {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            padding: "0.45rem 0.6rem",
+            padding: "0.5rem 0.65rem",
             background: "rgba(18,18,18,0.9)",
             border: "1.5px solid rgba(245,241,232,0.15)",
             boxShadow: "4px 4px 0px #000000",
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", paddingLeft: "0.4rem" }}>
-            <DollarSign size={14} style={{ color: "#d4a017" }} />
+            <DollarSign size={15} style={{ color: "#d4a017" }} />
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.62rem",
-                letterSpacing: "0.15em",
-                color: "rgba(245,241,232,0.7)",
+                fontSize: "0.76rem",
+                letterSpacing: "0.12em",
+                color: "rgba(245,241,232,0.8)",
                 textTransform: "uppercase",
-                fontWeight: 700,
+                fontWeight: 500,
               }}
             >
               PANEL ECONÓMICO
             </span>
           </div>
 
-          <div style={{ display: "flex", gap: "0.3rem" }}>
+          <div style={{ display: "flex", gap: "0.35rem" }}>
             <button
               type="button"
               onClick={() => setViewMode("simulator")}
               style={{
                 fontFamily: "'Archivo Black', sans-serif",
-                fontSize: "0.65rem",
+                fontSize: "0.76rem",
                 textTransform: "uppercase",
-                padding: "0.4rem 0.85rem",
-                letterSpacing: "0.05em",
+                padding: "0.45rem 0.95rem",
+                letterSpacing: "0.04em",
                 cursor: "pointer",
                 border: "1px solid",
                 borderColor: viewMode === "simulator" ? "#d4a017" : "rgba(245,241,232,0.1)",
                 background: viewMode === "simulator" ? "#d4a017" : "transparent",
                 color: viewMode === "simulator" ? "#0A0A0A" : "rgba(245,241,232,0.5)",
                 transition: "all 0.15s ease",
+                fontWeight: 400,
               }}
             >
               ⚡ SIMULADOR DE TRÁFICO
@@ -468,16 +473,17 @@ export function S10_Economia({ isActive: propActive } = {}) {
               onClick={() => setViewMode("table")}
               style={{
                 fontFamily: "'Archivo Black', sans-serif",
-                fontSize: "0.65rem",
+                fontSize: "0.76rem",
                 textTransform: "uppercase",
-                padding: "0.4rem 0.85rem",
-                letterSpacing: "0.05em",
+                padding: "0.45rem 0.95rem",
+                letterSpacing: "0.04em",
                 cursor: "pointer",
                 border: "1px solid",
                 borderColor: viewMode === "table" ? "#6e8e59" : "rgba(245,241,232,0.1)",
                 background: viewMode === "table" ? "#6e8e59" : "transparent",
                 color: viewMode === "table" ? "#0A0A0A" : "rgba(245,241,232,0.5)",
                 transition: "all 0.15s ease",
+                fontWeight: 400,
               }}
             >
               📊 DESGLOSE DE SERVICIOS
@@ -496,28 +502,29 @@ export function S10_Economia({ isActive: propActive } = {}) {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
               style={{
-                padding: "0.9rem 1.15rem",
+                padding: "0.85rem 1.15rem",
                 background: "rgba(18,18,18,0.9)",
                 border: isBudgetAlert ? "1.5px solid #c6432b" : "1.5px solid rgba(245,241,232,0.15)",
                 boxShadow: isBudgetAlert ? "4px 4px 0px #c6432b" : "4px 4px 0px #000000",
                 display: "flex",
                 flexDirection: "column",
-                gap: "0.65rem",
+                gap: "0.55rem",
                 transition: "border-color 0.3s ease, box-shadow 0.3s ease",
               }}
             >
               {/* Header del Slider */}
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <TrendingUp size={15} style={{ color: "#d4a017" }} />
+                  <TrendingUp size={16} style={{ color: "#d4a017" }} />
                   <label
                     htmlFor="traffic-slider-s10"
                     style={{
                       fontFamily: "'Archivo Black', sans-serif",
-                      fontSize: "0.72rem",
+                      fontSize: "0.84rem",
                       color: "#F5F1E8",
                       textTransform: "uppercase",
-                      letterSpacing: "0.05em",
+                      letterSpacing: "0.04em",
+                      fontWeight: 400,
                     }}
                   >
                     Tráfico Simulado (Peticiones ERP / Mes):
@@ -527,15 +534,15 @@ export function S10_Economia({ isActive: propActive } = {}) {
                 <div
                   style={{
                     fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.85rem",
-                    fontWeight: 800,
+                    fontSize: "0.95rem",
+                    fontWeight: 600,
                     color: "#d4a017",
                     background: "#0A0A0A",
-                    padding: "0.2rem 0.55rem",
+                    padding: "0.22rem 0.65rem",
                     border: "1px solid rgba(212,160,23,0.4)",
                   }}
                 >
-                  {simulatedUsers.toLocaleString()} <span style={{ fontSize: "0.58rem", color: "rgba(245,241,232,0.6)" }}>PETICIONES</span>
+                  {simulatedUsers.toLocaleString()} <span style={{ fontSize: "0.68rem", color: "rgba(245,241,232,0.65)", fontWeight: 400 }}>PETICIONES</span>
                 </div>
               </div>
 
@@ -562,12 +569,13 @@ export function S10_Economia({ isActive: propActive } = {}) {
                   display: "flex",
                   justifyContent: "space-between",
                   fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.58rem",
-                  color: "rgba(245,241,232,0.5)",
+                  fontSize: "0.70rem",
+                  color: "rgba(245,241,232,0.55)",
+                  fontWeight: 400,
                 }}
               >
                 <span>200 (Pruebas iniciales)</span>
-                <span style={{ color: "#6e8e59", fontWeight: 700 }}>▲ 1,000 (Free Tier: $0.00 USD)</span>
+                <span style={{ color: "#6e8e59", fontWeight: 500 }}>▲ 1,000 (Free Tier: $0.00 USD)</span>
                 <span>5,000 (Carga máxima)</span>
               </div>
 
@@ -576,7 +584,7 @@ export function S10_Economia({ isActive: propActive } = {}) {
                 {/* Hostinger Fijo */}
                 <div
                   style={{
-                    padding: "0.65rem 0.8rem",
+                    padding: "0.65rem 0.85rem",
                     background: "rgba(255,255,255,0.03)",
                     border: "1px solid rgba(245,241,232,0.12)",
                     display: "flex",
@@ -585,19 +593,19 @@ export function S10_Economia({ isActive: propActive } = {}) {
                   }}
                 >
                   <div>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "rgba(245,241,232,0.5)", textTransform: "uppercase" }}>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.70rem", color: "rgba(245,241,232,0.55)", textTransform: "uppercase", fontWeight: 400 }}>
                       HOSTINGER COMPARTIDO
                     </span>
-                    <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.72rem", color: "#F5F1E8", marginTop: "0.1rem" }}>
+                    <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.84rem", color: "#F5F1E8", marginTop: "0.1rem", fontWeight: 400 }}>
                       PLAN EMPRESARIAL FIJO
                     </div>
                   </div>
-                  <div style={{ marginTop: "0.5rem", display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "rgba(245,241,232,0.5)" }}>
+                  <div style={{ marginTop: "0.45rem", display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: "rgba(245,241,232,0.55)" }}>
                       COSTO MENSUAL:
                     </span>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "1.05rem", fontWeight: 800, color: "#F5F1E8" }}>
-                      ${hostingerFixedCost.toFixed(2)} <span style={{ fontSize: "0.6rem", fontWeight: 400, color: "rgba(245,241,232,0.6)" }}>USD</span>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "1.15rem", fontWeight: 600, color: "#F5F1E8" }}>
+                      ${hostingerFixedCost.toFixed(2)} <span style={{ fontSize: "0.70rem", fontWeight: 400, color: "rgba(245,241,232,0.6)" }}>USD</span>
                     </span>
                   </div>
                 </div>
@@ -605,7 +613,7 @@ export function S10_Economia({ isActive: propActive } = {}) {
                 {/* AWS Pay-As-You-Go */}
                 <div
                   style={{
-                    padding: "0.65rem 0.8rem",
+                    padding: "0.65rem 0.85rem",
                     background: isBudgetAlert ? "rgba(198,67,43,0.12)" : "rgba(212,160,23,0.08)",
                     border: isBudgetAlert ? "1.5px solid #c6432b" : "1.5px solid rgba(212,160,23,0.5)",
                     display: "flex",
@@ -616,32 +624,32 @@ export function S10_Economia({ isActive: propActive } = {}) {
                 >
                   <div>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#d4a017", fontWeight: 700, textTransform: "uppercase" }}>
+                      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.70rem", color: "#d4a017", fontWeight: 500, textTransform: "uppercase" }}>
                         AWS FOUNDATIONS
                       </span>
                       <span
                         style={{
                           fontFamily: "'JetBrains Mono', monospace",
-                          fontSize: "0.52rem",
-                          padding: "0.1rem 0.35rem",
+                          fontSize: "0.68rem",
+                          padding: "0.12rem 0.45rem",
                           background: awsEstimatedCost === 0 ? "rgba(110,142,89,0.25)" : isBudgetAlert ? "rgba(198,67,43,0.25)" : "rgba(212,160,23,0.2)",
                           color: awsEstimatedCost === 0 ? "#6e8e59" : isBudgetAlert ? "#c6432b" : "#d4a017",
-                          fontWeight: 700,
+                          fontWeight: 500,
                         }}
                       >
                         {awsEstimatedCost === 0 ? "FREE TIER" : isBudgetAlert ? "ALERTA $10" : "PAY-AS-YOU-GO"}
                       </span>
                     </div>
-                    <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.72rem", color: "#F5F1E8", marginTop: "0.1rem" }}>
+                    <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.84rem", color: "#F5F1E8", marginTop: "0.1rem", fontWeight: 400 }}>
                       INFRAESTRUCTURA ELÁSTICA
                     </div>
                   </div>
-                  <div style={{ marginTop: "0.5rem", display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "rgba(245,241,232,0.5)" }}>
+                  <div style={{ marginTop: "0.45rem", display: "flex", alignItems: "baseline", justifyContent: "space-between" }}>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: "rgba(245,241,232,0.55)" }}>
                       COSTO CALCULADO:
                     </span>
-                    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "1.05rem", fontWeight: 800, color: isBudgetAlert ? "#c6432b" : "#d4a017" }}>
-                      ${awsEstimatedCost.toFixed(2)} <span style={{ fontSize: "0.6rem", fontWeight: 400, color: "rgba(245,241,232,0.6)" }}>USD</span>
+                    <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "1.15rem", fontWeight: 600, color: isBudgetAlert ? "#c6432b" : "#d4a017" }}>
+                      ${awsEstimatedCost.toFixed(2)} <span style={{ fontSize: "0.70rem", fontWeight: 400, color: "rgba(245,241,232,0.6)" }}>USD</span>
                     </div>
                   </div>
                 </div>
@@ -651,7 +659,7 @@ export function S10_Economia({ isActive: propActive } = {}) {
               {isBudgetAlert ? (
                 <div
                   style={{
-                    padding: "0.45rem 0.75rem",
+                    padding: "0.5rem 0.85rem",
                     background: "rgba(198,67,43,0.25)",
                     border: "1px solid #c6432b",
                     display: "flex",
@@ -659,20 +667,20 @@ export function S10_Economia({ isActive: propActive } = {}) {
                     justifyContent: "space-between",
                   }}
                 >
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
-                    <AlertTriangle size={14} style={{ color: "#c6432b", flexShrink: 0 }} />
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#F5F1E8" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <AlertTriangle size={15} style={{ color: "#c6432b", flexShrink: 0 }} />
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.76rem", color: "#F5F1E8", fontWeight: 400 }}>
                       ⚠️ AWS Budgets disparó notificación preventiva: umbral de $10.00 USD superado.
                     </span>
                   </div>
-                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#c6432b", fontWeight: 800 }}>
+                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "#c6432b", fontWeight: 500 }}>
                     ALERTA_SNS
                   </span>
                 </div>
               ) : (
                 <div
                   style={{
-                    padding: "0.45rem 0.75rem",
+                    padding: "0.5rem 0.85rem",
                     background: "rgba(110,142,89,0.12)",
                     border: "1px solid rgba(110,142,89,0.35)",
                     display: "flex",
@@ -680,13 +688,13 @@ export function S10_Economia({ isActive: propActive } = {}) {
                     justifyContent: "space-between",
                   }}
                 >
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
-                    <ShieldCheck size={14} style={{ color: "#6e8e59", flexShrink: 0 }} />
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "rgba(245,241,232,0.8)" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <ShieldCheck size={15} style={{ color: "#6e8e59", flexShrink: 0 }} />
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.76rem", color: "rgba(245,241,232,0.85)", fontWeight: 400 }}>
                       AWS Budgets en monitoreo activo. Límite preventivo configurado en $10.00 USD.
                     </span>
                   </div>
-                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#6e8e59", fontWeight: 800 }}>
+                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "#6e8e59", fontWeight: 500 }}>
                     STATUS_OK
                   </span>
                 </div>
@@ -707,27 +715,27 @@ export function S10_Economia({ isActive: propActive } = {}) {
                 boxShadow: "4px 4px 0px #000000",
                 display: "flex",
                 flexDirection: "column",
-                gap: "0.6rem",
+                gap: "0.55rem",
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <div>
-                  <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.78rem", color: "#F5F1E8", textTransform: "uppercase" }}>
-                    // MATRIZ ECONÓMICA DETALLADA (REGIÓN us-east-1)
+                  <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.88rem", color: "#F5F1E8", textTransform: "uppercase", fontWeight: 400 }}>
+                    // MATRIZ ECONÓMICA DETALLADA (us-east-1)
                   </span>
-                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "#d4a017", marginTop: "0.1rem" }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.70rem", color: "#d4a017", marginTop: "0.1rem", fontWeight: 400 }}>
                     Haz click en cualquier servicio para ver su auditoría técnica completa
                   </div>
                 </div>
                 <span
                   style={{
                     fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.65rem",
+                    fontSize: "0.76rem",
                     color: "#6e8e59",
                     background: "rgba(110,142,89,0.2)",
                     border: "1.5px solid #6e8e59",
-                    padding: "0.25rem 0.6rem",
-                    fontWeight: 800,
+                    padding: "0.25rem 0.65rem",
+                    fontWeight: 500,
                   }}
                 >
                   TOTAL INICIAL: $0.50 USD / MES
@@ -768,26 +776,26 @@ export function S10_Economia({ isActive: propActive } = {}) {
                       <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", minWidth: 175 }}>
                         <ItemIcon size={16} style={{ color: isSelected ? "#d4a017" : item.color, flexShrink: 0 }} />
                         <div>
-                          <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.74rem", color: "#F5F1E8" }}>
+                          <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.84rem", color: "#F5F1E8", fontWeight: 400 }}>
                             {item.name}
                           </div>
-                          <div style={{ fontFamily: "Inter, sans-serif", fontSize: "0.62rem", color: "rgba(245,241,232,0.6)" }}>
+                          <div style={{ fontFamily: "Inter, sans-serif", fontSize: "0.70rem", color: "rgba(245,241,232,0.65)", fontWeight: 400 }}>
                             {item.category}
                           </div>
                         </div>
                       </div>
 
-                      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "rgba(245,241,232,0.8)", flex: 1, textAlign: "left", lineHeight: 1.3 }}>
-                        <span style={{ color: "rgba(245,241,232,0.45)" }}>Free Tier: </span>{item.freeTier}
+                      <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "rgba(245,241,232,0.85)", flex: 1, textAlign: "left", lineHeight: 1.35, fontWeight: 400 }}>
+                        <span style={{ color: "rgba(245,241,232,0.5)" }}>Free Tier: </span>{item.freeTier}
                         <br />
-                        <span style={{ color: isSelected ? "#d4a017" : "#6e8e59", fontWeight: 700 }}>MTA: </span>{item.mtaUsage}
+                        <span style={{ color: isSelected ? "#d4a017" : "#6e8e59", fontWeight: 500 }}>MTA: </span>{item.mtaUsage}
                       </div>
 
                       <div style={{ textAlign: "right", minWidth: 80 }}>
-                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.95rem", fontWeight: 800, color: item.color }}>
+                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "1.05rem", fontWeight: 600, color: item.color }}>
                           {item.monthlyCost}
                         </div>
-                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.54rem", color: item.color, fontWeight: 700 }}>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: item.color, fontWeight: 500 }}>
                           {item.status}
                         </span>
                       </div>
@@ -799,8 +807,8 @@ export function S10_Economia({ isActive: propActive } = {}) {
               <div
                 style={{
                   fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.62rem",
-                  color: "rgba(245,241,232,0.75)",
+                  fontSize: "0.72rem",
+                  color: "rgba(245,241,232,0.8)",
                   borderTop: "1px dashed rgba(245,241,232,0.2)",
                   paddingTop: "0.45rem",
                   display: "flex",
@@ -808,8 +816,8 @@ export function S10_Economia({ isActive: propActive } = {}) {
                   alignItems: "center",
                 }}
               >
-                <span>Ahorro directo vs Hostinger: <strong style={{ color: "#6e8e59", fontSize: "0.72rem" }}>$34.50 USD / mes (98.5%)</strong></span>
-                <span style={{ color: "#d4a017", fontWeight: 700 }}>Techo de seguridad: AWS Budgets $10.00 USD</span>
+                <span>Ahorro directo vs Hostinger: <strong style={{ color: "#6e8e59", fontSize: "0.80rem", fontWeight: 600 }}>$34.50 USD / mes (98.5%)</strong></span>
+                <span style={{ color: "#d4a017", fontWeight: 500 }}>Techo de seguridad: AWS Budgets $10.00 USD</span>
               </div>
             </motion.div>
           )}
@@ -824,22 +832,22 @@ export function S10_Economia({ isActive: propActive } = {}) {
               initial="hidden"
               animate={entered ? "visible" : "hidden"}
               style={{
-                padding: "0.75rem 0.85rem",
+                padding: "0.7rem 0.85rem",
                 background: "rgba(255,255,255,0.02)",
                 border: "1px solid rgba(245,241,232,0.12)",
                 borderTop: idx === 1 ? "2px solid #6e8e59" : "2px solid #d4a017",
                 display: "flex",
                 flexDirection: "column",
-                gap: "0.3rem",
+                gap: "0.25rem",
               }}
             >
               <span
                 style={{
                   fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.55rem",
+                  fontSize: "0.70rem",
                   color: idx === 1 ? "#6e8e59" : "#d4a017",
-                  fontWeight: 700,
-                  letterSpacing: "0.1em",
+                  fontWeight: 500,
+                  letterSpacing: "0.08em",
                 }}
               >
                 0{idx + 1} // PILAR
@@ -847,22 +855,24 @@ export function S10_Economia({ isActive: propActive } = {}) {
               <h4
                 style={{
                   fontFamily: "'Archivo Black', sans-serif",
-                  fontSize: "0.72rem",
+                  fontSize: "0.84rem",
                   color: "#F5F1E8",
                   textTransform: "uppercase",
                   margin: 0,
                   lineHeight: 1.2,
+                  fontWeight: 400,
                 }}
               >
                 {pt.title}
               </h4>
               <p
                 style={{
-                  fontFamily: "system-ui, -apple-system, sans-serif",
-                  fontSize: "0.65rem",
-                  color: "rgba(245,241,232,0.65)",
-                  lineHeight: 1.35,
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: "0.76rem",
+                  color: "rgba(245,241,232,0.72)",
+                  lineHeight: 1.45,
                   margin: 0,
+                  fontWeight: 400,
                 }}
               >
                 {pt.desc}
@@ -903,14 +913,15 @@ export function S10_Economia({ isActive: propActive } = {}) {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-            <DollarSign size={14} style={{ color: isBudgetAlert ? "#c6432b" : "#d4a017" }} />
+            <DollarSign size={16} style={{ color: isBudgetAlert ? "#c6432b" : "#d4a017" }} />
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
+                fontSize: "0.78rem",
                 letterSpacing: "0.15em",
-                color: isBudgetAlert ? "#c6432b" : "rgba(245,241,232,0.6)",
+                color: isBudgetAlert ? "#c6432b" : "rgba(245,241,232,0.65)",
                 textTransform: "uppercase",
+                fontWeight: 400,
               }}
             >
               FINANCIAL ARCHITECTURE // TCO BALANCE
@@ -920,11 +931,12 @@ export function S10_Economia({ isActive: propActive } = {}) {
           <div
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.6rem",
-              padding: "0.2rem 0.5rem",
+              fontSize: "0.74rem",
+              padding: "0.25rem 0.65rem",
               background: isBudgetAlert ? "rgba(198,67,43,0.15)" : "rgba(0,0,0,0.6)",
               border: isBudgetAlert ? "1px solid #c6432b" : "1px solid rgba(245,241,232,0.15)",
               color: isBudgetAlert ? "#c6432b" : "#d4a017",
+              fontWeight: 500,
             }}
           >
             {isBudgetAlert ? "BUDGET: EXCEEDED (> $10 USD)" : "BUDGET: SAFE (< $10 USD)"}
@@ -958,52 +970,52 @@ export function S10_Economia({ isActive: propActive } = {}) {
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-                  <selectedService.icon size={18} style={{ color: "#d4a017" }} />
+                  <selectedService.icon size={20} style={{ color: "#d4a017" }} />
                   <div>
-                    <h3 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.95rem", color: "#F5F1E8", margin: 0, textTransform: "uppercase" }}>
+                    <h3 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "1.05rem", color: "#F5F1E8", margin: 0, textTransform: "uppercase", fontWeight: 400 }}>
                       {selectedService.name}
                     </h3>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: "rgba(245,241,232,0.55)" }}>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "rgba(245,241,232,0.6)", fontWeight: 400 }}>
                       {selectedService.code} // {selectedService.category}
                     </span>
                   </div>
                 </div>
 
                 <div style={{ textAlign: "right" }}>
-                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "1.1rem", fontWeight: 800, color: "#6e8e59" }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "1.15rem", fontWeight: 600, color: "#6e8e59" }}>
                     {selectedService.monthlyCost} USD
                   </div>
-                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#6e8e59", fontWeight: 700 }}>
+                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "#6e8e59", fontWeight: 500 }}>
                     {selectedService.status}
                   </span>
                 </div>
               </div>
 
-              <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.78rem", color: "rgba(245,241,232,0.9)", lineHeight: 1.45, margin: "0.2rem 0" }}>
+              <p style={{ fontFamily: "Inter, sans-serif", fontSize: "0.88rem", color: "rgba(245,241,232,0.9)", lineHeight: 1.48, margin: "0.2rem 0", fontWeight: 400 }}>
                 {selectedService.summary}
               </p>
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", background: "rgba(0,0,0,0.4)", padding: "0.5rem 0.75rem", border: "1px solid rgba(245,241,232,0.1)" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem", background: "rgba(0,0,0,0.4)", padding: "0.55rem 0.85rem", border: "1px solid rgba(245,241,232,0.1)" }}>
                 <div>
-                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "rgba(245,241,232,0.5)" }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: "rgba(245,241,232,0.55)", fontWeight: 400 }}>
                     SLA & DISPONIBILIDAD
                   </div>
-                  <div style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.7rem", color: "#F5F1E8", fontWeight: 600, marginTop: "0.1rem" }}>
+                  <div style={{ fontFamily: "Inter, sans-serif", fontSize: "0.80rem", color: "#F5F1E8", fontWeight: 500, marginTop: "0.1rem" }}>
                     {selectedService.sla}
                   </div>
                 </div>
                 <div>
-                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "rgba(245,241,232,0.5)" }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: "rgba(245,241,232,0.55)", fontWeight: 400 }}>
                     COSTO POST-FREE TIER
                   </div>
-                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.7rem", color: "#d4a017", fontWeight: 700, marginTop: "0.1rem" }}>
+                  <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.80rem", color: "#d4a017", fontWeight: 500, marginTop: "0.1rem" }}>
                     {selectedService.postFreeTier}
                   </div>
                 </div>
               </div>
 
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: "rgba(245,241,232,0.6)", borderTop: "1px solid rgba(245,241,232,0.1)", paddingTop: "0.35rem" }}>
-                💡 <span style={{ color: "#d4a017" }}>Justificación us-east-1: </span>{selectedService.regionNote}
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "rgba(245,241,232,0.7)", borderTop: "1px solid rgba(245,241,232,0.1)", paddingTop: "0.35rem", fontWeight: 400 }}>
+                💡 <span style={{ color: "#d4a017", fontWeight: 500 }}>Justificación us-east-1: </span>{selectedService.regionNote}
               </div>
             </motion.div>
           )}
@@ -1042,7 +1054,7 @@ export function S10_Economia({ isActive: propActive } = {}) {
         >
           <div
             style={{
-              padding: "0.6rem 0.9rem",
+              padding: "0.65rem 0.95rem",
               background: "rgba(14,14,14,0.75)",
               border: "1px solid rgba(245,241,232,0.15)",
               backdropFilter: "blur(6px)",
@@ -1052,21 +1064,21 @@ export function S10_Economia({ isActive: propActive } = {}) {
             }}
           >
             <div>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "rgba(245,241,232,0.5)" }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.70rem", color: "rgba(245,241,232,0.55)", fontWeight: 400 }}>
                 HOSTINGER FIJO ANUAL
               </div>
-              <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.85rem", color: "#F5F1E8", marginTop: "0.15rem" }}>
-                $420.00 <span style={{ fontSize: "0.6rem", fontWeight: 400, color: "rgba(245,241,232,0.6)" }}>USD/AÑO</span>
+              <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.98rem", color: "#F5F1E8", marginTop: "0.15rem", fontWeight: 400 }}>
+                $420.00 <span style={{ fontSize: "0.72rem", fontWeight: 400, color: "rgba(245,241,232,0.6)" }}>USD/AÑO</span>
               </div>
             </div>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "rgba(245,241,232,0.4)" }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "rgba(245,241,232,0.45)", fontWeight: 400 }}>
               RECURSOS OCIOSOS
             </span>
           </div>
 
           <div
             style={{
-              padding: "0.6rem 0.9rem",
+              padding: "0.65rem 0.95rem",
               background: isBudgetAlert ? "rgba(198,67,43,0.15)" : "rgba(212,160,23,0.08)",
               border: isBudgetAlert ? "1px solid #c6432b" : "1px solid rgba(212,160,23,0.4)",
               backdropFilter: "blur(6px)",
@@ -1076,14 +1088,14 @@ export function S10_Economia({ isActive: propActive } = {}) {
             }}
           >
             <div>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: isBudgetAlert ? "#c6432b" : "#d4a017" }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.70rem", color: isBudgetAlert ? "#c6432b" : "#d4a017", fontWeight: 400 }}>
                 AWS CLOUD FOUNDATIONS
               </div>
-              <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.85rem", color: isBudgetAlert ? "#c6432b" : "#d4a017", marginTop: "0.15rem" }}>
+              <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.98rem", color: isBudgetAlert ? "#c6432b" : "#d4a017", marginTop: "0.15rem", fontWeight: 400 }}>
                 {awsEstimatedCost === 0 ? "CAPA GRATUITA ($0)" : `$${(awsEstimatedCost * 12).toFixed(2)} USD/AÑO PROY.`}
               </div>
             </div>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: isBudgetAlert ? "#c6432b" : "#6e8e59", fontWeight: 700 }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: isBudgetAlert ? "#c6432b" : "#6e8e59", fontWeight: 500 }}>
               {isBudgetAlert ? "NOTIFICACIÓN ACTIVA" : "AHORRO OPERATIVO"}
             </span>
           </div>

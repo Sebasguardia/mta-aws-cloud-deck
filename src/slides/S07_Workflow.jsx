@@ -180,10 +180,10 @@ export function S07_Workflow({ isActive: propActive } = {}) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          padding: "2.5rem 3.5rem 2.5rem 4.8rem",
+          padding: "2.1rem 3.5rem 2.1rem 4.5rem",
           position: "relative",
           zIndex: 2,
-          gap: "1rem",
+          gap: "0.85rem",
         }}
       >
         {/* Header Editorial */}
@@ -197,14 +197,14 @@ export function S07_Workflow({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
-                letterSpacing: "0.2em",
+                fontSize: "0.80rem",
+                letterSpacing: "0.18em",
                 textTransform: "uppercase",
-                fontWeight: 700,
+                fontWeight: 500,
                 color: "#c6432b",
                 background: "rgba(198,67,43,0.08)",
                 border: "1px solid rgba(198,67,43,0.35)",
-                padding: "0.25rem 0.65rem",
+                padding: "0.28rem 0.75rem",
               }}
             >
               [ {c.badge} ]
@@ -212,9 +212,10 @@ export function S07_Workflow({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.62rem",
-                letterSpacing: "0.15em",
-                color: "rgba(245,241,232,0.4)",
+                fontSize: "0.76rem",
+                letterSpacing: "0.12em",
+                color: "rgba(245,241,232,0.48)",
+                fontWeight: 400,
               }}
             >
               SEC_07 // MANUAL_DEPLOYMENT_WORKFLOW
@@ -227,10 +228,11 @@ export function S07_Workflow({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Yellowtail, cursive",
-              fontSize: "clamp(1.3rem, 2vw, 1.8rem)",
+              fontSize: "clamp(1.4rem, 2.3vw, 2.05rem)",
               color: "#e8a0bf",
               lineHeight: 1.1,
               margin: "0.15rem 0 0 0",
+              fontWeight: 400,
             }}
           >
             {c.scriptTag}
@@ -248,6 +250,7 @@ export function S07_Workflow({ isActive: propActive } = {}) {
               lineHeight: 1.05,
               textTransform: "uppercase",
               margin: 0,
+              fontWeight: 400,
             }}
           >
             {c.title}
@@ -259,10 +262,11 @@ export function S07_Workflow({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Inter, sans-serif",
-              fontSize: "0.85rem",
-              color: "rgba(245,241,232,0.65)",
-              lineHeight: 1.45,
+              fontSize: "1.02rem",
+              color: "rgba(245,241,232,0.76)",
+              lineHeight: 1.5,
               margin: 0,
+              fontWeight: 400,
             }}
           >
             {c.subtitle}
@@ -279,7 +283,7 @@ export function S07_Workflow({ isActive: propActive } = {}) {
         />
 
         {/* ── Timeline Táctico de 5 Pasos ── */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
           {c.steps.map((item, idx) => {
             const isCurrent = activeStep === idx;
             const isPast = activeStep > idx;
@@ -290,7 +294,7 @@ export function S07_Workflow({ isActive: propActive } = {}) {
                 variants={fadeUp(0.26 + idx * 0.06)}
                 initial="hidden"
                 animate={entered ? "visible" : "hidden"}
-                whileHover={{ scale: 1.02, x: 4 }}
+                whileHover={{ scale: 1.015, x: 4 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => {
                   if (isSimulating) cancelSimulation();
@@ -308,7 +312,7 @@ export function S07_Workflow({ isActive: propActive } = {}) {
                       ? "#4a5d3a"
                       : "rgba(245,241,232,0.15)"
                   }`,
-                  padding: isCurrent ? "0.65rem 1.0rem" : "0.55rem 0.9rem",
+                  padding: isCurrent ? "0.65rem 1.0rem" : "0.52rem 0.9rem",
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
@@ -321,9 +325,9 @@ export function S07_Workflow({ isActive: propActive } = {}) {
                   <span
                     style={{
                       fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.7rem",
-                      fontWeight: 700,
-                      color: isCurrent ? "#d4a017" : "rgba(245,241,232,0.4)",
+                      fontSize: "0.82rem",
+                      fontWeight: 500,
+                      color: isCurrent ? "#d4a017" : "rgba(245,241,232,0.45)",
                     }}
                   >
                     0{item.step}
@@ -334,8 +338,9 @@ export function S07_Workflow({ isActive: propActive } = {}) {
                       <span
                         style={{
                           fontFamily: "'Archivo Black', sans-serif",
-                          fontSize: "0.82rem",
-                          color: isCurrent ? "#F5F1E8" : "rgba(245,241,232,0.85)",
+                          fontSize: "0.96rem",
+                          color: isCurrent ? "#F5F1E8" : "rgba(245,241,232,0.9)",
+                          fontWeight: 400,
                         }}
                       >
                         {item.action}
@@ -343,11 +348,12 @@ export function S07_Workflow({ isActive: propActive } = {}) {
                       <span
                         style={{
                           fontFamily: "'JetBrains Mono', monospace",
-                          fontSize: "0.58rem",
+                          fontSize: "0.72rem",
                           color: "#d4a017",
                           background: "rgba(212,160,23,0.08)",
-                          padding: "0.1rem 0.35rem",
+                          padding: "0.12rem 0.45rem",
                           border: "1px solid rgba(212,160,23,0.2)",
+                          fontWeight: 400,
                         }}
                       >
                         {stepIcons[idx]}
@@ -356,8 +362,9 @@ export function S07_Workflow({ isActive: propActive } = {}) {
                     <span
                       style={{
                         fontFamily: "Inter, sans-serif",
-                        fontSize: "0.72rem",
-                        color: "rgba(245,241,232,0.55)",
+                        fontSize: "0.84rem",
+                        color: "rgba(245,241,232,0.68)",
+                        fontWeight: 400,
                       }}
                     >
                       {item.desc}
@@ -368,8 +375,9 @@ export function S07_Workflow({ isActive: propActive } = {}) {
                 <span
                   style={{
                     fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.6rem",
-                    fontWeight: 700,
+                    fontSize: "0.74rem",
+                    fontWeight: 500,
+                    letterSpacing: "0.05em",
                     color:
                       idx === 4 && hasFailed
                         ? "#c6432b"
@@ -377,7 +385,7 @@ export function S07_Workflow({ isActive: propActive } = {}) {
                         ? "#d4a017"
                         : isPast
                         ? "#4a5d3a"
-                        : "rgba(245,241,232,0.3)",
+                        : "rgba(245,241,232,0.35)",
                   }}
                 >
                   {idx === 4 && hasFailed ? "❌ ERROR 500" : isCurrent ? "EN PROCESO" : isPast ? "COMPLETADO" : "PENDIENTE"}
@@ -395,10 +403,10 @@ export function S07_Workflow({ isActive: propActive } = {}) {
           style={{
             border: `1px solid ${hasFailed ? "#c6432b" : "rgba(245,241,232,0.12)"}`,
             background: hasFailed ? "rgba(198,67,43,0.1)" : "rgba(245,241,232,0.02)",
-            padding: "0.85rem 1.1rem",
+            padding: "0.75rem 1.1rem",
             display: "flex",
             flexDirection: "column",
-            gap: "0.5rem",
+            gap: "0.45rem",
             transition: "all 0.3s ease",
           }}
         >
@@ -407,10 +415,10 @@ export function S07_Workflow({ isActive: propActive } = {}) {
               <span
                 style={{
                   fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.64rem",
+                  fontSize: "0.78rem",
                   color: hasFailed ? "#c6432b" : "#d4a017",
-                  fontWeight: 700,
-                  letterSpacing: "0.1em",
+                  fontWeight: 500,
+                  letterSpacing: "0.08em",
                 }}
               >
                 [ SIMULADOR: ANTES VS AHORA — PARTE 1 ]
@@ -418,8 +426,9 @@ export function S07_Workflow({ isActive: propActive } = {}) {
               <span
                 style={{
                   fontFamily: "Inter, sans-serif",
-                  fontSize: "0.76rem",
-                  color: "rgba(245,241,232,0.85)",
+                  fontSize: "0.90rem",
+                  color: "rgba(245,241,232,0.9)",
+                  fontWeight: 400,
                 }}
               >
                 Ejecuta el ciclo de despliegue manual tradicional:
@@ -435,9 +444,9 @@ export function S07_Workflow({ isActive: propActive } = {}) {
                     border: "1px solid rgba(245,241,232,0.25)",
                     color: "rgba(245,241,232,0.8)",
                     fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.66rem",
-                    fontWeight: 700,
-                    padding: "0.45rem 0.8rem",
+                    fontSize: "0.76rem",
+                    fontWeight: 500,
+                    padding: "0.5rem 0.85rem",
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
@@ -458,9 +467,9 @@ export function S07_Workflow({ isActive: propActive } = {}) {
                   border: `1px solid ${hasFailed ? "#c6432b" : isSimulating ? "#d4a017" : "rgba(245,241,232,0.3)"}`,
                   color: "#F5F1E8",
                   fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.66rem",
-                  fontWeight: 700,
-                  padding: "0.45rem 0.95rem",
+                  fontSize: "0.78rem",
+                  fontWeight: 500,
+                  padding: "0.5rem 1.05rem",
                   cursor: isSimulating ? "wait" : "pointer",
                   display: "flex",
                   alignItems: "center",
@@ -483,7 +492,7 @@ export function S07_Workflow({ isActive: propActive } = {}) {
               style={{
                 background: "rgba(198,67,43,0.18)",
                 borderLeft: "3px solid #c6432b",
-                padding: "0.6rem 0.8rem",
+                padding: "0.65rem 0.9rem",
                 display: "flex",
                 alignItems: "center",
                 gap: "0.75rem",
@@ -494,8 +503,8 @@ export function S07_Workflow({ isActive: propActive } = {}) {
                 <span
                   style={{
                     fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.72rem",
-                    fontWeight: 700,
+                    fontSize: "0.84rem",
+                    fontWeight: 500,
                     color: "#F5F1E8",
                   }}
                 >
@@ -504,8 +513,9 @@ export function S07_Workflow({ isActive: propActive } = {}) {
                 <span
                   style={{
                     fontFamily: "Inter, sans-serif",
-                    fontSize: "0.68rem",
-                    color: "rgba(245,241,232,0.7)",
+                    fontSize: "0.80rem",
+                    color: "rgba(245,241,232,0.78)",
+                    fontWeight: 400,
                   }}
                 >
                   Discrepancias de variables de entorno, versiones de Node.js y falta de Staging automatizado.
@@ -560,10 +570,10 @@ export function S07_Workflow({ isActive: propActive } = {}) {
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.62rem",
-              letterSpacing: "0.2em",
+              fontSize: "0.78rem",
+              letterSpacing: "0.15em",
               color: hasFailed ? "#c6432b" : "#d4a017",
-              fontWeight: 700,
+              fontWeight: 500,
             }}
           >
             {hasFailed ? "PIPELINE_STATUS // BROKEN_BUILD" : "GIT_PIPELINE // 5_STAGES"}
@@ -571,8 +581,9 @@ export function S07_Workflow({ isActive: propActive } = {}) {
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.58rem",
-              color: "rgba(245,241,232,0.4)",
+              fontSize: "0.72rem",
+              color: "rgba(245,241,232,0.5)",
+              fontWeight: 400,
             }}
           >
             CI_CD: ABSENT · STAGING: NONE · DEPLOY_METHOD: MANUAL
@@ -587,23 +598,24 @@ export function S07_Workflow({ isActive: propActive } = {}) {
             bottom: "2.5rem",
             right: "3rem",
             border: `1px solid ${hasFailed ? "#c6432b" : "rgba(245,241,232,0.12)"}`,
-            background: "rgba(10,10,10,0.75)",
+            background: "rgba(10,10,10,0.85)",
             backdropFilter: "blur(8px)",
-            padding: "0.65rem 1rem",
+            padding: "0.85rem 1.25rem",
             display: "flex",
             flexDirection: "column",
-            gap: "0.25rem",
+            gap: "0.35rem",
             zIndex: 10,
-            maxWidth: "300px",
+            maxWidth: "360px",
             boxShadow: hasFailed ? "0 0 25px rgba(198,67,43,0.35)" : "none",
           }}
         >
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.62rem",
+              fontSize: "0.78rem",
               color: hasFailed ? "#c6432b" : "#d4a017",
-              fontWeight: 700,
+              fontWeight: 500,
+              letterSpacing: "0.05em",
             }}
           >
             {hasFailed ? "[ ANATOMÍA DEL ERROR 500 ]" : "[ COOPERACIÓN MANUAL ]"}
@@ -611,9 +623,10 @@ export function S07_Workflow({ isActive: propActive } = {}) {
           <span
             style={{
               fontFamily: "Inter, sans-serif",
-              fontSize: "0.72rem",
-              color: "rgba(245,241,232,0.75)",
-              lineHeight: 1.35,
+              fontSize: "0.85rem",
+              color: "rgba(245,241,232,0.85)",
+              lineHeight: 1.48,
+              fontWeight: 400,
             }}
           >
             {hasFailed

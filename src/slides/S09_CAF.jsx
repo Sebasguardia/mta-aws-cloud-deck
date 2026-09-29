@@ -174,10 +174,10 @@ export function S09_CAF({ isActive: propActive } = {}) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          padding: "2.5rem 3rem 2.5rem 4.8rem",
+          padding: "2.1rem 3rem 2.1rem 4.5rem",
           position: "relative",
           zIndex: 2,
-          gap: "1.1rem",
+          gap: "0.95rem",
         }}
       >
         {/* Header Editorial */}
@@ -191,14 +191,14 @@ export function S09_CAF({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
-                letterSpacing: "0.2em",
+                fontSize: "0.80rem",
+                letterSpacing: "0.18em",
                 textTransform: "uppercase",
-                fontWeight: 700,
+                fontWeight: 500,
                 color: "#d4a017",
                 background: "rgba(212,160,23,0.12)",
                 border: "1px solid rgba(212,160,23,0.4)",
-                padding: "0.25rem 0.65rem",
+                padding: "0.28rem 0.75rem",
               }}
             >
               [ {c.badge} ]
@@ -206,9 +206,10 @@ export function S09_CAF({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.62rem",
-                letterSpacing: "0.15em",
-                color: "rgba(245,241,232,0.45)",
+                fontSize: "0.76rem",
+                letterSpacing: "0.12em",
+                color: "rgba(245,241,232,0.48)",
+                fontWeight: 400,
               }}
             >
               SEC_09 // CLOUD_ADOPTION_FRAMEWORK
@@ -221,10 +222,11 @@ export function S09_CAF({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Yellowtail, cursive",
-              fontSize: "clamp(1.3rem, 2vw, 1.8rem)",
+              fontSize: "clamp(1.4rem, 2.3vw, 2.05rem)",
               color: "#e8a0bf",
               lineHeight: 1.1,
               margin: "0.15rem 0 0 0",
+              fontWeight: 400,
             }}
           >
             {c.scriptTag}
@@ -242,6 +244,7 @@ export function S09_CAF({ isActive: propActive } = {}) {
               lineHeight: 1.05,
               textTransform: "uppercase",
               margin: 0,
+              fontWeight: 400,
             }}
           >
             {c.title}
@@ -252,11 +255,12 @@ export function S09_CAF({ isActive: propActive } = {}) {
             initial="hidden"
             animate={entered ? "visible" : "hidden"}
             style={{
-              fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: "clamp(0.85rem, 1.05vw, 0.95rem)",
-              color: "rgba(245,241,232,0.65)",
+              fontFamily: "Inter, sans-serif",
+              fontSize: "clamp(0.94rem, 1.1vw, 1.02rem)",
+              color: "rgba(245,241,232,0.76)",
               margin: "0.2rem 0 0 0",
-              lineHeight: 1.4,
+              lineHeight: 1.5,
+              fontWeight: 400,
             }}
           >
             {c.subtitle}
@@ -272,44 +276,45 @@ export function S09_CAF({ isActive: propActive } = {}) {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            padding: "0.5rem 0.6rem",
+            padding: "0.55rem 0.7rem",
             background: "rgba(18,18,18,0.9)",
             border: "1.5px solid rgba(245,241,232,0.15)",
             boxShadow: "4px 4px 0px #000000",
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", paddingLeft: "0.5rem" }}>
-            <ArrowLeftRight size={14} style={{ color: isAfter ? "#d4a017" : "rgba(245,241,232,0.5)" }} />
+            <ArrowLeftRight size={15} style={{ color: isAfter ? "#d4a017" : "rgba(245,241,232,0.5)" }} />
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
-                letterSpacing: "0.15em",
-                color: "rgba(245,241,232,0.7)",
+                fontSize: "0.76rem",
+                letterSpacing: "0.12em",
+                color: "rgba(245,241,232,0.8)",
                 textTransform: "uppercase",
-                fontWeight: 700,
+                fontWeight: 500,
               }}
             >
               TRANSFORMACIÓN CAF
             </span>
           </div>
 
-          <div style={{ display: "flex", gap: "0.3rem" }}>
+          <div style={{ display: "flex", gap: "0.4rem" }}>
             <button
               type="button"
               onClick={() => setCafPerspective("before")}
               style={{
                 fontFamily: "'Archivo Black', sans-serif",
-                fontSize: "0.68rem",
+                fontSize: "0.78rem",
                 textTransform: "uppercase",
-                padding: "0.45rem 0.9rem",
-                letterSpacing: "0.05em",
+                padding: "0.45rem 1.0rem",
+                letterSpacing: "0.04em",
                 cursor: "pointer",
                 border: "1px solid",
                 borderColor: !isAfter ? "#c6432b" : "rgba(245,241,232,0.1)",
                 background: !isAfter ? "#c6432b" : "transparent",
                 color: !isAfter ? "#FFFFFF" : "rgba(245,241,232,0.5)",
                 transition: "all 0.15s ease",
+                fontWeight: 400,
               }}
             >
               ANTES // HOSTINGER
@@ -320,16 +325,17 @@ export function S09_CAF({ isActive: propActive } = {}) {
               onClick={() => setCafPerspective("after")}
               style={{
                 fontFamily: "'Archivo Black', sans-serif",
-                fontSize: "0.68rem",
+                fontSize: "0.78rem",
                 textTransform: "uppercase",
-                padding: "0.45rem 0.9rem",
-                letterSpacing: "0.05em",
+                padding: "0.45rem 1.0rem",
+                letterSpacing: "0.04em",
                 cursor: "pointer",
                 border: "1px solid",
                 borderColor: isAfter ? "#d4a017" : "rgba(245,241,232,0.1)",
                 background: isAfter ? "#d4a017" : "transparent",
                 color: isAfter ? "#0A0A0A" : "rgba(245,241,232,0.5)",
                 transition: "all 0.15s ease",
+                fontWeight: 400,
               }}
             >
               DESPUÉS // AWS CLOUD
@@ -345,7 +351,7 @@ export function S09_CAF({ isActive: propActive } = {}) {
             initial="hidden"
             animate={entered ? "visible" : "hidden"}
             style={{
-              padding: "1rem 1.15rem",
+              padding: "0.95rem 1.15rem",
               background: isAfter ? "rgba(212,160,23,0.06)" : "rgba(255,255,255,0.02)",
               border: isAfter ? "1.5px solid rgba(212,160,23,0.5)" : "1px solid rgba(245,241,232,0.12)",
               borderTop: isAfter ? "3px solid #d4a017" : "3px solid #c6432b",
@@ -358,29 +364,30 @@ export function S09_CAF({ isActive: propActive } = {}) {
             }}
           >
             <div>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.45rem" }}>
                 <span
                   style={{
                     fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.58rem",
-                    letterSpacing: "0.15em",
+                    fontSize: "0.72rem",
+                    letterSpacing: "0.12em",
                     color: isAfter ? "#d4a017" : "#c6432b",
-                    fontWeight: 700,
+                    fontWeight: 500,
                   }}
                 >
                   01 // TECNOLOGÍA
                 </span>
-                <Cpu size={14} style={{ color: isAfter ? "#d4a017" : "#c6432b" }} />
+                <Cpu size={15} style={{ color: isAfter ? "#d4a017" : "#c6432b" }} />
               </div>
 
               <h3
                 style={{
                   fontFamily: "'Archivo Black', sans-serif",
-                  fontSize: "0.85rem",
+                  fontSize: "0.98rem",
                   color: "#F5F1E8",
                   textTransform: "uppercase",
                   margin: "0 0 0.45rem 0",
-                  letterSpacing: "0.02em",
+                  letterSpacing: "0.01em",
+                  fontWeight: 400,
                 }}
               >
                 {c.perspectiveTech.name}
@@ -388,11 +395,12 @@ export function S09_CAF({ isActive: propActive } = {}) {
 
               <p
                 style={{
-                  fontFamily: "system-ui, -apple-system, sans-serif",
-                  fontSize: "0.78rem",
-                  color: "rgba(245,241,232,0.75)",
-                  lineHeight: 1.45,
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: "0.88rem",
+                  color: "rgba(245,241,232,0.76)",
+                  lineHeight: 1.48,
                   margin: 0,
+                  fontWeight: 400,
                 }}
               >
                 {isAfter ? c.perspectiveTech.after : c.perspectiveTech.before}
@@ -401,25 +409,25 @@ export function S09_CAF({ isActive: propActive } = {}) {
 
             <div
               style={{
-                marginTop: "0.8rem",
-                paddingTop: "0.5rem",
+                marginTop: "0.75rem",
+                paddingTop: "0.45rem",
                 borderTop: "1px solid rgba(245,241,232,0.1)",
                 display: "flex",
                 alignItems: "center",
-                gap: "0.4rem",
+                gap: "0.45rem",
               }}
             >
               {isAfter ? (
                 <>
-                  <Check size={12} style={{ color: "#6e8e59" }} />
-                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#6e8e59", fontWeight: 700 }}>
+                  <Check size={14} style={{ color: "#6e8e59" }} />
+                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#6e8e59", fontWeight: 500 }}>
                     Alta disponibilidad & VPC
                   </span>
                 </>
               ) : (
                 <>
-                  <X size={12} style={{ color: "#c6432b" }} />
-                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#c6432b", fontWeight: 700 }}>
+                  <X size={14} style={{ color: "#c6432b" }} />
+                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#c6432b", fontWeight: 500 }}>
                     Cuello de botella en host
                   </span>
                 </>
@@ -433,7 +441,7 @@ export function S09_CAF({ isActive: propActive } = {}) {
             initial="hidden"
             animate={entered ? "visible" : "hidden"}
             style={{
-              padding: "1rem 1.15rem",
+              padding: "0.95rem 1.15rem",
               background: isAfter ? "rgba(110,142,89,0.06)" : "rgba(255,255,255,0.02)",
               border: isAfter ? "1.5px solid rgba(110,142,89,0.5)" : "1px solid rgba(245,241,232,0.12)",
               borderTop: isAfter ? "3px solid #6e8e59" : "3px solid #c6432b",
@@ -446,29 +454,30 @@ export function S09_CAF({ isActive: propActive } = {}) {
             }}
           >
             <div>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.45rem" }}>
                 <span
                   style={{
                     fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.58rem",
-                    letterSpacing: "0.15em",
+                    fontSize: "0.72rem",
+                    letterSpacing: "0.12em",
                     color: isAfter ? "#6e8e59" : "#c6432b",
-                    fontWeight: 700,
+                    fontWeight: 500,
                   }}
                 >
                   02 // PROCESOS
                 </span>
-                <Workflow size={14} style={{ color: isAfter ? "#6e8e59" : "#c6432b" }} />
+                <Workflow size={15} style={{ color: isAfter ? "#6e8e59" : "#c6432b" }} />
               </div>
 
               <h3
                 style={{
                   fontFamily: "'Archivo Black', sans-serif",
-                  fontSize: "0.85rem",
+                  fontSize: "0.98rem",
                   color: "#F5F1E8",
                   textTransform: "uppercase",
                   margin: "0 0 0.45rem 0",
-                  letterSpacing: "0.02em",
+                  letterSpacing: "0.01em",
+                  fontWeight: 400,
                 }}
               >
                 {c.perspectiveProc.name}
@@ -476,11 +485,12 @@ export function S09_CAF({ isActive: propActive } = {}) {
 
               <p
                 style={{
-                  fontFamily: "system-ui, -apple-system, sans-serif",
-                  fontSize: "0.78rem",
-                  color: "rgba(245,241,232,0.75)",
-                  lineHeight: 1.45,
+                  fontFamily: "Inter, sans-serif",
+                  fontSize: "0.88rem",
+                  color: "rgba(245,241,232,0.76)",
+                  lineHeight: 1.48,
                   margin: 0,
+                  fontWeight: 400,
                 }}
               >
                 {isAfter ? c.perspectiveProc.after : c.perspectiveProc.before}
@@ -489,25 +499,25 @@ export function S09_CAF({ isActive: propActive } = {}) {
 
             <div
               style={{
-                marginTop: "0.8rem",
-                paddingTop: "0.5rem",
+                marginTop: "0.75rem",
+                paddingTop: "0.45rem",
                 borderTop: "1px solid rgba(245,241,232,0.1)",
                 display: "flex",
                 alignItems: "center",
-                gap: "0.4rem",
+                gap: "0.45rem",
               }}
             >
               {isAfter ? (
                 <>
-                  <Check size={12} style={{ color: "#6e8e59" }} />
-                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#6e8e59", fontWeight: 700 }}>
+                  <Check size={14} style={{ color: "#6e8e59" }} />
+                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#6e8e59", fontWeight: 500 }}>
                     Staging real & CI/CD ágil
                   </span>
                 </>
               ) : (
                 <>
-                  <X size={12} style={{ color: "#c6432b" }} />
-                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#c6432b", fontWeight: 700 }}>
+                  <X size={14} style={{ color: "#c6432b" }} />
+                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#c6432b", fontWeight: 500 }}>
                     Pases manuales e inseguros
                   </span>
                 </>
@@ -522,23 +532,24 @@ export function S09_CAF({ isActive: propActive } = {}) {
           initial="hidden"
           animate={entered ? "visible" : "hidden"}
           style={{
-            padding: "0.75rem 1rem",
+            padding: "0.75rem 1.15rem",
             background: "rgba(0,0,0,0.55)",
             border: "1px solid rgba(245,241,232,0.15)",
             borderLeft: "3px solid #d4a017",
             display: "flex",
             alignItems: "center",
-            gap: "0.75rem",
+            gap: "0.85rem",
           }}
         >
-          <Compass size={20} style={{ color: "#d4a017", flexShrink: 0 }} />
+          <Compass size={22} style={{ color: "#d4a017", flexShrink: 0 }} />
           <p
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.65rem",
-              color: "rgba(245,241,232,0.7)",
-              lineHeight: 1.45,
+              fontSize: "0.80rem",
+              color: "rgba(245,241,232,0.78)",
+              lineHeight: 1.48,
               margin: 0,
+              fontWeight: 400,
             }}
           >
             {c.concept}
@@ -577,14 +588,15 @@ export function S09_CAF({ isActive: propActive } = {}) {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
-            <Server size={14} style={{ color: isAfter ? "#d4a017" : "rgba(245,241,232,0.5)" }} />
+            <Server size={16} style={{ color: isAfter ? "#d4a017" : "rgba(245,241,232,0.5)" }} />
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
+                fontSize: "0.78rem",
                 letterSpacing: "0.15em",
-                color: isAfter ? "#d4a017" : "rgba(245,241,232,0.6)",
+                color: isAfter ? "#d4a017" : "rgba(245,241,232,0.65)",
                 textTransform: "uppercase",
+                fontWeight: 400,
               }}
             >
               {isAfter ? "AWS CLOUD ECOSYSTEM // RESILIENT MESH" : "LEGACY SHARED HOST // FRAGMENTED"}
@@ -594,11 +606,12 @@ export function S09_CAF({ isActive: propActive } = {}) {
           <div
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.6rem",
-              padding: "0.2rem 0.5rem",
+              fontSize: "0.74rem",
+              padding: "0.25rem 0.65rem",
               background: isAfter ? "rgba(212,160,23,0.15)" : "rgba(0,0,0,0.6)",
               border: isAfter ? "1px solid #d4a017" : "1px solid rgba(245,241,232,0.15)",
               color: isAfter ? "#d4a017" : "rgba(245,241,232,0.5)",
+              fontWeight: 500,
             }}
           >
             {isAfter ? "CAF: STAGE_03 ADOPTED" : "CAF: STAGE_01 DIAGNOSED"}
@@ -633,7 +646,7 @@ export function S09_CAF({ isActive: propActive } = {}) {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            padding: "0.6rem 1rem",
+            padding: "0.7rem 1.15rem",
             background: isAfter ? "rgba(212,160,23,0.08)" : "rgba(14,14,14,0.75)",
             border: isAfter ? "1px solid rgba(212,160,23,0.4)" : "1px solid rgba(245,241,232,0.15)",
             backdropFilter: "blur(6px)",
@@ -651,10 +664,10 @@ export function S09_CAF({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.62rem",
-                color: isAfter ? "#d4a017" : "rgba(245,241,232,0.6)",
+                fontSize: "0.76rem",
+                color: isAfter ? "#d4a017" : "rgba(245,241,232,0.65)",
                 textTransform: "uppercase",
-                fontWeight: 700,
+                fontWeight: 500,
               }}
             >
               {isAfter ? "10 IDENTIDADES IAM AISLADAS EN MALLA" : "10 LOCALHOSTS AISLADOS SIN STAGING"}
@@ -664,9 +677,9 @@ export function S09_CAF({ isActive: propActive } = {}) {
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.6rem",
-              color: isAfter ? "#6e8e59" : "rgba(245,241,232,0.4)",
-              fontWeight: 700,
+              fontSize: "0.74rem",
+              color: isAfter ? "#6e8e59" : "rgba(245,241,232,0.45)",
+              fontWeight: 500,
             }}
           >
             {isAfter ? "GOBIERNO CENTRALIZADO: 100%" : "RIESGO OPERATIVO: ALTO"}

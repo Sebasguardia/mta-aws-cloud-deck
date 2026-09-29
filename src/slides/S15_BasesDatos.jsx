@@ -18,7 +18,7 @@ const c = slidesContent.s16_basesDatos;
 
 export function S16_BasesDatos({ isActive: propActive } = {}) {
   const shouldReduceMotion = useReducedMotion();
-  const hookActive = useSlideActive(15);
+  const hookActive = useSlideActive(14);
   const sectionRef = useRef(null);
   const [domActive, setDomActive] = useState(false);
 
@@ -109,9 +109,9 @@ export function S16_BasesDatos({ isActive: propActive } = {}) {
   ];
 
   const RequirementIcon = ({ val }) => {
-    if (val === true) return <CheckCircle2 size={13} style={{ color: "#7a9b5c" }} />;
-    if (val === false) return <XCircle size={13} style={{ color: "#c6432b" }} />;
-    return <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.5rem", color: "#d4a017", fontWeight: 700 }}>{val === "parcial" ? "PARCIAL" : "VERT."}</span>;
+    if (val === true) return <CheckCircle2 size={16} style={{ color: "#7a9b5c" }} />;
+    if (val === false) return <XCircle size={16} style={{ color: "#c6432b" }} />;
+    return <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "#d4a017", fontWeight: 600 }}>{val === "parcial" ? "PARCIAL" : "VERT."}</span>;
   };
 
   return (
@@ -132,28 +132,28 @@ export function S16_BasesDatos({ isActive: propActive } = {}) {
       />
 
       {/* ══════════════ COLUMNA IZQUIERDA ══════════════ */}
-      <div style={{ flex: "0 0 50%", display: "flex", flexDirection: "column", justifyContent: "center", padding: "2.5rem 3rem 2.5rem 4.8rem", position: "relative", zIndex: 2, gap: "0.85rem" }}>
+      <div style={{ flex: "0 0 50%", display: "flex", flexDirection: "column", justifyContent: "center", padding: "2.1rem 2.8rem 2.1rem 4.5rem", position: "relative", zIndex: 2, gap: "0.85rem" }}>
 
         <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
-          <motion.div variants={fadeUp(0.04)} initial="hidden" animate={entered ? "visible" : "hidden"} style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", fontWeight: 700, color: "#d4a017", background: "rgba(212,160,23,0.12)", border: "1px solid rgba(212,160,23,0.4)", padding: "0.25rem 0.65rem" }}>
+          <motion.div variants={fadeUp(0.04)} initial="hidden" animate={entered ? "visible" : "hidden"} style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.80rem", letterSpacing: "0.15em", textTransform: "uppercase", fontWeight: 500, color: "#d4a017", background: "rgba(212,160,23,0.12)", border: "1px solid rgba(212,160,23,0.4)", padding: "0.28rem 0.75rem" }}>
               [ {c.badge} ]
             </span>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", letterSpacing: "0.15em", color: "rgba(245,241,232,0.45)" }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.76rem", letterSpacing: "0.12em", color: "rgba(245,241,232,0.65)", fontWeight: 400 }}>
               SEC_16 // MANAGED_DATABASES
             </span>
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "#7a9b5c", background: "rgba(122,155,92,0.15)", border: "1px solid rgba(122,155,92,0.35)", padding: "0.15rem 0.45rem", fontWeight: 700 }}>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#7a9b5c", background: "rgba(122,155,92,0.15)", border: "1px solid rgba(122,155,92,0.35)", padding: "0.24rem 0.6rem", fontWeight: 500 }}>
               RDS · AURORA · DYNAMODB
             </span>
           </motion.div>
 
           <motion.p variants={fadeUp(0.08)} initial="hidden" animate={entered ? "visible" : "hidden"}
-            style={{ fontFamily: "Yellowtail, cursive", fontSize: "clamp(1.3rem, 2vw, 1.8rem)", color: "#e8a0bf", lineHeight: 1.1, margin: "0.15rem 0 0 0" }}>
+            style={{ fontFamily: "Yellowtail, cursive", fontSize: "clamp(1.4rem, 2.3vw, 2.05rem)", color: "#e8a0bf", lineHeight: 1.1, margin: "0.15rem 0 0 0", fontWeight: 400 }}>
             {c.scriptTag}
           </motion.p>
 
           <motion.h1 variants={fadeUp(0.12)} initial="hidden" animate={entered ? "visible" : "hidden"}
-            style={{ fontFamily: "'Archivo Black', 'Arial Black', sans-serif", fontSize: "clamp(1.6rem, 2.3vw, 2.2rem)", color: "#F5F1E8", letterSpacing: "-0.025em", lineHeight: 1.05, textTransform: "uppercase", margin: 0 }}>
+            style={{ fontFamily: "'Archivo Black', 'Arial Black', sans-serif", fontSize: "clamp(1.7rem, 2.6vw, 2.5rem)", color: "#F5F1E8", letterSpacing: "-0.025em", lineHeight: 1.05, textTransform: "uppercase", margin: 0, fontWeight: 400 }}>
             {c.title}
           </motion.h1>
 
@@ -165,27 +165,27 @@ export function S16_BasesDatos({ isActive: propActive } = {}) {
           />
 
           <motion.p variants={fadeUp(0.16)} initial="hidden" animate={entered ? "visible" : "hidden"}
-            style={{ fontFamily: "system-ui, -apple-system, sans-serif", fontSize: "clamp(0.85rem, 1.05vw, 0.95rem)", color: "rgba(245,241,232,0.65)", margin: 0, lineHeight: 1.4 }}>
+            style={{ fontFamily: "Inter, system-ui, -apple-system, sans-serif", fontSize: "clamp(0.94rem, 1.1vw, 1.02rem)", color: "rgba(245,241,232,0.78)", margin: 0, lineHeight: 1.5, fontWeight: 400 }}>
             {c.subtitle}
           </motion.p>
         </div>
 
         {/* Engine selector */}
         <motion.div variants={fadeUp(0.22)} initial="hidden" animate={entered ? "visible" : "hidden"}
-          style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.4rem", background: "rgba(18,18,18,0.9)", border: "1.5px solid rgba(245,241,232,0.15)", padding: "0.35rem" }}>
+          style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.45rem", background: "rgba(18,18,18,0.9)", border: "1.5px solid rgba(245,241,232,0.15)", padding: "0.45rem" }}>
           {Object.values(enginesData).map((eng) => {
             const isSelected = selectedEngine === eng.id;
             return (
               <button key={eng.id} type="button" onClick={() => setSelectedEngine(eng.id)}
-                style={{ background: isSelected ? "#d4a017" : "transparent", color: isSelected ? "#0A0A0A" : "rgba(245,241,232,0.7)", border: isSelected ? "1px solid #d4a017" : "1px solid rgba(245,241,232,0.1)", padding: "0.45rem 0.35rem", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", fontWeight: 700, cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.2rem", transition: "all 0.18s ease", position: "relative", overflow: "hidden" }}>
+                style={{ background: isSelected ? "#d4a017" : "transparent", color: isSelected ? "#0A0A0A" : "rgba(245,241,232,0.85)", border: isSelected ? "1px solid #d4a017" : "1px solid rgba(245,241,232,0.12)", padding: "0.55rem 0.4rem", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.76rem", fontWeight: isSelected ? 600 : 500, cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.28rem", transition: "all 0.18s ease", position: "relative", overflow: "hidden" }}>
                 {isSelected && (
                   <motion.div layoutId="engine-selector-glow"
                     style={{ position: "absolute", inset: 0, background: "rgba(212,160,23,0.15)" }}
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}
-                <eng.icon size={14} style={{ position: "relative", zIndex: 1 }} />
-                <span style={{ position: "relative", zIndex: 1 }}>{eng.id.toUpperCase()}</span>
+                <eng.icon size={17} style={{ position: "relative", zIndex: 1 }} />
+                <span style={{ position: "relative", zIndex: 1, letterSpacing: "0.04em" }}>{eng.id.toUpperCase()}</span>
               </button>
             );
           })}
@@ -193,18 +193,18 @@ export function S16_BasesDatos({ isActive: propActive } = {}) {
 
         {/* Engine verdict status bar */}
         <motion.div variants={fadeUp(0.28)} initial="hidden" animate={entered ? "visible" : "hidden"}
-          style={{ padding: "0.45rem 0.75rem", background: "#0A0A0A", border: "1px solid rgba(245,241,232,0.12)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          style={{ padding: "0.55rem 0.85rem", background: "#0A0A0A", border: "1.5px solid rgba(245,241,232,0.15)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
             <motion.div animate={{ opacity: pulse ? 1 : 0.3, scale: pulse ? 1.2 : 0.9 }} transition={{ duration: 0.5 }}
-              style={{ width: 7, height: 7, borderRadius: "50%", background: current.verdictColor }} />
-            <Activity size={13} style={{ color: "#d4a017", flexShrink: 0 }} />
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#d4a017", fontWeight: 700 }}>ENGINE VERDICT:</span>
+              style={{ width: 8, height: 8, borderRadius: "50%", background: current.verdictColor }} />
+            <Activity size={15} style={{ color: "#d4a017", flexShrink: 0 }} />
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#d4a017", fontWeight: 600 }}>ENGINE VERDICT:</span>
           </div>
           <AnimatePresence mode="wait">
             <motion.span key={selectedEngine + "-verdict"}
               initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.22 }}
-              style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: current.verdictColor, fontWeight: 700 }}>
+              style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: current.verdictColor, fontWeight: 600 }}>
               {current.verdict}
             </motion.span>
           </AnimatePresence>
@@ -212,23 +212,23 @@ export function S16_BasesDatos({ isActive: propActive } = {}) {
 
         {/* Requirements Matrix */}
         <motion.div variants={fadeUp(0.34)} initial="hidden" animate={entered ? "visible" : "hidden"}
-          style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "#d4a017", letterSpacing: "0.1em", fontWeight: 700 }}>
+          style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#d4a017", letterSpacing: "0.08em", fontWeight: 600 }}>
             JUSTIFICACIÓN TÉCNICA SEGÚN CARGAS DE TRABAJO DE MTA:
           </span>
           <div style={{ background: "#0c0c0c", border: "1.5px solid rgba(212,160,23,0.35)", overflow: "hidden" }}>
             {/* Table header */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", borderBottom: "1px solid rgba(245,241,232,0.1)", padding: "0.3rem 0.6rem", background: "#111" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr 1fr", borderBottom: "1px solid rgba(245,241,232,0.12)", padding: "0.45rem 0.75rem", background: "#111" }}>
               {["REQUERIMIENTO", "RDS", "AURORA", "DYNAMO"].map(h => (
-                <span key={h} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.5rem", color: "rgba(245,241,232,0.4)", fontWeight: 700, textAlign: h !== "REQUERIMIENTO" ? "center" : "left" }}>{h}</span>
+                <span key={h} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: "rgba(245,241,232,0.6)", fontWeight: 600, textAlign: h !== "REQUERIMIENTO" ? "center" : "left" }}>{h}</span>
               ))}
             </div>
             {requirements.map((row, i) => (
               <motion.div key={row.label}
                 initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.25, delay: entered ? 0.38 + i * 0.06 : 0 }}
-                style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", padding: "0.32rem 0.6rem", borderBottom: i < requirements.length - 1 ? "1px solid rgba(245,241,232,0.06)" : "none", background: i % 2 === 0 ? "transparent" : "rgba(255,255,255,0.015)" }}>
-                <span style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.62rem", color: "rgba(245,241,232,0.7)" }}>{row.label}</span>
+                style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr 1fr", padding: "0.42rem 0.75rem", borderBottom: i < requirements.length - 1 ? "1px solid rgba(245,241,232,0.08)" : "none", background: i % 2 === 0 ? "transparent" : "rgba(255,255,255,0.015)", alignItems: "center" }}>
+                <span style={{ fontFamily: "Inter, system-ui, sans-serif", fontSize: "0.76rem", color: "rgba(245,241,232,0.85)", fontWeight: 400 }}>{row.label}</span>
                 {[row.rds, row.aurora, row.dynamodb].map((val, j) => (
                   <div key={j} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <RequirementIcon val={val} />
@@ -241,20 +241,20 @@ export function S16_BasesDatos({ isActive: propActive } = {}) {
       </div>
 
       {/* ══════════════ COLUMNA DERECHA ══════════════ */}
-      <div style={{ flex: "0 0 50%", position: "relative", display: "flex", flexDirection: "column", justifyContent: "center", padding: "2.5rem 4rem 2.5rem 1rem", zIndex: 2, gap: "0.75rem" }}>
+      <div style={{ flex: "0 0 50%", position: "relative", display: "flex", flexDirection: "column", justifyContent: "center", padding: "2.1rem 3.5rem 2.1rem 1rem", zIndex: 2, gap: "0.75rem" }}>
 
         <motion.div variants={fadeUp(0.1)} initial="hidden" animate={entered ? "visible" : "hidden"}
-          style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.3rem 0.6rem", background: "#101010", border: "1px solid rgba(245,241,232,0.12)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <Database size={13} style={{ color: "#d4a017" }} />
-            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", letterSpacing: "0.15em", color: "rgba(245,241,232,0.7)", textTransform: "uppercase", fontWeight: 700 }}>
+          style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.45rem 0.85rem", background: "#101010", border: "1px solid rgba(245,241,232,0.12)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
+            <Database size={16} style={{ color: "#d4a017" }} />
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.78rem", letterSpacing: "0.14em", color: "rgba(245,241,232,0.85)", textTransform: "uppercase", fontWeight: 500 }}>
               DATABASE ENGINE MATRIX // SEMANA 7
             </span>
           </div>
           <AnimatePresence mode="wait">
             <motion.span key={selectedEngine + "-type"}
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
-              style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: current.verdictColor, fontWeight: 700 }}>
+              style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.70rem", color: current.verdictColor, fontWeight: 600 }}>
               {current.type}
             </motion.span>
           </AnimatePresence>
@@ -267,69 +267,69 @@ export function S16_BasesDatos({ isActive: propActive } = {}) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -16, scale: 0.97 }}
             transition={{ duration: shouldReduceMotion ? 0.1 : 0.38, ease: [0.16, 1, 0.3, 1] }}
-            style={{ background: "#0c0c0c", border: `2px solid ${current.verdictColor}55`, padding: "0.9rem", display: "flex", flexDirection: "column", gap: "0.65rem" }}>
+            style={{ background: "#0c0c0c", border: `2px solid ${current.verdictColor}55`, padding: "1.1rem 1.15rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
 
-            <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.85rem" }}>
               <motion.div
                 initial={{ scale: 0, rotate: -20 }} animate={{ scale: 1, rotate: 0 }}
                 transition={{ type: "spring", stiffness: 400, damping: 20, delay: 0.05 }}
-                style={{ width: 36, height: 36, background: `${current.verdictColor}22`, border: `1px solid ${current.verdictColor}`, display: "flex", alignItems: "center", justifyContent: "center", color: current.verdictColor }}>
-                <current.icon size={20} />
+                style={{ width: 44, height: 44, background: `${current.verdictColor}22`, border: `1px solid ${current.verdictColor}`, display: "flex", alignItems: "center", justifyContent: "center", color: current.verdictColor, flexShrink: 0 }}>
+                <current.icon size={23} />
               </motion.div>
               <div>
-                <h3 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.95rem", color: "#F5F1E8", margin: 0, textTransform: "uppercase" }}>{current.name}</h3>
-                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: current.verdictColor, fontWeight: 700 }}>{current.verdict}</span>
+                <h3 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "1.1rem", color: "#F5F1E8", margin: 0, textTransform: "uppercase", fontWeight: 400 }}>{current.name}</h3>
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: current.verdictColor, fontWeight: 500 }}>{current.verdict}</span>
               </div>
             </div>
 
-            <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.74rem", color: "rgba(245,241,232,0.85)", lineHeight: 1.4, margin: 0 }}>
+            <p style={{ fontFamily: "Inter, system-ui, sans-serif", fontSize: "0.86rem", color: "rgba(245,241,232,0.9)", lineHeight: 1.5, margin: 0, fontWeight: 400 }}>
               {current.desc}
             </p>
 
             {/* ACID + JOINs chips */}
             <motion.div initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: 0.1 }}
-              style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+              style={{ display: "flex", gap: "0.55rem", flexWrap: "wrap" }}>
               {[
                 { label: current.acidLabel, ok: current.acidSupport },
                 { label: current.joinsLabel, ok: current.joinsSupport },
               ].map((chip, i) => (
-                <span key={i} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.52rem", color: chip.ok ? "#7a9b5c" : "#c6432b", background: chip.ok ? "rgba(122,155,92,0.1)" : "rgba(198,67,43,0.1)", border: `1px solid ${chip.ok ? "rgba(122,155,92,0.35)" : "rgba(198,67,43,0.35)"}`, padding: "0.2rem 0.5rem", fontWeight: 700 }}>
+                <span key={i} style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: chip.ok ? "#7a9b5c" : "#c6432b", background: chip.ok ? "rgba(122,155,92,0.12)" : "rgba(198,67,43,0.12)", border: `1px solid ${chip.ok ? "rgba(122,155,92,0.4)" : "rgba(198,67,43,0.4)"}`, padding: "0.25rem 0.6rem", fontWeight: 500 }}>
                   {chip.ok ? "✓" : "✗"} {chip.label}
                 </span>
               ))}
             </motion.div>
 
             <motion.div initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: 0.18 }}
-              style={{ background: "#121212", border: "1px solid rgba(245,241,232,0.1)", padding: "0.5rem 0.65rem", display: "flex", flexDirection: "column", gap: "0.2rem" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                <ShieldCheck size={12} style={{ color: "#d4a017" }} />
-                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "#d4a017", fontWeight: 700 }}>ESCALABILIDAD Y RESILIENCIA:</span>
+              style={{ background: "#121212", border: "1px solid rgba(245,241,232,0.1)", padding: "0.6rem 0.85rem", display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
+                <ShieldCheck size={14} style={{ color: "#d4a017" }} />
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "#d4a017", fontWeight: 600 }}>ESCALABILIDAD Y RESILIENCIA:</span>
               </div>
-              <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "rgba(245,241,232,0.75)", margin: 0, lineHeight: 1.3 }}>{current.scaleModel}</p>
+              <p style={{ fontFamily: "Inter, system-ui, sans-serif", fontSize: "0.80rem", color: "rgba(245,241,232,0.85)", margin: 0, lineHeight: 1.42, fontWeight: 400 }}>{current.scaleModel}</p>
             </motion.div>
 
             <motion.div initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: 0.22 }}
-              style={{ borderLeft: "3px solid #d4a017", background: "rgba(212,160,23,0.06)", padding: "0.45rem 0.65rem" }}>
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#d4a017", fontWeight: 700, display: "block", marginBottom: "0.15rem" }}>
+              style={{ borderLeft: "3.5px solid #d4a017", background: "rgba(212,160,23,0.06)", padding: "0.6rem 0.85rem" }}>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "#d4a017", fontWeight: 600, display: "block", marginBottom: "0.22rem" }}>
                 CASO EN WORKSPACE MTA:
               </span>
-              <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "#F5F1E8", margin: 0, lineHeight: 1.35 }}>{current.mtaFit}</p>
+              <p style={{ fontFamily: "Inter, system-ui, sans-serif", fontSize: "0.80rem", color: "#F5F1E8", margin: 0, lineHeight: 1.42, fontWeight: 400 }}>{current.mtaFit}</p>
             </motion.div>
 
             <motion.div initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: 0.3 }}
-              style={{ borderLeft: "3px solid #7a9b5c", background: "rgba(122,155,92,0.06)", padding: "0.45rem 0.65rem" }}>
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#7a9b5c", fontWeight: 700, display: "block", marginBottom: "0.15rem" }}>
+              style={{ borderLeft: "3.5px solid #7a9b5c", background: "rgba(122,155,92,0.06)", padding: "0.6rem 0.85rem" }}>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "#7a9b5c", fontWeight: 600, display: "block", marginBottom: "0.22rem" }}>
                 SUPERACIÓN DEL HOSTING COMPARTIDO:
               </span>
-              <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "#F5F1E8", margin: 0, lineHeight: 1.35 }}>{current.hostingerComp}</p>
+              <p style={{ fontFamily: "Inter, system-ui, sans-serif", fontSize: "0.80rem", color: "#F5F1E8", margin: 0, lineHeight: 1.42, fontWeight: 400 }}>{current.hostingerComp}</p>
             </motion.div>
           </motion.div>
         </AnimatePresence>
 
         <motion.div variants={fadeUp(0.45)} initial="hidden" animate={entered ? "visible" : "hidden"}
-          style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "rgba(245,241,232,0.45)", display: "flex", justifyContent: "space-between" }}>
+          style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.70rem", color: "rgba(245,241,232,0.6)", display: "flex", justifyContent: "space-between", fontWeight: 400 }}>
           <span>ENTREGABLE 2 · PERSISTENCIA ADMINISTRADA</span>
-          <span style={{ color: "#d4a017" }}>SEMANA 7 · SENATI</span>
+          <span style={{ color: "#d4a017", fontWeight: 500 }}>SEMANA 7 · SENATI</span>
         </motion.div>
       </div>
     </section>

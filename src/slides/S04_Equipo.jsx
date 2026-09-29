@@ -4,26 +4,14 @@ import { motion, useReducedMotion } from "framer-motion";
 import { slidesContent } from "../data/content.es.js";
 import { useSlideActive } from "../hooks/useSlideActive.js";
 import { TeamTopologyCanvas } from "../components/three/TeamTopologyCanvas.jsx";
-import { CanvasTransitionWrapper } from "../components/motion/CanvasTransitionWrapper.jsx";
 
 const c = slidesContent.s04_equipo;
 
 /**
  * S04 — El Equipo de TI: Colectivo de Ingeniería Ágil 100% Remoto.
  *
- * Directivas de diseño:
- *  - /industrial-brutalist-ui:
- *    Grid matemático bimodal, métricas en monospace JetBrains, avatares de radar táctico,
- *    borders nítidos de 1px en palette ink/olive/gold, 0px border-radius.
- *  - /impeccable:
- *    Composición editorial asimétrica (48% data / 52% visualizador 3D interactivo),
- *    jerarquía tipográfica estricta con Archivo Black y Yellowtail cursive.
- *  - /threejs-geometry + /threejs-animation + /threejs-interaction:
- *    TeamTopologyCanvas: red de 10 nodos periféricos + 1 núcleo coordinador,
- *    flujos de datos orbitales en tiempo real y respuesta de cámara inercial.
- *  - /emil-design-eng + /animate:
- *    Count-up animado progresivo de "10 Practicantes",
- *    staggers de badges tecnológicos con tooltips tácticos al hover y focus.
+ * Letras aumentadas, peso equilibrado sin negrita excesiva,
+ * preservando proporciones, interactive hover y canvas 3D.
  */
 export function S04_Equipo({ isActive: propActive } = {}) {
   const shouldReduceMotion = useReducedMotion();
@@ -76,7 +64,6 @@ export function S04_Equipo({ isActive: propActive } = {}) {
       return;
     }
 
-    let start = 0;
     const target = c.statNumber;
     const duration = 950;
     const startTime = performance.now();
@@ -84,7 +71,6 @@ export function S04_Equipo({ isActive: propActive } = {}) {
     const updateCounter = (currentTime) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      // easeOutExpo: progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress)
       const easeVal = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
       const currentVal = Math.round(easeVal * target);
       setCount(currentVal);
@@ -172,18 +158,19 @@ export function S04_Equipo({ isActive: propActive } = {}) {
       />
 
       {/* ══════════════════════════════════════════════════════════
-          COLUMNA IZQUIERDA (48%): Jerarquía Editorial & Telemetría
+          COLUMNA IZQUIERDA (50%): Jerarquía Editorial & Telemetría
       ══════════════════════════════════════════════════════════ */}
       <div
         style={{
-          flex: "0 0 48%",
+          flex: "0 0 50%",
+          maxWidth: "50%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          padding: "2.8rem 3rem 2.8rem 4.8rem",
+          justifyContent: "space-between",
+          padding: "2.4rem 2.8rem 2.2rem 4.5rem",
           position: "relative",
           zIndex: 2,
-          gap: "1.15rem",
+          gap: "0.85rem",
         }}
       >
         {/* Header editorial */}
@@ -197,14 +184,15 @@ export function S04_Equipo({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
-                letterSpacing: "0.2em",
+                fontSize: "0.78rem",
+                letterSpacing: "0.18em",
                 textTransform: "uppercase",
-                fontWeight: 700,
+                fontWeight: 500,
                 color: "#D4A017",
-                background: "rgba(212,160,23,0.08)",
+                background: "rgba(212,160,23,0.1)",
                 border: "1px solid rgba(212,160,23,0.35)",
-                padding: "0.26rem 0.65rem",
+                padding: "0.3rem 0.75rem",
+                borderRadius: "2px",
               }}
             >
               [ {c.badge} ]
@@ -212,9 +200,10 @@ export function S04_Equipo({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
+                fontSize: "0.74rem",
                 letterSpacing: "0.15em",
-                color: "rgba(245,241,232,0.4)",
+                color: "rgba(245,241,232,0.5)",
+                fontWeight: 400,
               }}
             >
               SEC_04 // DISTRIBUTED_TEAM
@@ -228,10 +217,11 @@ export function S04_Equipo({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Yellowtail, cursive",
-              fontSize: "clamp(1.3rem, 2vw, 1.9rem)",
+              fontSize: "clamp(1.4rem, 2vw, 1.9rem)",
               color: "#e8a0bf",
-              lineHeight: 1.1,
+              lineHeight: 1.15,
               margin: "0.2rem 0 0 0",
+              fontWeight: 400,
             }}
           >
             {c.scriptTag}
@@ -244,12 +234,13 @@ export function S04_Equipo({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "'Archivo Black', 'Arial Black', sans-serif",
-              fontSize: "clamp(1.9rem, 3vw, 2.9rem)",
+              fontSize: "clamp(2rem, 3.2vw, 3rem)",
               color: "#F5F1E8",
-              letterSpacing: "-0.025em",
+              letterSpacing: "-0.02em",
               lineHeight: 1.05,
               textTransform: "uppercase",
               margin: 0,
+              fontWeight: 400,
             }}
           >
             {c.title}
@@ -261,11 +252,12 @@ export function S04_Equipo({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Inter, sans-serif",
-              fontSize: "0.85rem",
-              color: "rgba(245,241,232,0.65)",
+              fontSize: "0.94rem",
+              color: "rgba(245,241,232,0.72)",
               lineHeight: 1.5,
-              maxWidth: "500px",
+              maxWidth: "540px",
               margin: 0,
+              fontWeight: 400,
             }}
           >
             {c.lead}
@@ -278,7 +270,7 @@ export function S04_Equipo({ isActive: propActive } = {}) {
           initial={{ clipPath: "inset(0 100% 0 0)" }}
           animate={entered ? { clipPath: "inset(0 0% 0 0)" } : { clipPath: "inset(0 100% 0 0)" }}
           transition={{ duration: shouldReduceMotion ? 0.1 : 0.55, ease: [0.83, 0, 0.17, 1], delay: 0.28 }}
-          style={{ height: 2, background: "#D4A017", width: "100%", maxWidth: 300 }}
+          style={{ height: 2, background: "#D4A017", width: "100%", maxWidth: 320 }}
         />
 
         {/* ── Métrica Clave: Count-Up Animado "10" ── */}
@@ -289,15 +281,15 @@ export function S04_Equipo({ isActive: propActive } = {}) {
           style={{
             background: "rgba(245,241,232,0.03)",
             border: "1px solid rgba(245,241,232,0.12)",
-            borderLeft: "3px solid #D4A017",
-            padding: "1rem 1.4rem",
+            borderLeft: "3.5px solid #D4A017",
+            padding: "0.85rem 1.4rem",
             display: "flex",
             alignItems: "center",
-            gap: "1.5rem",
+            gap: "1.4rem",
           }}
         >
           {/* Número gigante count-up */}
-          <div style={{ display: "flex", alignItems: "baseline", gap: "0.3rem" }}>
+          <div style={{ display: "flex", alignItems: "baseline", gap: "0.4rem" }}>
             <span
               style={{
                 fontFamily: "'Archivo Black', sans-serif",
@@ -305,6 +297,7 @@ export function S04_Equipo({ isActive: propActive } = {}) {
                 color: "#F5F1E8",
                 lineHeight: 0.9,
                 letterSpacing: "-0.04em",
+                fontWeight: 400,
               }}
             >
               {String(count).padStart(2, "0")}
@@ -312,9 +305,9 @@ export function S04_Equipo({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "1rem",
+                fontSize: "1.05rem",
                 color: "#D4A017",
-                fontWeight: 700,
+                fontWeight: 500,
               }}
             >
               NODOS
@@ -326,9 +319,9 @@ export function S04_Equipo({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.78rem",
+                fontSize: "0.86rem",
                 color: "#F5F1E8",
-                fontWeight: 700,
+                fontWeight: 500,
                 letterSpacing: "0.05em",
                 textTransform: "uppercase",
               }}
@@ -338,9 +331,10 @@ export function S04_Equipo({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "Inter, sans-serif",
-                fontSize: "0.74rem",
-                color: "rgba(245,241,232,0.5)",
+                fontSize: "0.82rem",
+                color: "rgba(245,241,232,0.65)",
                 lineHeight: 1.4,
+                fontWeight: 400,
               }}
             >
               {c.statSubtext}
@@ -353,17 +347,17 @@ export function S04_Equipo({ isActive: propActive } = {}) {
           variants={fadeUp(0.36)}
           initial="hidden"
           animate={entered ? "visible" : "hidden"}
-          style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}
+          style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}
         >
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.62rem",
-                letterSpacing: "0.15em",
+                fontSize: "0.74rem",
+                letterSpacing: "0.14em",
                 color: "#D4A017",
                 textTransform: "uppercase",
-                fontWeight: 700,
+                fontWeight: 500,
               }}
             >
               // 4 ENCARGADOS DE TI (LIDERAZGO & ARQUITECTURA)
@@ -371,8 +365,9 @@ export function S04_Equipo({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.55rem",
-                color: "rgba(245,241,232,0.45)",
+                fontSize: "0.68rem",
+                color: "rgba(245,241,232,0.5)",
+                fontWeight: 400,
               }}
             >
               NÚCLEO CENTRAL EN 3D
@@ -400,33 +395,33 @@ export function S04_Equipo({ isActive: propActive } = {}) {
                   style={{
                     background: isLeadActive ? "rgba(212,160,23,0.18)" : "rgba(245,241,232,0.03)",
                     border: `1px solid ${isLeadActive ? "#D4A017" : "rgba(212,160,23,0.3)"}`,
-                    padding: "0.55rem 0.45rem",
+                    padding: "0.6rem 0.5rem",
                     cursor: "pointer",
                     textAlign: "left",
                     display: "flex",
                     flexDirection: "column",
-                    gap: "0.2rem",
+                    gap: "0.22rem",
                     transition: "all 0.18s ease",
                   }}
                 >
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "#D4A017", fontWeight: 700 }}>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#D4A017", fontWeight: 500 }}>
                       {lead.code}
                     </span>
                     <span
                       style={{
-                        width: 5,
-                        height: 5,
+                        width: 6,
+                        height: 6,
                         borderRadius: "50%",
                         background: "#D4A017",
                         boxShadow: "0 0 6px #D4A017",
                       }}
                     />
                   </div>
-                  <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.68rem", color: "#F5F1E8", textTransform: "uppercase" }}>
+                  <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.78rem", color: "#F5F1E8", textTransform: "uppercase", fontWeight: 400 }}>
                     {lead.title}
                   </span>
-                  <span style={{ fontFamily: "Inter, sans-serif", fontSize: "0.58rem", color: "rgba(245,241,232,0.55)" }}>
+                  <span style={{ fontFamily: "Inter, sans-serif", fontSize: "0.68rem", color: "rgba(245,241,232,0.65)", fontWeight: 400 }}>
                     {lead.focus}
                   </span>
                 </button>
@@ -440,17 +435,17 @@ export function S04_Equipo({ isActive: propActive } = {}) {
           variants={fadeUp(0.4)}
           initial="hidden"
           animate={entered ? "visible" : "hidden"}
-          style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}
+          style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}
         >
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.62rem",
-                letterSpacing: "0.15em",
+                fontSize: "0.74rem",
+                letterSpacing: "0.14em",
                 color: "#6e8e59",
                 textTransform: "uppercase",
-                fontWeight: 700,
+                fontWeight: 500,
               }}
             >
               // 10 PRACTICANTES REMOTOS (DESARROLLO & TESTING)
@@ -458,9 +453,9 @@ export function S04_Equipo({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.55rem",
-                color: activeNode !== null ? "#d4a017" : "#4a5d3a",
-                fontWeight: 700,
+                fontSize: "0.68rem",
+                color: activeNode !== null ? "#d4a017" : "#6e8e59",
+                fontWeight: 500,
               }}
             >
               {activeNode !== null ? `DEV-${String(activeNode + 1).padStart(2, "0")} ENFOCADO` : "● 100% DISPONIBLE"}
@@ -485,26 +480,26 @@ export function S04_Equipo({ isActive: propActive } = {}) {
                   style={{
                     background: isSelected ? "rgba(212,160,23,0.18)" : "rgba(245,241,232,0.03)",
                     border: `1px solid ${isSelected ? "#D4A017" : "rgba(245,241,232,0.1)"}`,
-                    padding: "0.45rem 0.35rem",
+                    padding: "0.5rem 0.4rem",
                     cursor: "pointer",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    gap: "0.2rem",
+                    gap: "0.22rem",
                     transition: "all 0.15s ease",
                   }}
                 >
                   <span
                     style={{
                       fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.62rem",
-                      fontWeight: 700,
-                      color: isSelected ? "#D4A017" : "rgba(245,241,232,0.75)",
+                      fontSize: "0.76rem",
+                      fontWeight: 500,
+                      color: isSelected ? "#D4A017" : "rgba(245,241,232,0.85)",
                     }}
                   >
                     {intern.label}
                   </span>
-                  <div style={{ display: "flex", alignItems: "center", gap: "3px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
                     <span
                       style={{
                         width: 5,
@@ -514,7 +509,7 @@ export function S04_Equipo({ isActive: propActive } = {}) {
                         boxShadow: isSelected ? "0 0 6px #D4A017" : "none",
                       }}
                     />
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.48rem", color: "rgba(245,241,232,0.4)" }}>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "rgba(245,241,232,0.5)", fontWeight: 400 }}>
                       {intern.role.split(" ")[0]}
                     </span>
                   </div>
@@ -526,7 +521,7 @@ export function S04_Equipo({ isActive: propActive } = {}) {
           {/* Ficha interactiva de asignación remota */}
           <div
             style={{
-              padding: "0.55rem 0.85rem",
+              padding: "0.6rem 0.95rem",
               background: "rgba(14,14,14,0.75)",
               border: "1px solid rgba(245,241,232,0.12)",
               display: "flex",
@@ -534,7 +529,7 @@ export function S04_Equipo({ isActive: propActive } = {}) {
               alignItems: "center",
             }}
           >
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "rgba(245,241,232,0.7)" }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "rgba(245,241,232,0.8)", fontWeight: 400 }}>
               {activeNode !== null
                 ? `Nodo DEV-${String(activeNode + 1).padStart(2, "0")}: Asignado a [${interns[activeNode].role}] · Modalidad Remota Localhost`
                 : "Inspecciona cualquier nodo o líder para visualizar sus enlaces de datos en 3D"}
@@ -542,10 +537,12 @@ export function S04_Equipo({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.52rem",
+                fontSize: "0.66rem",
                 color: "#d4a017",
                 background: "rgba(212,160,23,0.12)",
-                padding: "0.15rem 0.4rem",
+                padding: "0.2rem 0.5rem",
+                fontWeight: 500,
+                borderRadius: "2px",
               }}
             >
               METODOLOGÍA: ÁGIL
@@ -558,15 +555,16 @@ export function S04_Equipo({ isActive: propActive } = {}) {
           variants={fadeUp(0.44)}
           initial="hidden"
           animate={entered ? "visible" : "hidden"}
-          style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}
+          style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}
         >
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.62rem",
-              letterSpacing: "0.15em",
-              color: "rgba(245,241,232,0.45)",
+              fontSize: "0.72rem",
+              letterSpacing: "0.14em",
+              color: "rgba(245,241,232,0.5)",
               textTransform: "uppercase",
+              fontWeight: 400,
             }}
           >
             // STACK DE DESARROLLO ESTÁNDAR
@@ -584,7 +582,7 @@ export function S04_Equipo({ isActive: propActive } = {}) {
                     position: "relative",
                     background: isHovered ? "rgba(212,160,23,0.08)" : "rgba(245,241,232,0.02)",
                     border: `1px solid ${isHovered ? "#D4A017" : "rgba(245,241,232,0.1)"}`,
-                    padding: "0.55rem 0.5rem",
+                    padding: "0.6rem 0.55rem",
                     textAlign: "center",
                     cursor: "help",
                     transition: "all 0.15s ease",
@@ -593,8 +591,8 @@ export function S04_Equipo({ isActive: propActive } = {}) {
                   <span
                     style={{
                       fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.72rem",
-                      fontWeight: 700,
+                      fontSize: "0.82rem",
+                      fontWeight: 500,
                       color: isHovered ? "#D4A017" : "#F5F1E8",
                       display: "block",
                     }}
@@ -602,7 +600,7 @@ export function S04_Equipo({ isActive: propActive } = {}) {
                     {tech.name}
                   </span>
 
-                  {/* Tooltip táctico brutalista al hover */}
+                  {/* Tooltip táctico al hover */}
                   {isHovered && (
                     <div
                       style={{
@@ -612,20 +610,21 @@ export function S04_Equipo({ isActive: propActive } = {}) {
                         transform: "translateX(-50%)",
                         background: "#141414",
                         border: "1px solid #D4A017",
-                        padding: "0.45rem 0.65rem",
-                        width: "160px",
+                        padding: "0.5rem 0.75rem",
+                        width: "180px",
                         zIndex: 30,
-                        boxShadow: "0 8px 24px rgba(0,0,0,0.8)",
+                        boxShadow: "0 8px 24px rgba(0,0,0,0.85)",
                         pointerEvents: "none",
                       }}
                     >
                       <span
                         style={{
                           fontFamily: "'JetBrains Mono', monospace",
-                          fontSize: "0.6rem",
+                          fontSize: "0.68rem",
                           color: "#D4A017",
                           display: "block",
-                          marginBottom: "0.15rem",
+                          marginBottom: "0.2rem",
+                          fontWeight: 500,
                         }}
                       >
                         [ FUNCIONALIDAD ]
@@ -633,10 +632,11 @@ export function S04_Equipo({ isActive: propActive } = {}) {
                       <span
                         style={{
                           fontFamily: "Inter, sans-serif",
-                          fontSize: "0.66rem",
-                          color: "rgba(245,241,232,0.85)",
-                          lineHeight: 1.3,
+                          fontSize: "0.74rem",
+                          color: "rgba(245,241,232,0.9)",
+                          lineHeight: 1.35,
                           display: "block",
+                          fontWeight: 400,
                         }}
                       >
                         {tech.role}
@@ -651,11 +651,11 @@ export function S04_Equipo({ isActive: propActive } = {}) {
       </div>
 
       {/* ══════════════════════════════════════════════════════════
-          COLUMNA DERECHA (52%): Topología 3D en Tiempo Real
+          COLUMNA DERECHA (50%): Topología 3D en Tiempo Real
       ══════════════════════════════════════════════════════════ */}
       <div
         style={{
-          flex: "0 0 52%",
+          flex: "0 0 50%",
           position: "relative",
           display: "flex",
           alignItems: "center",
@@ -665,7 +665,7 @@ export function S04_Equipo({ isActive: propActive } = {}) {
           overflow: "hidden",
         }}
       >
-        {/* Canvas 3D de Topología (Fluido directo, sin desmontar context) */}
+        {/* Canvas 3D de Topología */}
         <TeamTopologyCanvas
           isActive={isActive}
           selectedNode={activeNode}
@@ -690,10 +690,10 @@ export function S04_Equipo({ isActive: propActive } = {}) {
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.62rem",
-              letterSpacing: "0.2em",
+              fontSize: "0.74rem",
+              letterSpacing: "0.18em",
               color: "#D4A017",
-              fontWeight: 700,
+              fontWeight: 500,
             }}
           >
             SYS_TOPOLOGY // 4_LEADS + 10_INTERNS
@@ -701,8 +701,9 @@ export function S04_Equipo({ isActive: propActive } = {}) {
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.58rem",
-              color: "rgba(245,241,232,0.4)",
+              fontSize: "0.68rem",
+              color: "rgba(245,241,232,0.5)",
+              fontWeight: 400,
             }}
           >
             LATENCY: ZERO_LOCAL · PROTOCOL: REMOTE_AGILE
@@ -717,22 +718,22 @@ export function S04_Equipo({ isActive: propActive } = {}) {
             bottom: "2.5rem",
             right: "3rem",
             border: "1px solid rgba(245,241,232,0.12)",
-            background: "rgba(10,10,10,0.7)",
+            background: "rgba(10,10,10,0.75)",
             backdropFilter: "blur(6px)",
-            padding: "0.5rem 0.8rem",
+            padding: "0.6rem 0.9rem",
             display: "flex",
             flexDirection: "column",
-            gap: "0.2rem",
+            gap: "0.25rem",
             zIndex: 10,
-            maxWidth: "240px",
+            maxWidth: "270px",
           }}
         >
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.6rem",
+              fontSize: "0.72rem",
               color: "#D4A017",
-              fontWeight: 700,
+              fontWeight: 500,
             }}
           >
             [ ARQUITECTURA DE MANDO ]
@@ -740,9 +741,10 @@ export function S04_Equipo({ isActive: propActive } = {}) {
           <span
             style={{
               fontFamily: "Inter, sans-serif",
-              fontSize: "0.68rem",
-              color: "rgba(245,241,232,0.6)",
-              lineHeight: 1.3,
+              fontSize: "0.76rem",
+              color: "rgba(245,241,232,0.75)",
+              lineHeight: 1.35,
+              fontWeight: 400,
             }}
           >
             4 Encargados de TI coordinan a 10 practicantes en paralelo. Flujo descentralizado hacia el repositorio.
@@ -752,3 +754,5 @@ export function S04_Equipo({ isActive: propActive } = {}) {
     </section>
   );
 }
+
+export default S04_Equipo;

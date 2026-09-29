@@ -48,6 +48,7 @@ import { CanvasTransitionWrapper } from "../components/motion/CanvasTransitionWr
 import { Button } from "../components/ui/Button.jsx";
 import { Badge } from "../components/ui/Badge.jsx";
 import { Tooltip } from "../components/ui/Tooltip.jsx";
+import { InteractiveArchitectureDiagramModal } from "../components/diagram/InteractiveArchitectureDiagramModal.jsx";
 import { easings } from "../lib/easings.js";
 
 const c = slidesContent.s12_arquitectura;
@@ -98,6 +99,7 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
   const [isSimulating, setIsSimulating] = useState(false);
   const [activeTelemetry, setActiveTelemetry] = useState(null);
   const [isExpanded3D, setIsExpanded3D] = useState(false); // Modo pantalla completa / cine 3D
+  const [isDiagramModalOpen, setIsDiagramModalOpen] = useState(false); // Modal gigante de diagrama de arquitectura 2D
   const timerRef = useRef(null);
 
   const nodes = [
@@ -363,7 +365,7 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          padding: "2.5rem 3rem 2.5rem 4.8rem",
+          padding: "2.1rem 2.8rem 2.1rem 4.5rem",
           position: "relative",
           zIndex: 2,
           gap: "0.85rem",
@@ -375,19 +377,19 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
             variants={fadeUp(0.04)}
             initial="hidden"
             animate={entered ? "visible" : "hidden"}
-            style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}
+            style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}
           >
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
-                letterSpacing: "0.2em",
+                fontSize: "0.80rem",
+                letterSpacing: "0.15em",
                 textTransform: "uppercase",
-                fontWeight: 700,
+                fontWeight: 500,
                 color: "#d4a017",
                 background: "rgba(212,160,23,0.12)",
                 border: "1px solid rgba(212,160,23,0.4)",
-                padding: "0.25rem 0.65rem",
+                padding: "0.28rem 0.75rem",
               }}
             >
               [ {c.badge} ]
@@ -395,9 +397,10 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.62rem",
-                letterSpacing: "0.15em",
-                color: "rgba(245,241,232,0.45)",
+                fontSize: "0.75rem",
+                letterSpacing: "0.12em",
+                color: "rgba(245,241,232,0.6)",
+                fontWeight: 400,
               }}
             >
               SEC_12 // RESILIENT_NETWORK_ARCHITECTURE
@@ -405,12 +408,12 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.58rem",
+                fontSize: "0.70rem",
                 color: "#d4a017",
                 background: "rgba(212,160,23,0.15)",
                 border: "1px solid rgba(212,160,23,0.4)",
-                padding: "0.15rem 0.45rem",
-                fontWeight: 700,
+                padding: "0.2rem 0.55rem",
+                fontWeight: 500,
               }}
             >
               REGION: us-east-1 // MULTI-AZ (AZ-a & AZ-b)
@@ -423,10 +426,11 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Yellowtail, cursive",
-              fontSize: "clamp(1.3rem, 2vw, 1.8rem)",
+              fontSize: "clamp(1.4rem, 2.3vw, 2.05rem)",
               color: "#e8a0bf",
               lineHeight: 1.1,
               margin: "0.15rem 0 0 0",
+              fontWeight: 400,
             }}
           >
             {c.scriptTag}
@@ -438,12 +442,13 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "'Archivo Black', 'Arial Black', sans-serif",
-              fontSize: "clamp(1.7rem, 2.5vw, 2.4rem)",
+              fontSize: "clamp(1.7rem, 2.6vw, 2.5rem)",
               color: "#F5F1E8",
               letterSpacing: "-0.025em",
               lineHeight: 1.05,
               textTransform: "uppercase",
               margin: 0,
+              fontWeight: 400,
             }}
           >
             {c.title}
@@ -454,11 +459,12 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
             initial="hidden"
             animate={entered ? "visible" : "hidden"}
             style={{
-              fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: "clamp(0.85rem, 1.05vw, 0.95rem)",
-              color: "rgba(245,241,232,0.65)",
-              margin: "0.2rem 0 0 0",
-              lineHeight: 1.4,
+              fontFamily: "Inter, system-ui, -apple-system, sans-serif",
+              fontSize: "clamp(0.94rem, 1.1vw, 1.02rem)",
+              color: "rgba(245,241,232,0.78)",
+              margin: "0.25rem 0 0 0",
+              lineHeight: 1.5,
+              fontWeight: 400,
             }}
           >
             {c.subtitle}
@@ -482,11 +488,11 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
         >
           {/* Barra superior de simulación */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
               <span
                 style={{
-                  width: 8,
-                  height: 8,
+                  width: 9,
+                  height: 9,
                   borderRadius: "50%",
                   backgroundColor: isSimulating ? "#d4a017" : activeStep > nodes.length ? "#6e8e59" : "rgba(245,241,232,0.4)",
                   animation: isSimulating ? "ping 1s cubic-bezier(0, 0, 0.2, 1) infinite" : "none",
@@ -495,10 +501,10 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
               <span
                 style={{
                   fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.65rem",
-                  letterSpacing: "0.15em",
+                  fontSize: "0.76rem",
+                  letterSpacing: "0.12em",
                   color: "#d4a017",
-                  fontWeight: 700,
+                  fontWeight: 500,
                   textTransform: "uppercase",
                 }}
               >
@@ -506,7 +512,7 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
               </span>
             </div>
 
-            <div style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
               {/* Controles de avance paso a paso */}
               <button
                 type="button"
@@ -516,14 +522,14 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
                   background: "rgba(255,255,255,0.06)",
                   border: "1px solid rgba(245,241,232,0.2)",
                   color: "#F5F1E8",
-                  padding: "0.25rem 0.4rem",
+                  padding: "0.3rem 0.5rem",
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                <ChevronLeft size={13} />
+                <ChevronLeft size={14} />
               </button>
               <button
                 type="button"
@@ -533,14 +539,14 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
                   background: "rgba(255,255,255,0.06)",
                   border: "1px solid rgba(245,241,232,0.2)",
                   color: "#F5F1E8",
-                  padding: "0.25rem 0.4rem",
+                  padding: "0.3rem 0.5rem",
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                <ChevronRight size={13} />
+                <ChevronRight size={14} />
               </button>
 
               {activeStep > 0 && (
@@ -549,7 +555,7 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
                   size="sm"
                   icon={RotateCcw}
                   onClick={handleReset}
-                  className="!py-1 !px-2.5 !text-xs !border-white/30 !text-white hover:!bg-white/10"
+                  className="!py-1.5 !px-3 !text-xs !border-white/30 !text-white hover:!bg-white/10"
                 >
                   Reset
                 </Button>
@@ -561,7 +567,7 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
                 icon={Play}
                 onClick={handleSimulateRequest}
                 disabled={isSimulating}
-                className="!py-1 !px-3 !text-xs"
+                className="!py-1.5 !px-3.5 !text-xs"
               >
                 {isSimulating ? "Trazando..." : "▶ Simular"}
               </Button>
@@ -569,7 +575,7 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
           </div>
 
           {/* Grid de los 6 Nodos del Recorrido */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: "0.35rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: "0.4rem" }}>
             {nodes.map((node) => {
               const NodeIcon = node.icon;
               const isNodeActive = activeStep === node.id;
@@ -586,7 +592,7 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
                   }}
                   title="Haz click para auditar este salto perimetral"
                   style={{
-                    padding: "0.45rem 0.3rem",
+                    padding: "0.5rem 0.35rem",
                     border: isNodeActive
                       ? "1.5px solid #d4a017"
                       : isNodePassed
@@ -601,7 +607,7 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
                     flexDirection: "column",
                     alignItems: "center",
                     textAlign: "center",
-                    minHeight: 80,
+                    minHeight: 84,
                     justifyContent: "space-between",
                     cursor: isSimulating ? "default" : "pointer",
                     boxShadow: isNodeActive ? "2px 2px 0px #d4a017" : "none",
@@ -609,23 +615,23 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
                   }}
                 >
                   <div style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.52rem", color: isNodeActive ? "#d4a017" : "rgba(245,241,232,0.5)", fontWeight: 800 }}>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: isNodeActive ? "#d4a017" : "rgba(245,241,232,0.6)", fontWeight: 600 }}>
                       0{node.id}
                     </span>
                     {isNodePassed ? (
-                      <CheckCircle2 size={10} style={{ color: "#6e8e59" }} />
+                      <CheckCircle2 size={12} style={{ color: "#6e8e59" }} />
                     ) : isNodeActive ? (
-                      <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#d4a017" }} />
+                      <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#d4a017" }} />
                     ) : (
-                      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.48rem", color: "rgba(245,241,232,0.3)" }}>
+                      <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "rgba(245,241,232,0.45)", fontWeight: 400 }}>
                         {node.latency}
                       </span>
                     )}
                   </div>
 
-                  <NodeIcon size={14} style={{ color: isNodeActive ? "#d4a017" : isNodePassed ? "#6e8e59" : "rgba(245,241,232,0.6)", margin: "0.15rem 0" }} />
+                  <NodeIcon size={16} style={{ color: isNodeActive ? "#d4a017" : isNodePassed ? "#6e8e59" : "rgba(245,241,232,0.7)", margin: "0.2rem 0" }} />
 
-                  <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.55rem", color: "#F5F1E8", textTransform: "uppercase", lineHeight: 1.1 }}>
+                  <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.68rem", color: "#F5F1E8", textTransform: "uppercase", lineHeight: 1.15, fontWeight: 400 }}>
                     {node.name.split(" ")[0]}
                   </div>
                 </div>
@@ -636,7 +642,7 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
           {/* Consola de Telemetría Inferior */}
           <div
             style={{
-              padding: "0.5rem 0.75rem",
+              padding: "0.6rem 0.85rem",
               background: "#0A0A0A",
               border: "1px solid rgba(245,241,232,0.12)",
               display: "flex",
@@ -644,9 +650,9 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
               justifyContent: "space-between",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <Activity size={13} style={{ color: "#d4a017", flexShrink: 0 }} />
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#d4a017", fontWeight: 700 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
+              <Activity size={15} style={{ color: "#d4a017", flexShrink: 0 }} />
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#d4a017", fontWeight: 600 }}>
                 TELEMETRY:
               </span>
 
@@ -657,7 +663,7 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "rgba(245,241,232,0.6)" }}
+                    style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "rgba(245,241,232,0.7)", fontWeight: 400 }}
                   >
                     En espera. Presiona "Simular Petición" o haz click en cualquier nodo para trazar.
                   </motion.span>
@@ -669,9 +675,9 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
                     initial={{ opacity: 0, x: 4 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -4 }}
-                    style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#F5F1E8" }}
+                    style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#F5F1E8", fontWeight: 400 }}
                   >
-                    <span style={{ color: "#d4a017", fontWeight: 800 }}>[{activeTelemetry.statusText}]</span> {activeTelemetry.name} ({activeTelemetry.protocol})
+                    <span style={{ color: "#d4a017", fontWeight: 600 }}>[{activeTelemetry.statusText}]</span> {activeTelemetry.name} ({activeTelemetry.protocol})
                   </motion.span>
                 )}
 
@@ -681,7 +687,7 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
                     initial={{ opacity: 0, y: 3 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#6e8e59", fontWeight: 800 }}
+                    style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#6e8e59", fontWeight: 600 }}
                   >
                     [HTTP 200 OK] — CloudFront CDN Cache Hit + Amazon VPC Firewall Aprobado (30ms)
                   </motion.span>
@@ -690,7 +696,7 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
             </div>
 
             {activeStep > nodes.length && (
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#6e8e59", fontWeight: 800 }}>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.70rem", color: "#6e8e59", fontWeight: 600 }}>
                 LATENCIA TOTAL: 30ms
               </span>
             )}
@@ -712,18 +718,18 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
                 borderLeft: idx === 0 || idx === 3 ? "3px solid #d4a017" : "3px solid #6e8e59",
                 display: "flex",
                 flexDirection: "column",
-                gap: "0.25rem",
+                gap: "0.3rem",
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <h4 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.78rem", color: "#F5F1E8", textTransform: "uppercase", margin: 0 }}>
+                <h4 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.86rem", color: "#F5F1E8", textTransform: "uppercase", margin: 0, fontWeight: 400 }}>
                   {pillar.service}
                 </h4>
-                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.52rem", color: "rgba(245,241,232,0.4)" }}>
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "rgba(245,241,232,0.55)", fontWeight: 400 }}>
                   CAPA 0{idx + 1}
                 </span>
               </div>
-              <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "rgba(245,241,232,0.7)", lineHeight: 1.35, margin: 0 }}>
+              <p style={{ fontFamily: "Inter, system-ui, sans-serif", fontSize: "0.82rem", color: "rgba(245,241,232,0.85)", lineHeight: 1.45, margin: 0, fontWeight: 400 }}>
                 {pillar.desc}
               </p>
             </motion.div>
@@ -814,6 +820,32 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
 
           {/* Botones de Acción en Cabecera (Compactos en vista normal, completos en expandida) */}
           <div style={{ display: "flex", alignItems: "center", gap: isExpanded3D ? "0.5rem" : "0.3rem", flexShrink: 0 }}>
+            {/* Botón para Abrir el Modal Gigante de Diagrama 2D */}
+            <button
+              type="button"
+              onClick={() => setIsDiagramModalOpen(true)}
+              title="Abrir Diagrama de Arquitectura Completo 2D Interactivo"
+              style={{
+                background: "rgba(110, 142, 89, 0.2)",
+                border: "1.5px solid #6e8e59",
+                color: "#6e8e59",
+                padding: isExpanded3D ? "0.25rem 0.65rem" : "0.2rem 0.45rem",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.3rem",
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: isExpanded3D ? "0.6rem" : "0.52rem",
+                fontWeight: 900,
+                letterSpacing: "0.05em",
+                transition: "all 0.15s ease",
+                boxShadow: "2px 2px 0px rgba(0,0,0,0.5)",
+              }}
+            >
+              <Workflow size={isExpanded3D ? 12 : 11} />
+              <span>DIAGRAMA 2D</span>
+            </button>
+
             {/* Botón de Inicio de Simulación */}
             <Button
               variant="primary"
@@ -1642,47 +1674,53 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
             zIndex: 35,
             display: "grid",
             gridTemplateColumns: "repeat(4, 1fr)",
-            gap: "0.55rem",
+            gap: "0.65rem",
             transition: "all 0.3s ease",
           }}
         >
-          <div style={{ padding: "0.5rem 0.65rem", background: "rgba(14,14,14,0.75)", border: "1px solid rgba(245,241,232,0.15)", backdropFilter: "blur(6px)" }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.5rem", color: "rgba(245,241,232,0.5)" }}>
+          <div style={{ padding: "0.6rem 0.8rem", background: "rgba(14,14,14,0.85)", border: "1px solid rgba(245,241,232,0.15)", backdropFilter: "blur(6px)" }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "rgba(245,241,232,0.6)", fontWeight: 400 }}>
               AMAZON VPC
             </div>
-            <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.68rem", color: "#F5F1E8", marginTop: "0.1rem" }}>
+            <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.80rem", color: "#F5F1E8", marginTop: "0.15rem", fontWeight: 400 }}>
               10.0.0.0/16
             </div>
           </div>
 
-          <div style={{ padding: "0.5rem 0.65rem", background: "rgba(14,14,14,0.75)", border: "1px solid rgba(245,241,232,0.15)", backdropFilter: "blur(6px)" }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.5rem", color: "rgba(245,241,232,0.5)" }}>
+          <div style={{ padding: "0.6rem 0.8rem", background: "rgba(14,14,14,0.85)", border: "1px solid rgba(245,241,232,0.15)", backdropFilter: "blur(6px)" }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "rgba(245,241,232,0.6)", fontWeight: 400 }}>
               SECURITY GROUPS
             </div>
-            <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.68rem", color: "#6e8e59", marginTop: "0.1rem" }}>
+            <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.80rem", color: "#6e8e59", marginTop: "0.15rem", fontWeight: 400 }}>
               L4 STATEFUL
             </div>
           </div>
 
-          <div style={{ padding: "0.5rem 0.65rem", background: "rgba(14,14,14,0.75)", border: "1px solid rgba(245,241,232,0.15)", backdropFilter: "blur(6px)" }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.5rem", color: "rgba(245,241,232,0.5)" }}>
+          <div style={{ padding: "0.6rem 0.8rem", background: "rgba(14,14,14,0.85)", border: "1px solid rgba(245,241,232,0.15)", backdropFilter: "blur(6px)" }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "rgba(245,241,232,0.6)", fontWeight: 400 }}>
               ROUTE 53
             </div>
-            <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.68rem", color: "#F5F1E8", marginTop: "0.1rem" }}>
+            <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.80rem", color: "#F5F1E8", marginTop: "0.15rem", fontWeight: 400 }}>
               GLOBAL DNS
             </div>
           </div>
 
-          <div style={{ padding: "0.5rem 0.65rem", background: "rgba(14,14,14,0.75)", border: "1px solid rgba(245,241,232,0.15)", backdropFilter: "blur(6px)" }}>
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.5rem", color: "rgba(245,241,232,0.5)" }}>
+          <div style={{ padding: "0.6rem 0.8rem", background: "rgba(14,14,14,0.85)", border: "1px solid rgba(245,241,232,0.15)", backdropFilter: "blur(6px)" }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "rgba(245,241,232,0.6)", fontWeight: 400 }}>
               CLOUDFRONT
             </div>
-            <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.68rem", color: "#d4a017", marginTop: "0.1rem" }}>
+            <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.80rem", color: "#d4a017", marginTop: "0.15rem", fontWeight: 400 }}>
               CDN CACHE
             </div>
           </div>
         </div>
       </div>
+
+      {/* ── MODAL GIGANTE DE DIAGRAMA DE ARQUITECTURA 2D INTERACTIVO ── */}
+      <InteractiveArchitectureDiagramModal
+        isOpen={isDiagramModalOpen}
+        onClose={() => setIsDiagramModalOpen(false)}
+      />
     </section>
   );
 }

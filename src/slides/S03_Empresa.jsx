@@ -4,19 +4,14 @@ import { motion, useReducedMotion } from "framer-motion";
 import { slidesContent } from "../data/content.es.js";
 import { useSlideActive } from "../hooks/useSlideActive.js";
 import { HybridCoreCanvas } from "../components/three/HybridCoreCanvas.jsx";
-import { CanvasTransitionWrapper } from "../components/motion/CanvasTransitionWrapper.jsx";
 
 const c = slidesContent.s03_empresa;
 
 /**
  * S03 — La Empresa: Multiservicios Tecnoindustrial Acosta S.A.C.
  *
- * Directivas de diseño:
- *  - /industrial-brutalist-ui: Modular bimodal grid, micro-telemetría monospace, contrastes nítidos, 0px border-radius, framing táctico con brackets y separadores matemáticos.
- *  - /impeccable: Tipografía curada (Archivo Black, Yellowtail, JetBrains Mono, Inter), proporciones visuales de nivel editorial, layout asimétrico equilibrado.
- *  - /threejs-geometry + /threejs-animation + /threejs-interaction:
- *    Componente Three.js interactivo que modela la dualidad Híbrida (Metalmecánica + Software Cloud).
- *  - /emil-design-eng + /animate: Staggers deliberados con cubic-bezier(0.22, 1, 0.36, 1), soporte para prefers-reduced-motion, micro-interacciones en badges y métricas.
+ * Letras más grandes y peso limpio sin exceso de negrita,
+ * manteniendo el layout y proporciones estables en pantalla completa.
  */
 export function S03_Empresa({ isActive: propActive } = {}) {
   const shouldReduceMotion = useReducedMotion();
@@ -155,14 +150,14 @@ export function S03_Empresa({ isActive: propActive } = {}) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "3.2rem 3.5rem 3rem 4.5rem",
+          padding: "2.6rem 3.5rem 2.4rem 4.5rem",
           position: "relative",
           zIndex: 2,
           borderRight: "1px solid rgba(245,241,232,0.1)",
         }}
       >
         {/* Header de Telemetría */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
             <motion.span
               variants={fadeUp(0.04)}
@@ -170,14 +165,15 @@ export function S03_Empresa({ isActive: propActive } = {}) {
               animate={entered ? "visible" : "hidden"}
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
+                fontSize: "0.78rem",
                 letterSpacing: "0.18em",
                 textTransform: "uppercase",
-                fontWeight: 700,
+                fontWeight: 500,
                 color: "#4A5D3A",
                 background: "rgba(74,93,58,0.12)",
                 border: "1px solid rgba(74,93,58,0.4)",
-                padding: "0.24rem 0.65rem",
+                padding: "0.3rem 0.75rem",
+                borderRadius: "2px",
               }}
             >
               [ {c.badge} ]
@@ -186,9 +182,10 @@ export function S03_Empresa({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.62rem",
-                letterSpacing: "0.15em",
-                color: "rgba(245,241,232,0.4)",
+                fontSize: "0.74rem",
+                letterSpacing: "0.14em",
+                color: "rgba(245,241,232,0.5)",
+                fontWeight: 400,
               }}
             >
               SECTOR // TECNOINDUSTRIAL & SAAS
@@ -201,10 +198,11 @@ export function S03_Empresa({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Yellowtail, cursive",
-              fontSize: "clamp(1.2rem, 1.8vw, 1.7rem)",
+              fontSize: "clamp(1.4rem, 2vw, 1.9rem)",
               color: "#e8a0bf",
-              lineHeight: 1.1,
+              lineHeight: 1.15,
               marginTop: "0.15rem",
+              fontWeight: 400,
             }}
           >
             {c.scriptTag}
@@ -216,9 +214,9 @@ export function S03_Empresa({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "'Archivo Black', 'Arial Black', sans-serif",
-              fontSize: "clamp(1.9rem, 2.8vw, 2.9rem)",
+              fontSize: "clamp(2rem, 3vw, 3rem)",
               color: "#F5F1E8",
-              letterSpacing: "-0.03em",
+              letterSpacing: "-0.02em",
               textTransform: "uppercase",
               lineHeight: 1.05,
               fontWeight: 400,
@@ -234,10 +232,11 @@ export function S03_Empresa({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.75rem",
-              color: "rgba(245,241,232,0.55)",
+              fontSize: "0.82rem",
+              color: "rgba(245,241,232,0.65)",
               letterSpacing: "0.08em",
               textTransform: "uppercase",
+              fontWeight: 400,
             }}
           >
             RAZÓN SOCIAL: {c.title}
@@ -245,18 +244,18 @@ export function S03_Empresa({ isActive: propActive } = {}) {
         </div>
 
         {/* Lead & Cuerpo analítico */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem", margin: "1.2rem 0" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", margin: "0.8rem 0" }}>
           <motion.p
             variants={fadeUp(0.28)}
             initial="hidden"
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Inter, sans-serif",
-              fontSize: "1.02rem",
-              fontWeight: 600,
+              fontSize: "1.1rem",
+              fontWeight: 500,
               color: "#F5F1E8",
               lineHeight: 1.45,
-              maxWidth: "620px",
+              maxWidth: "630px",
             }}
           >
             {c.leadText}
@@ -268,10 +267,11 @@ export function S03_Empresa({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Inter, sans-serif",
-              fontSize: "0.86rem",
-              color: "rgba(245,241,232,0.65)",
-              lineHeight: 1.65,
-              maxWidth: "620px",
+              fontSize: "0.92rem",
+              color: "rgba(245,241,232,0.72)",
+              lineHeight: 1.6,
+              maxWidth: "630px",
+              fontWeight: 400,
             }}
           >
             {c.body}
@@ -279,16 +279,16 @@ export function S03_Empresa({ isActive: propActive } = {}) {
         </div>
 
         {/* ── Bimodal Dual Switch / Pilares interactivos con 3 Modos ── */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.62rem",
+                fontSize: "0.74rem",
                 color: "#D4A017",
                 letterSpacing: "0.14em",
                 textTransform: "uppercase",
-                fontWeight: 700,
+                fontWeight: 500,
               }}
             >
               // DUALIDAD ESTRUCTURAL DEL NEGOCIO
@@ -296,8 +296,9 @@ export function S03_Empresa({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.6rem",
-                color: "rgba(245,241,232,0.45)",
+                fontSize: "0.7rem",
+                color: "rgba(245,241,232,0.5)",
+                fontWeight: 400,
               }}
             >
               SELECCIONA O TOCA EL 3D PARA INSPECCIONAR
@@ -337,8 +338,8 @@ export function S03_Empresa({ isActive: propActive } = {}) {
                     <span
                       style={{
                         fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: "0.62rem",
-                        fontWeight: 700,
+                        fontSize: "0.8rem",
+                        fontWeight: 500,
                         color: pillar.color,
                       }}
                     >
@@ -347,9 +348,10 @@ export function S03_Empresa({ isActive: propActive } = {}) {
                     <span
                       style={{
                         fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: "0.52rem",
-                        color: isSelected ? "#F5F1E8" : "rgba(245,241,232,0.4)",
+                        fontSize: "0.72rem",
+                        color: isSelected ? "#F5F1E8" : "rgba(245,241,232,0.55)",
                         letterSpacing: "0.06em",
+                        fontWeight: 400,
                       }}
                     >
                       {pillar.tag}
@@ -359,11 +361,12 @@ export function S03_Empresa({ isActive: propActive } = {}) {
                   <span
                     style={{
                       fontFamily: "'Archivo Black', sans-serif",
-                      fontSize: "0.82rem",
+                      fontSize: "0.96rem",
                       color: "#F5F1E8",
                       textTransform: "uppercase",
                       letterSpacing: "-0.01em",
                       lineHeight: 1.15,
+                      fontWeight: 400,
                     }}
                   >
                     {pillar.name}
@@ -372,10 +375,11 @@ export function S03_Empresa({ isActive: propActive } = {}) {
                   <p
                     style={{
                       fontFamily: "Inter, sans-serif",
-                      fontSize: "0.68rem",
-                      color: "rgba(245,241,232,0.65)",
-                      lineHeight: 1.35,
+                      fontSize: "0.84rem",
+                      color: "rgba(245,241,232,0.76)",
+                      lineHeight: 1.38,
                       margin: 0,
+                      fontWeight: 400,
                     }}
                   >
                     {pillar.summary}
@@ -388,7 +392,7 @@ export function S03_Empresa({ isActive: propActive } = {}) {
           {/* Ficha técnica detallada del pilar seleccionado */}
           <div
             style={{
-              padding: "0.75rem 1rem",
+              padding: "0.8rem 1.1rem",
               background: "rgba(14,14,14,0.8)",
               border: `1px solid ${selectedPillar === 1 ? "#4A5D3A" : selectedPillar === 2 ? "#D4A017" : "rgba(245,241,232,0.15)"}`,
               borderLeft: `4px solid ${selectedPillar === 1 ? "#6e8e59" : selectedPillar === 2 ? "#D4A017" : "#e8a0bf"}`,
@@ -399,14 +403,14 @@ export function S03_Empresa({ isActive: propActive } = {}) {
             }}
           >
             <div>
-              <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.75rem", color: "#F5F1E8" }}>
+              <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.9rem", color: "#F5F1E8", fontWeight: 400 }}>
                 {selectedPillar === 0
                   ? "SISTEMA INTEGRADO: HARDWARE & SOFTWARE"
                   : selectedPillar === 1
                   ? "OPERACIONES MECÁNICAS DE PLANTA"
                   : "ARQUITECTURA DE SOFTWARE & SAAS B2B"}
               </div>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.58rem", color: "rgba(245,241,232,0.65)", marginTop: "0.15rem" }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.76rem", color: "rgba(245,241,232,0.78)", marginTop: "0.15rem", fontWeight: 400 }}>
                 {selectedPillar === 0
                   ? "Coexistencia estratégica que financia y potencia la división de ingeniería tecnológica."
                   : selectedPillar === 1
@@ -418,12 +422,13 @@ export function S03_Empresa({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.58rem",
-                fontWeight: 700,
+                fontSize: "0.74rem",
+                fontWeight: 500,
                 color: selectedPillar === 1 ? "#6e8e59" : selectedPillar === 2 ? "#d4a017" : "#e8a0bf",
                 background: "rgba(0,0,0,0.5)",
                 border: "1px solid currentColor",
-                padding: "0.25rem 0.5rem",
+                padding: "0.28rem 0.6rem",
+                borderRadius: "2px",
               }}
             >
               MODO_3D: {selectedPillar === 0 ? "HÍBRIDO" : selectedPillar === 1 ? "MECÁNICA" : "CLOUD_TI"}
@@ -438,16 +443,17 @@ export function S03_Empresa({ isActive: propActive } = {}) {
             alignItems: "center",
             justifyContent: "space-between",
             borderTop: "1px solid rgba(245,241,232,0.08)",
-            paddingTop: "0.9rem",
-            marginTop: "0.6rem",
+            paddingTop: "0.8rem",
+            marginTop: "0.5rem",
           }}
         >
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.62rem",
-              color: "rgba(245,241,232,0.4)",
+              fontSize: "0.76rem",
+              color: "rgba(245,241,232,0.55)",
               letterSpacing: "0.12em",
+              fontWeight: 400,
             }}
           >
             MTA // DOCS REF: SEC-01-ESTRUC
@@ -455,9 +461,10 @@ export function S03_Empresa({ isActive: propActive } = {}) {
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.62rem",
+              fontSize: "0.76rem",
               color: "#D4A017",
               letterSpacing: "0.12em",
+              fontWeight: 500,
             }}
           >
             SLIDE 03 · LA EMPRESA
@@ -475,7 +482,7 @@ export function S03_Empresa({ isActive: propActive } = {}) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "3.2rem 3.5rem 3rem 3rem",
+          padding: "2.6rem 3rem 2.4rem 2.8rem",
           position: "relative",
           zIndex: 2,
           background: "rgba(10,10,10,0.7)",
@@ -497,10 +504,10 @@ export function S03_Empresa({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
+                fontSize: "0.8rem",
                 color: "#F5F1E8",
                 letterSpacing: "0.12em",
-                fontWeight: 700,
+                fontWeight: 500,
               }}
             >
               {selectedPillar === 0
@@ -514,9 +521,10 @@ export function S03_Empresa({ isActive: propActive } = {}) {
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.6rem",
+              fontSize: "0.74rem",
               color: "#D4A017",
               letterSpacing: "0.1em",
+              fontWeight: 400,
             }}
           >
             CLIC PARA ALTERNAR
@@ -528,20 +536,20 @@ export function S03_Empresa({ isActive: propActive } = {}) {
           style={{
             flex: 1,
             position: "relative",
-            minHeight: "320px",
+            minHeight: "310px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             border: "1px solid rgba(245,241,232,0.07)",
             background: "radial-gradient(circle at center, rgba(74,93,58,0.12) 0%, transparent 70%)",
-            margin: "1.2rem 0",
+            margin: "0.9rem 0",
           }}
         >
           {/* Marcadores tácticos de esquina */}
-          <span style={{ position: "absolute", top: 6, left: 8, fontFamily: "monospace", fontSize: "0.7rem", color: "rgba(245,241,232,0.3)" }}>+</span>
-          <span style={{ position: "absolute", top: 6, right: 8, fontFamily: "monospace", fontSize: "0.7rem", color: "rgba(245,241,232,0.3)" }}>+</span>
-          <span style={{ position: "absolute", bottom: 6, left: 8, fontFamily: "monospace", fontSize: "0.7rem", color: "rgba(245,241,232,0.3)" }}>+</span>
-          <span style={{ position: "absolute", bottom: 6, right: 8, fontFamily: "monospace", fontSize: "0.7rem", color: "rgba(245,241,232,0.3)" }}>+</span>
+          <span style={{ position: "absolute", top: 6, left: 8, fontFamily: "monospace", fontSize: "0.75rem", color: "rgba(245,241,232,0.3)" }}>+</span>
+          <span style={{ position: "absolute", top: 6, right: 8, fontFamily: "monospace", fontSize: "0.75rem", color: "rgba(245,241,232,0.3)" }}>+</span>
+          <span style={{ position: "absolute", bottom: 6, left: 8, fontFamily: "monospace", fontSize: "0.75rem", color: "rgba(245,241,232,0.3)" }}>+</span>
+          <span style={{ position: "absolute", bottom: 6, right: 8, fontFamily: "monospace", fontSize: "0.75rem", color: "rgba(245,241,232,0.3)" }}>+</span>
 
           {/* Badge flotante con el estado del modelo */}
           <div
@@ -553,16 +561,16 @@ export function S03_Empresa({ isActive: propActive } = {}) {
               pointerEvents: "none",
               background: "rgba(10,10,10,0.85)",
               border: "1px solid rgba(245,241,232,0.15)",
-              padding: "0.3rem 0.6rem",
+              padding: "0.35rem 0.7rem",
               backdropFilter: "blur(4px)",
             }}
           >
-            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#d4a017", fontWeight: 700 }}>
+            <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.72rem", color: "#d4a017", fontWeight: 500 }}>
               ESTRUCTURA: {selectedPillar === 0 ? "COEXISTENCIA DUAL" : selectedPillar === 1 ? "MATRICERÍA Y HARDWARE" : "SAAS & RED AWS CLOUD"}
             </div>
           </div>
 
-          {/* Three.js canvas (Directo, reactivo, fluido a 60 FPS sin recargas) */}
+          {/* Three.js canvas */}
           <HybridCoreCanvas
             isActive={isActive}
             activeMode={selectedPillar}
@@ -587,19 +595,20 @@ export function S03_Empresa({ isActive: propActive } = {}) {
               animate={entered ? "visible" : "hidden"}
               style={{
                 background: "#0d0d0d",
-                padding: "0.85rem 0.9rem",
+                padding: "0.85rem 0.95rem",
                 display: "flex",
                 flexDirection: "column",
-                gap: "0.25rem",
+                gap: "0.3rem",
               }}
             >
               <span
                 style={{
                   fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.58rem",
+                  fontSize: "0.74rem",
                   color: "#D4A017",
                   textTransform: "uppercase",
                   letterSpacing: "0.1em",
+                  fontWeight: 500,
                 }}
               >
                 {h.label}
@@ -607,10 +616,10 @@ export function S03_Empresa({ isActive: propActive } = {}) {
               <span
                 style={{
                   fontFamily: "Inter, sans-serif",
-                  fontSize: "0.72rem",
-                  fontWeight: 600,
+                  fontSize: "0.88rem",
+                  fontWeight: 500,
                   color: "#F5F1E8",
-                  lineHeight: 1.3,
+                  lineHeight: 1.35,
                 }}
               >
                 {h.val}
@@ -622,3 +631,5 @@ export function S03_Empresa({ isActive: propActive } = {}) {
     </section>
   );
 }
+
+export default S03_Empresa;

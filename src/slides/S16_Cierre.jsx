@@ -22,7 +22,12 @@ import { Button } from "../components/ui/Button.jsx";
 import { Badge } from "../components/ui/Badge.jsx";
 import { easings } from "../lib/easings.js";
 
-const c = slidesContent.s14_cierre;
+const c = slidesContent.s17_cierre || slidesContent.s14_cierre || {
+  badge: "CONCLUSIÓN · ETAPAS 01 Y 02",
+  scriptTag: "Cierre de Investigación",
+  title: "GRACIAS POR SU ATENCIÓN",
+  subtitle: "Propuesta arquitectónica integral en AWS Cloud para MTA Software — Redes, Cómputo, Almacenamiento y Bases de Datos",
+};
 
 /**
  * S14 — Cierre del Deck, Síntesis de Logros, Preguntas del Jurado y Conclusión.
@@ -47,7 +52,7 @@ const c = slidesContent.s14_cierre;
  */
 export function S14_Cierre({ isActive: propActive } = {}) {
   const shouldReduceMotion = useReducedMotion();
-  const hookActive = useSlideActive(13);
+  const hookActive = useSlideActive(15);
   const sectionRef = useRef(null);
   const [domActive, setDomActive] = useState(false);
   const [celebrateCount, setCelebrateCount] = useState(0);
@@ -187,24 +192,24 @@ export function S14_Cierre({ isActive: propActive } = {}) {
         }}
       >
         {/* Header Editorial */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.15rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
           <motion.div
             variants={fadeUp(0.04)}
             initial="hidden"
             animate={entered ? "visible" : "hidden"}
-            style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}
+            style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}
           >
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
-                letterSpacing: "0.2em",
+                fontSize: "0.80rem",
+                letterSpacing: "0.15em",
                 textTransform: "uppercase",
-                fontWeight: 700,
+                fontWeight: 500,
                 color: "#d4a017",
                 background: "rgba(212,160,23,0.12)",
                 border: "1px solid rgba(212,160,23,0.4)",
-                padding: "0.2rem 0.6rem",
+                padding: "0.28rem 0.75rem",
               }}
             >
               [ {c.badge} ]
@@ -212,12 +217,13 @@ export function S14_Cierre({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.62rem",
-                letterSpacing: "0.15em",
-                color: "rgba(245,241,232,0.45)",
+                fontSize: "0.76rem",
+                letterSpacing: "0.12em",
+                color: "rgba(245,241,232,0.65)",
+                fontWeight: 400,
               }}
             >
-              SEC_14 // PRESENTATION_CLOSING
+              SEC_16 // PRESENTATION_CLOSING
             </span>
           </motion.div>
 
@@ -227,10 +233,11 @@ export function S14_Cierre({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Yellowtail, cursive",
-              fontSize: "clamp(1.2rem, 1.8vw, 1.6rem)",
+              fontSize: "clamp(1.4rem, 2.3vw, 2.05rem)",
               color: "#e8a0bf",
               lineHeight: 1.1,
-              margin: "0.1rem 0 0 0",
+              margin: "0.15rem 0 0 0",
+              fontWeight: 400,
             }}
           >
             {c.scriptTag}
@@ -242,12 +249,13 @@ export function S14_Cierre({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "'Archivo Black', 'Arial Black', sans-serif",
-              fontSize: "clamp(1.7rem, 2.5vw, 2.4rem)",
+              fontSize: "clamp(1.7rem, 2.6vw, 2.5rem)",
               color: "#F5F1E8",
               letterSpacing: "-0.025em",
               lineHeight: 1.05,
               textTransform: "uppercase",
               margin: 0,
+              fontWeight: 400,
             }}
           >
             {c.title}
@@ -258,11 +266,12 @@ export function S14_Cierre({ isActive: propActive } = {}) {
             initial="hidden"
             animate={entered ? "visible" : "hidden"}
             style={{
-              fontFamily: "system-ui, -apple-system, sans-serif",
-              fontSize: "clamp(0.8rem, 0.95vw, 0.88rem)",
-              color: "rgba(245,241,232,0.65)",
-              margin: "0.1rem 0 0 0",
-              lineHeight: 1.35,
+              fontFamily: "Inter, system-ui, -apple-system, sans-serif",
+              fontSize: "clamp(0.94rem, 1.1vw, 1.02rem)",
+              color: "rgba(245,241,232,0.78)",
+              margin: "0.15rem 0 0 0",
+              lineHeight: 1.5,
+              fontWeight: 400,
             }}
           >
             {c.subtitle}
@@ -284,7 +293,7 @@ export function S14_Cierre({ isActive: propActive } = {}) {
           initial="hidden"
           animate={entered ? "visible" : "hidden"}
           style={{
-            padding: "0.65rem 0.85rem",
+            padding: "0.75rem 0.95rem",
             background: "rgba(14,14,14,0.85)",
             border: "1px solid rgba(245,241,232,0.12)",
             display: "flex",
@@ -292,13 +301,13 @@ export function S14_Cierre({ isActive: propActive } = {}) {
             alignItems: "center",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <Award size={15} style={{ color: "#d4a017" }} />
+          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+            <Award size={18} style={{ color: "#d4a017" }} />
             <div>
-              <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.72rem", color: "#F5F1E8" }}>
+              <div style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.78rem", color: "#F5F1E8", fontWeight: 400 }}>
                 CURSO: {projectMeta.course}
               </div>
-              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "rgba(245,241,232,0.6)" }}>
+              <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: "rgba(245,241,232,0.75)", fontWeight: 400, marginTop: "0.1rem" }}>
                 DOCENTE: {projectMeta.instructor.name} · SENATI
               </div>
             </div>
@@ -308,12 +317,12 @@ export function S14_Cierre({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.58rem",
+                fontSize: "0.70rem",
                 color: "#6e8e59",
                 background: "rgba(110,142,89,0.15)",
                 border: "1px solid #6e8e59",
-                padding: "0.2rem 0.45rem",
-                fontWeight: 700,
+                padding: "0.25rem 0.6rem",
+                fontWeight: 600,
               }}
             >
               5 INTEGRANTES SENATI

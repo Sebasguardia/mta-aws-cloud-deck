@@ -15,14 +15,8 @@ const ACCENT_MAP = {
 /**
  * S02 — Agenda / Roadmap del deck.
  *
- * index Reveal: 1 (segundo slide, después de S01_Cover).
- *
- * Usa useSlideActive(1) en lugar del prop isActive — más robusto porque
- * escucha el evento `deck:slidechanged` directamente sin depender de
- * prop-drilling desde App.jsx.
- *
- * Animación: stagger 120ms | translateY(28px→0) + opacity | ease cinematic.
- * Interactividad: click en tarjeta → deck.slide(targetSlide).
+ * Letras más grandes y peso limpio sin exceso de negrita,
+ * manteniendo el layout y proporciones estables en pantalla completa.
  */
 export function S02_Agenda({ isActive: propActive } = {}) {
   const shouldReduceMotion = useReducedMotion();
@@ -50,7 +44,6 @@ export function S02_Agenda({ isActive: propActive } = {}) {
 
   useEffect(() => {
     if (isActive) {
-      // Breve timeout para disparar la animación de entrada sincronizada
       const timer = setTimeout(() => setEntered(true), 40);
       return () => clearTimeout(timer);
     } else {
@@ -61,7 +54,6 @@ export function S02_Agenda({ isActive: propActive } = {}) {
 
   const jumpToSlide = useCallback((targetSlide, cardIndex) => {
     setZoomingCardIdx(cardIndex);
-    // Efecto de portal / zoom cinemático hacia la tarjeta antes de ejecutar el slide
     setTimeout(() => {
       if (window.__revealDeck) {
         window.__revealDeck.slide(targetSlide);
@@ -126,13 +118,13 @@ export function S02_Agenda({ isActive: propActive } = {}) {
         style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 4, background: "#D4A017", zIndex: 2 }}
       />
 
-      {/* Contenido */}
+      {/* Contenido principal centrado y bien distribuido */}
       <div style={{
         position: "relative", zIndex: 2,
-        width: "100%", maxWidth: "1440px",
+        width: "100%", maxWidth: "1480px",
         margin: "0 auto",
-        padding: "2.5rem 4rem 2.5rem 5rem",
-        display: "flex", flexDirection: "column", gap: "1.4rem",
+        padding: "2.2rem 4rem 2.2rem 4.8rem",
+        display: "flex", flexDirection: "column", gap: "1.3rem",
       }}>
 
         {/* ── Encabezado ── */}
@@ -143,16 +135,17 @@ export function S02_Agenda({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.65rem",
-              letterSpacing: "0.2em",
+              fontSize: "0.78rem",
+              letterSpacing: "0.18em",
               textTransform: "uppercase",
-              fontWeight: 700,
+              fontWeight: 500,
               color: "#D4A017",
-              background: "rgba(212,160,23,0.08)",
+              background: "rgba(212,160,23,0.1)",
               border: "1px solid rgba(212,160,23,0.35)",
-              padding: "0.28rem 0.7rem",
+              padding: "0.35rem 0.85rem",
               display: "inline-block",
               width: "fit-content",
+              borderRadius: "2px",
             }}
           >
             [ {c.badge} ]
@@ -164,9 +157,10 @@ export function S02_Agenda({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Yellowtail, cursive",
-              fontSize: "clamp(1.2rem, 2vw, 1.9rem)",
+              fontSize: "clamp(1.5rem, 2.3vw, 2.2rem)",
               color: "#e8a0bf",
-              lineHeight: 1.1,
+              lineHeight: 1.15,
+              fontWeight: 400,
             }}
           >
             {c.scriptTag}
@@ -178,13 +172,13 @@ export function S02_Agenda({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "'Archivo Black', 'Arial Black', sans-serif",
-              fontSize: "clamp(1.8rem, 3vw, 3rem)",
+              fontSize: "clamp(2rem, 3.2vw, 3.2rem)",
               color: "#F5F1E8",
-              letterSpacing: "-0.025em",
+              letterSpacing: "-0.02em",
               textTransform: "uppercase",
-              lineHeight: 1,
+              lineHeight: 1.05,
               fontWeight: 400,
-              maxWidth: "640px",
+              maxWidth: "700px",
             }}
           >
             {c.title}
@@ -196,10 +190,11 @@ export function S02_Agenda({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Inter, sans-serif",
-              fontSize: "0.83rem",
-              color: "rgba(245,241,232,0.5)",
-              maxWidth: "520px",
+              fontSize: "0.95rem",
+              color: "rgba(245,241,232,0.65)",
+              maxWidth: "580px",
               lineHeight: 1.5,
+              fontWeight: 400,
             }}
           >
             {c.subtitle}
@@ -212,7 +207,7 @@ export function S02_Agenda({ isActive: propActive } = {}) {
           initial={{ clipPath: "inset(0 100% 0 0)" }}
           animate={entered ? { clipPath: "inset(0 0% 0 0)" } : { clipPath: "inset(0 100% 0 0)" }}
           transition={{ duration: shouldReduceMotion ? 0.1 : 0.5, ease: [0.83, 0, 0.17, 1], delay: 0.28 }}
-          style={{ height: 2, background: "#D4A017", width: "100%", maxWidth: 280 }}
+          style={{ height: 2, background: "#D4A017", width: "100%", maxWidth: 320 }}
         />
 
         {/* ── Tarjetas de bloque — Grid 4 columnas ── */}
@@ -241,14 +236,14 @@ export function S02_Agenda({ isActive: propActive } = {}) {
                 style={{
                   background: isHovered ? "rgba(245,241,232,0.06)" : "#0a0a0a",
                   border: "none",
-                  padding: "1.1rem 1.25rem",
+                  padding: "1.25rem 1.35rem",
                   cursor: "pointer",
                   textAlign: "left",
                   position: "relative",
                   overflow: "hidden",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "0.45rem",
+                  gap: "0.5rem",
                   borderTop: `3px solid ${isHovered || isZooming ? acc.border : "rgba(245,241,232,0.1)"}`,
                   boxShadow: isZooming ? `0 0 35px ${acc.glow}` : "none",
                   transform: isZooming
@@ -283,17 +278,17 @@ export function S02_Agenda({ isActive: propActive } = {}) {
                 {/* Indicador de bloque */}
                 <span style={{
                   fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.62rem",
+                  fontSize: "0.74rem",
                   letterSpacing: "0.18em",
                   textTransform: "uppercase",
-                  fontWeight: 700,
-                  color: isHovered ? acc.border : "rgba(212,160,23,0.55)",
-                  display: "flex", alignItems: "center", gap: "0.4rem",
+                  fontWeight: 500,
+                  color: isHovered ? acc.border : "rgba(212,160,23,0.7)",
+                  display: "flex", alignItems: "center", gap: "0.45rem",
                   transition: "color 0.18s ease-out",
                 }}>
                   <span style={{
-                    display: "inline-block", width: 5, height: 5,
-                    background: isHovered ? acc.border : "rgba(212,160,23,0.4)",
+                    display: "inline-block", width: 6, height: 6,
+                    background: isHovered ? acc.border : "rgba(212,160,23,0.45)",
                     transition: "background 0.18s ease-out",
                   }} />
                   BLOQUE {block.num}
@@ -302,10 +297,12 @@ export function S02_Agenda({ isActive: propActive } = {}) {
                 {/* Script acento */}
                 <p style={{
                   fontFamily: "Yellowtail, cursive",
-                  fontSize: "clamp(1rem, 1.5vw, 1.45rem)",
-                  color: isHovered ? acc.border : "rgba(245,241,232,0.5)",
+                  fontSize: "clamp(1.2rem, 1.8vw, 1.65rem)",
+                  color: isHovered ? acc.border : "rgba(245,241,232,0.6)",
                   lineHeight: 1.1,
+                  fontWeight: 400,
                   transition: "color 0.2s ease-out",
+                  margin: 0,
                 }}>
                   {block.script}
                 </p>
@@ -313,13 +310,14 @@ export function S02_Agenda({ isActive: propActive } = {}) {
                 {/* Título del bloque */}
                 <p style={{
                   fontFamily: "'Archivo Black', 'Arial Black', sans-serif",
-                  fontSize: "clamp(1.1rem, 1.7vw, 1.6rem)",
+                  fontSize: "clamp(1.2rem, 1.8vw, 1.7rem)",
                   color: "#F5F1E8",
-                  letterSpacing: "-0.02em",
+                  letterSpacing: "-0.01em",
                   textTransform: "uppercase",
-                  lineHeight: 1.05,
+                  lineHeight: 1.1,
                   fontWeight: 400,
-                  maxWidth: "280px",
+                  maxWidth: "290px",
+                  margin: "0.1rem 0",
                 }}>
                   {block.title}
                 </p>
@@ -329,27 +327,31 @@ export function S02_Agenda({ isActive: propActive } = {}) {
                   height: 1,
                   background: isHovered ? acc.border : "rgba(245,241,232,0.1)",
                   transition: "background 0.2s ease-out",
+                  margin: "0.1rem 0",
                 }} />
 
                 {/* Descripción */}
                 <p style={{
                   fontFamily: "Inter, sans-serif",
-                  fontSize: "0.7rem",
-                  color: "rgba(245,241,232,0.52)",
-                  lineHeight: 1.45,
-                  maxWidth: "300px",
+                  fontSize: "0.82rem",
+                  color: "rgba(245,241,232,0.68)",
+                  lineHeight: 1.5,
+                  maxWidth: "320px",
+                  fontWeight: 400,
+                  margin: 0,
                 }}>
                   {block.description}
                 </p>
 
                 {/* CTA flecha */}
-                <div style={{ marginTop: "0.4rem", display: "flex", alignItems: "center", gap: "0.35rem" }}>
+                <div style={{ marginTop: "0.45rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
                   <span style={{
                     fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.6rem",
+                    fontSize: "0.72rem",
                     letterSpacing: "0.14em",
                     textTransform: "uppercase",
-                    color: isHovered ? acc.border : "rgba(245,241,232,0.28)",
+                    fontWeight: 500,
+                    color: isHovered ? acc.border : "rgba(245,241,232,0.4)",
                     transition: "color 0.18s ease-out",
                   }}>
                     VER BLOQUE
@@ -362,7 +364,7 @@ export function S02_Agenda({ isActive: propActive } = {}) {
                       transition: "clip-path 0.22s cubic-bezier(0.23,1,0.32,1)",
                       color: acc.border,
                       fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.7rem",
+                      fontSize: "0.8rem",
                     }}
                   >
                     {" "}›››
@@ -380,21 +382,23 @@ export function S02_Agenda({ isActive: propActive } = {}) {
           animate={entered ? "visible" : "hidden"}
           style={{
             display: "flex", alignItems: "center", gap: "1.5rem",
-            paddingTop: "0.5rem",
+            paddingTop: "0.6rem",
             borderTop: "1px solid rgba(245,241,232,0.07)",
           }}
         >
           <span style={{
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: "0.6rem", letterSpacing: "0.16em",
-            textTransform: "uppercase", color: "rgba(245,241,232,0.22)",
+            fontSize: "0.72rem", letterSpacing: "0.16em",
+            textTransform: "uppercase", color: "rgba(245,241,232,0.38)",
+            fontWeight: 400,
           }}>
             CLICK EN CADA BLOQUE PARA NAVEGAR DIRECTAMENTE
           </span>
           <span style={{
             fontFamily: "'JetBrains Mono', monospace",
-            fontSize: "0.6rem", letterSpacing: "0.14em",
-            textTransform: "uppercase", color: "rgba(212,160,23,0.38)",
+            fontSize: "0.72rem", letterSpacing: "0.14em",
+            textTransform: "uppercase", color: "rgba(212,160,23,0.55)",
+            fontWeight: 500,
           }}>
             // SLIDE 02 · AGENDA
           </span>

@@ -4,17 +4,14 @@ import { motion, useReducedMotion } from "framer-motion";
 import { slidesContent } from "../data/content.es.js";
 import { useSlideActive } from "../hooks/useSlideActive.js";
 import { PortfolioMonolithCanvas } from "../components/three/PortfolioMonolithCanvas.jsx";
-import { CanvasTransitionWrapper } from "../components/motion/CanvasTransitionWrapper.jsx";
 
 const c = slidesContent.s05_portafolio;
 
 /**
  * S05 — Portafolio de Proyectos: Carga en Producción y Sistemas Críticos.
  *
- * Arquitectura de layout pantalla completa (100% viewport width/height):
- *  - Estructura `slide-row` idéntica a S03 y S04:
- *    Columna Izquierda (50%): Jerarquía editorial, selector de proyectos, badges y flip 3D.
- *    Columna Derecha (50%): Escenario 3D interactivo a pantalla completa con los monolitos holográficos y HUD de criticidad.
+ * Letras aumentadas, peso equilibrado sin negrita excesiva,
+ * preservando proporciones, interactive flip 3D y canvas 3D.
  */
 export function S05_Portafolio({ isActive: propActive } = {}) {
   const shouldReduceMotion = useReducedMotion();
@@ -159,18 +156,19 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
       />
 
       {/* ══════════════════════════════════════════════════════════
-          COLUMNA IZQUIERDA (46%): Contenido Editorial & Selector
+          COLUMNA IZQUIERDA (48%): Contenido Editorial & Selector
       ══════════════════════════════════════════════════════════ */}
       <div
         style={{
-          flex: "0 0 46%",
+          flex: "0 0 48%",
+          maxWidth: "48%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          padding: "2.5rem 2.8rem 2.5rem 4.4rem",
+          justifyContent: "space-between",
+          padding: "2.4rem 2.8rem 2.2rem 4.5rem",
           position: "relative",
           zIndex: 2,
-          gap: "1.1rem",
+          gap: "0.85rem",
         }}
       >
         {/* Encabezado Editorial */}
@@ -184,14 +182,15 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
-                letterSpacing: "0.2em",
+                fontSize: "0.78rem",
+                letterSpacing: "0.18em",
                 textTransform: "uppercase",
-                fontWeight: 700,
+                fontWeight: 500,
                 color: "#D4A017",
-                background: "rgba(212,160,23,0.08)",
+                background: "rgba(212,160,23,0.1)",
                 border: "1px solid rgba(212,160,23,0.35)",
-                padding: "0.25rem 0.65rem",
+                padding: "0.3rem 0.75rem",
+                borderRadius: "2px",
               }}
             >
               [ {c.badge} ]
@@ -199,9 +198,10 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.62rem",
+                fontSize: "0.74rem",
                 letterSpacing: "0.15em",
-                color: "rgba(245,241,232,0.4)",
+                color: "rgba(245,241,232,0.5)",
+                fontWeight: 400,
               }}
             >
               SEC_05 // WORKLOAD_ANALYSIS
@@ -214,10 +214,11 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Yellowtail, cursive",
-              fontSize: "clamp(1.3rem, 2vw, 1.8rem)",
+              fontSize: "clamp(1.4rem, 2vw, 1.9rem)",
               color: "#e8a0bf",
-              lineHeight: 1.1,
+              lineHeight: 1.15,
               margin: "0.15rem 0 0 0",
+              fontWeight: 400,
             }}
           >
             {c.scriptTag}
@@ -229,12 +230,13 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "'Archivo Black', 'Arial Black', sans-serif",
-              fontSize: "clamp(1.9rem, 2.9vw, 2.8rem)",
+              fontSize: "clamp(2rem, 3.1vw, 2.9rem)",
               color: "#F5F1E8",
-              letterSpacing: "-0.025em",
+              letterSpacing: "-0.02em",
               lineHeight: 1.05,
               textTransform: "uppercase",
               margin: 0,
+              fontWeight: 400,
             }}
           >
             {c.title}
@@ -246,10 +248,11 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
             animate={entered ? "visible" : "hidden"}
             style={{
               fontFamily: "Inter, sans-serif",
-              fontSize: "0.85rem",
-              color: "rgba(245,241,232,0.65)",
-              lineHeight: 1.45,
+              fontSize: "0.94rem",
+              color: "rgba(245,241,232,0.72)",
+              lineHeight: 1.5,
               margin: 0,
+              fontWeight: 400,
             }}
           >
             {c.subtitle}
@@ -289,12 +292,12 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
                   background: isSelected ? "rgba(245,241,232,0.06)" : "rgba(245,241,232,0.02)",
                   border: `1px solid ${isSelected ? project.accent : "rgba(245,241,232,0.1)"}`,
                   borderTop: `3px solid ${project.accent}`,
-                  padding: "0.65rem 0.75rem",
+                  padding: "0.75rem 0.85rem",
                   cursor: "pointer",
                   textAlign: "left",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "0.3rem",
+                  gap: "0.35rem",
                   boxShadow: isSelected ? `0 0 20px ${project.glow}` : "none",
                   transition: "all 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
                 }}
@@ -303,17 +306,17 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
                   <span
                     style={{
                       fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.6rem",
+                      fontSize: "0.74rem",
                       color: project.accent,
-                      fontWeight: 700,
+                      fontWeight: 500,
                     }}
                   >
                     [ {project.code} ]
                   </span>
                   <span
                     style={{
-                      width: 6,
-                      height: 6,
+                      width: 7,
+                      height: 7,
                       borderRadius: "50%",
                       background: project.isInternal ? "#c6432b" : "#4a5d3a",
                     }}
@@ -322,9 +325,10 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
                 <span
                   style={{
                     fontFamily: "'Archivo Black', sans-serif",
-                    fontSize: "0.78rem",
+                    fontSize: "0.92rem",
                     color: "#F5F1E8",
                     lineHeight: 1.1,
+                    fontWeight: 400,
                   }}
                 >
                   {project.name}
@@ -339,7 +343,7 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
           variants={fadeUp(0.38)}
           initial="hidden"
           animate={entered ? "visible" : "hidden"}
-          style={{ perspective: "1000px", minHeight: "210px" }}
+          style={{ perspective: "1000px", minHeight: "220px" }}
         >
           <div
             style={{
@@ -357,10 +361,10 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
                 background: "rgba(245,241,232,0.03)",
                 border: `1px solid ${currentProject.accent}`,
                 borderLeft: `4px solid ${currentProject.accent}`,
-                padding: "1.4rem 1.6rem",
+                padding: "1.3rem 1.6rem",
                 display: "flex",
                 flexDirection: "column",
-                gap: "0.8rem",
+                gap: "0.75rem",
                 backfaceVisibility: "hidden",
                 position: "relative",
                 overflow: "hidden",
@@ -380,6 +384,7 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
                   lineHeight: 1,
                   pointerEvents: "none",
                   userSelect: "none",
+                  fontWeight: 400,
                 }}
               >
                 {currentProject.id}
@@ -389,9 +394,10 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
                 <span
                   style={{
                     fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.68rem",
-                    color: "rgba(245,241,232,0.5)",
+                    fontSize: "0.76rem",
+                    color: "rgba(245,241,232,0.6)",
                     textTransform: "uppercase",
+                    fontWeight: 400,
                   }}
                 >
                   {currentProject.category} // {currentProject.tag}
@@ -417,9 +423,9 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
                   <span
                     style={{
                       fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.65rem",
-                      color: "rgba(245,241,232,0.85)",
-                      fontWeight: 700,
+                      fontSize: "0.74rem",
+                      color: "rgba(245,241,232,0.9)",
+                      fontWeight: 500,
                     }}
                   >
                     {currentProject.status}
@@ -430,11 +436,12 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
               <h2
                 style={{
                   fontFamily: "'Archivo Black', sans-serif",
-                  fontSize: "1.6rem",
+                  fontSize: "1.7rem",
                   color: "#F5F1E8",
                   margin: 0,
                   letterSpacing: "-0.02em",
                   zIndex: 1,
+                  fontWeight: 400,
                 }}
               >
                 {currentProject.name}
@@ -443,11 +450,12 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
               <p
                 style={{
                   fontFamily: "Inter, sans-serif",
-                  fontSize: "0.85rem",
-                  color: "rgba(245,241,232,0.75)",
+                  fontSize: "0.92rem",
+                  color: "rgba(245,241,232,0.8)",
                   lineHeight: 1.5,
                   margin: 0,
                   zIndex: 1,
+                  fontWeight: 400,
                 }}
               >
                 {currentProject.desc}
@@ -472,14 +480,15 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
                       border: "1px solid #c6432b",
                       color: "#F5F1E8",
                       fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.68rem",
-                      fontWeight: 700,
-                      padding: "0.45rem 0.85rem",
+                      fontSize: "0.74rem",
+                      fontWeight: 500,
+                      padding: "0.45rem 0.95rem",
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
                       gap: "0.5rem",
                       transition: "all 0.2s ease",
+                      borderRadius: "2px",
                     }}
                   >
                     <span>FLIP 3D // REVELAR IMPACTO OPERATIVO</span>
@@ -489,8 +498,9 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
                   <span
                     style={{
                       fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.65rem",
-                      color: "rgba(245,241,232,0.45)",
+                      fontSize: "0.72rem",
+                      color: "rgba(245,241,232,0.55)",
+                      fontWeight: 400,
                     }}
                   >
                     CARGA DE USUARIOS EXTERNA EN PRODUCCIÓN
@@ -500,9 +510,9 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
                 <span
                   style={{
                     fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.65rem",
+                    fontSize: "0.72rem",
                     color: currentProject.accent,
-                    fontWeight: 700,
+                    fontWeight: 500,
                   }}
                 >
                   [ MONOLITO 3D VINCULADO ]
@@ -519,7 +529,7 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
                   background: "#160e0e",
                   border: "1px solid #c6432b",
                   borderLeft: "4px solid #c6432b",
-                  padding: "1.4rem 1.6rem",
+                  padding: "1.3rem 1.6rem",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
@@ -529,14 +539,14 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
                   zIndex: 10,
                 }}
               >
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <span
                       style={{
                         fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: "0.65rem",
+                        fontSize: "0.74rem",
                         color: "#c6432b",
-                        fontWeight: 700,
+                        fontWeight: 500,
                       }}
                     >
                       [ ANÁLISIS DE IMPACTO CRÍTICO ]
@@ -549,7 +559,7 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
                         color: "#F5F1E8",
                         cursor: "pointer",
                         fontFamily: "'JetBrains Mono', monospace",
-                        fontSize: "0.9rem",
+                        fontSize: "0.95rem",
                       }}
                     >
                       ✕
@@ -559,9 +569,10 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
                   <h3
                     style={{
                       fontFamily: "'Archivo Black', sans-serif",
-                      fontSize: "1.2rem",
+                      fontSize: "1.3rem",
                       color: "#F5F1E8",
                       margin: 0,
+                      fontWeight: 400,
                     }}
                   >
                     RIESGO DE PARÁLISIS OPERATIVA
@@ -571,30 +582,31 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
                     style={{
                       background: "rgba(198,67,43,0.15)",
                       borderLeft: "3px solid #c6432b",
-                      padding: "0.65rem 0.8rem",
+                      padding: "0.65rem 0.85rem",
                     }}
                   >
                     <p
                       style={{
                         fontFamily: "Inter, sans-serif",
-                        fontSize: "0.78rem",
+                        fontSize: "0.85rem",
                         color: "rgba(245,241,232,0.95)",
-                        lineHeight: 1.4,
+                        lineHeight: 1.45,
                         margin: 0,
+                        fontWeight: 400,
                       }}
                     >
                       {currentProject.criticalNote}
                     </p>
                   </div>
 
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.65rem", color: "#D4A017" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.22rem" }}>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#D4A017", fontWeight: 400 }}>
                       • Registro de Asistencia y Turnos Diarios
                     </span>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.65rem", color: "#D4A017" }}>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#D4A017", fontWeight: 400 }}>
                       • Evaluación de los 10 Practicantes
                     </span>
-                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.65rem", color: "#D4A017" }}>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#D4A017", fontWeight: 400 }}>
                       • Dashboard de Métricas y Proyectos en Tiempo Real
                     </span>
                   </div>
@@ -607,11 +619,12 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
                     border: "none",
                     color: "#F5F1E8",
                     fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.68rem",
-                    fontWeight: 700,
-                    padding: "0.5rem",
+                    fontSize: "0.74rem",
+                    fontWeight: 500,
+                    padding: "0.55rem",
                     cursor: "pointer",
                     textAlign: "center",
+                    borderRadius: "2px",
                   }}
                 >
                   ← VOLVER AL POSTER
@@ -639,10 +652,10 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.62rem",
+                fontSize: "0.74rem",
                 letterSpacing: "0.15em",
                 color: "#D4A017",
-                fontWeight: 700,
+                fontWeight: 500,
               }}
             >
               // DIAGNÓSTICO DE ARQUITECTURA:
@@ -650,9 +663,9 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
             <span
               style={{
                 fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.62rem",
+                fontSize: "0.74rem",
                 color: "#c6432b",
-                fontWeight: 700,
+                fontWeight: 500,
               }}
             >
               ● PUNTO ÚNICO DE VULNERABILIDAD
@@ -661,10 +674,11 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
           <p
             style={{
               fontFamily: "Inter, sans-serif",
-              fontSize: "0.76rem",
-              color: "rgba(245,241,232,0.65)",
-              lineHeight: 1.4,
+              fontSize: "0.84rem",
+              color: "rgba(245,241,232,0.72)",
+              lineHeight: 1.45,
               margin: 0,
+              fontWeight: 400,
             }}
           >
             Los 3 sistemas (2 comerciales externos y 1 ERP interno crítico) conviven actualmente en un único hosting compartido sin segmentación ni failover.
@@ -673,11 +687,12 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
       </div>
 
       {/* ══════════════════════════════════════════════════════════
-          COLUMNA DERECHA (54%): Escenario 3D Pantalla Completa
+          COLUMNA DERECHA (52%): Escenario 3D Pantalla Completa
       ══════════════════════════════════════════════════════════ */}
       <div
         style={{
-          flex: "0 0 54%",
+          flex: "0 0 52%",
+          maxWidth: "52%",
           position: "relative",
           display: "flex",
           alignItems: "center",
@@ -687,7 +702,7 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
           overflow: "hidden",
         }}
       >
-        {/* Canvas 3D de Monolitos con Texturas Reales, Beacon de Riesgo y selección directa */}
+        {/* Canvas 3D de Monolitos */}
         <PortfolioMonolithCanvas
           isActive={isActive}
           activeIndex={activeProjectIdx}
@@ -715,10 +730,10 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.62rem",
-              letterSpacing: "0.2em",
+              fontSize: "0.74rem",
+              letterSpacing: "0.18em",
               color: "#D4A017",
-              fontWeight: 700,
+              fontWeight: 500,
             }}
           >
             SYS_MONOLITHS // 3_ACTIVE_TARGETS
@@ -726,8 +741,9 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.58rem",
-              color: "rgba(245,241,232,0.4)",
+              fontSize: "0.68rem",
+              color: "rgba(245,241,232,0.5)",
+              fontWeight: 400,
             }}
           >
             SHARED_HOSTING: HOSTINGER_BUSINESS · FAILOVER: NONE
@@ -744,20 +760,20 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
             border: `1px solid ${currentProject.accent}`,
             background: "rgba(10,10,10,0.75)",
             backdropFilter: "blur(8px)",
-            padding: "0.6rem 1rem",
+            padding: "0.65rem 1.1rem",
             display: "flex",
             flexDirection: "column",
-            gap: "0.2rem",
+            gap: "0.25rem",
             zIndex: 10,
-            maxWidth: "280px",
+            maxWidth: "300px",
           }}
         >
           <span
             style={{
               fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.6rem",
+              fontSize: "0.72rem",
               color: currentProject.accent,
-              fontWeight: 700,
+              fontWeight: 500,
             }}
           >
             [ NÚCLEO EN VIVO: {currentProject.name.toUpperCase()} ]
@@ -765,9 +781,10 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
           <span
             style={{
               fontFamily: "Inter, sans-serif",
-              fontSize: "0.68rem",
-              color: "rgba(245,241,232,0.7)",
-              lineHeight: 1.3,
+              fontSize: "0.78rem",
+              color: "rgba(245,241,232,0.8)",
+              lineHeight: 1.35,
+              fontWeight: 400,
             }}
           >
             {currentProject.isInternal
@@ -779,3 +796,5 @@ export function S05_Portafolio({ isActive: propActive } = {}) {
     </section>
   );
 }
+
+export default S05_Portafolio;
