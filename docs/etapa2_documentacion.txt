@@ -1,0 +1,166 @@
+================================================================================
+SENATI - DIRECCION ZONAL LIMA CALLAO
+ESCUELA DE TECNOLOGIAS DE LA INFORMACION
+CURSO: CLOUD COMPUTING AWS
+PROYECTO: MIGRACION ARQUITECTURAL CLOUD AWS - MTA SOFTWARE
+================================================================================
+DOCUMENTACION TECNICA Y PROPUESTA INTEGRAL: ETAPA 2 (SEMANA 7)
+APROVISIONAMIENTO DE SERVICIOS CORE, ALMACENAMIENTO Y BASES DE DATOS EN LA NUBE
+================================================================================
+
+DATOS GENERALES DEL PROYECTO
+--------------------------------------------------------------------------------
+- Empresa Beneficiaria: Multiservicios Tecnoindustrial Acosta S.A.C. (MTA Software)
+- Sistema Central: Workspace MTA (ERP interno de asistencias, notas, contratos y gestion)
+- Proyectos Clientes Afectados: Strato Studio (visuales de alta demanda) y VIISION (ERP y landing)
+- Equipo Tecnico: 14 colaboradores (4 Leads de Arquitectura/Desarrollo + 10 Practicantes Remotos P01 a P10)
+- Region Principal de Despliegue: AWS us-east-1 (Norte de Virginia)
+- Modelo de Costos: AWS Free Tier + Gobernanza de Presupuestos (Alerta a $10.00 USD)
+
+
+1. OBJETIVOS Y ALCANCE DE LA ETAPA 2
+--------------------------------------------------------------------------------
+La Etapa 2 traslada el diagnostico y las bases conceptuales formalizadas en la Etapa 1
+(identidad IAM, red perimetral VPC Multi-AZ y marco CAF) hacia la implementacion practica
+y aprovisionamiento real de servicios de infraestructura en AWS.
+
+Su mision principal es erradicar los tres cuellos de botella criticos de la infraestructura previa:
+a) Erradicacion del Punto Unico de Falla (SPOF) en la persistencia de datos.
+b) Fin a la fragmentacion de desarrollo ("en mi maquina si funciona") mediante Staging Unificado.
+c) Provisionamiento de almacenamiento de alta durabilidad y concurrencia multi-usuario para el equipo.
+
+
+2. PILAR 1: ENTORNO DE PRUEBAS Y STAGING UNIFICADO (EC2 + EBS gp3)
+--------------------------------------------------------------------------------
+Diagnostico Resuelto:
+Actualmente, los 10 practicantes de MTA Software ejecutan pruebas y validaciones en sus
+ambientes locales (localhost en Windows/Mac/Linux). Esto genera incompatibilidades de versionamiento,
+discrepancias de librerias de Node.js y fallos imprevistos al pasar codigo a produccion.
+
+Solucion Aprovisionada:
+- Servicio: Instancia Amazon EC2 Staging dedicada en subred privada / publica de pruebas.
+- Tipo de Instancia: t2.micro / t3.micro (cobertura 100% elegible en Free Tier: 750 horas/mes).
+- Capacidad de Procesamiento: 1 a 2 vCPUs de rendimiento burstable con creditos de CPU, 1 GiB de memoria RAM.
+- Sistema Operativo Base: Amazon Linux 2023 / Ubuntu Server 22.04 LTS optimizado.
+- Almacenamiento Asociado: Amazon EBS (Elastic Block Store) volumen root gp3 de 30 GB (limite gratuito de capa Free Tier).
+- Metricas de Almacenamiento: 3,000 IOPS base sostenidos y 125 MB/s de rendimiento sin costo adicional.
+
+Pipeline Operativo de Validacion:
+1. Practicante empuja codigo validado a rama 'staging'.
+2. Ejecucion automatica de bateria de pruebas unitarias e integracion (Jest / Supertest).
+3. Construccion de contenedor / despliegue en la instancia EC2 de Staging.
+4. Validacion por parte de QA y Lead Tecnico en entorno identico al real.
+5. Autorizacion de merge hacia rama principal de produccion con cero margen de discrepancia.
+
+
+3. PILAR 2: COMPUTO ELASTICO Y SERVERLESS (EC2, LAMBDA Y CONTENEDORES)
+--------------------------------------------------------------------------------
+Para equilibrar cargas de trabajo continuas con tareas esporadicas intensivas, se implementa
+un modelo de computo hibrido altamente optimizado:
+
+A) Amazon EC2 para Backend y APIs Continuas:
+- Arquitectura Recomendada: t4g.small potenciado por procesadores AWS Graviton2 (64-bit ARM).
+- Beneficio Tecnico-Financiero: Brinda hasta un 40% de mejor relacion precio/rendimiento en
+  comparacion con procesadores x86 convencionales de familia t3.
+- Configuracion de Resiliencia: Integracion en Auto Scaling Group (ASG) entre las zonas
+  us-east-1a y us-east-1b con politicas de escalamiento basadas en consumo de CPU (>70%).
+
+B) AWS Lambda para Procesamiento Asincrono y Batch:
+- Cargas de Trabajo Delegadas:
+  * Calculo automatizado de notas y ponderados semanales de estudiantes.
+  * Generacion de reportes consolidados en PDF a fin de mes.
+  * Procesamiento y compresion de imagenes de perfiles y contratos.
+- Modelo de Costos: Pago exacto por milisegundo de ejecucion ($0.00 USD en periodos de inactividad).
+- Capacidad Free Tier: 1,000,000 de solicitudes gratuitas al mes y 3.2 millones de segundos de computo.
+
+C) Docker y Amazon ECS (Elastic Container Service):
+- Estandarizacion de microservicios y modulos independientes de Workspace MTA en imagenes ligeras.
+- Facilita migraciones, parches de seguridad y despliegues sin interrupcion de servicio (Zero-Downtime Rolling Updates).
+
+
+4. PILAR 3: ESTRATEGIA DE ALMACENAMIENTO UNIFICADO Y ARCHIVO HISTORICO
+--------------------------------------------------------------------------------
+MTA Software requiere manejar simultaneamente assets publicos web, archivos de trabajo compartidos
+para los practicantes y resguardo historico de contratos y copias de seguridad de bases de datos.
+
+A) Amazon S3 Standard (Object Storage):
+- Proposito: Archivos estaticos de Workspace MTA, multimedia de Strato Studio y bundles web de VIISION.
+- Durabilidad y Disponibilidad: 99.999999999% (11 nueves de durabilidad) con redundancia distribuida.
+- Capacidad Inicial: 5 GB en capa gratuita mensual durante los primeros 12 meses.
+- Seguridad: Cifrado en reposo por defecto (SSE-S3 / AES-256) y bloqueo publico estricto salvo buckets web.
+
+B) Amazon EFS (Elastic File System - NFSv4):
+- Proposito: Directorio de archivos compartidos y volumen de codigo concurrente para los 10 practicantes remotos.
+- Caracteristicas: Sistema de archivos nativo POSIX montable en multiples instancias EC2 y contenedores.
+- Disponibilidad: Multi-AZ nativa; si una zona de disponibilidad sufre un corte, el acceso al sistema de archivos
+  permanece intacto desde la segunda zona sin reconfiguracion.
+
+C) Amazon S3 Glacier Flexible Retrieval (Regla de Ciclo de Vida):
+- Politica Automatizada de Almacenamiento:
+  * Dia 0 a Dia 90: Los backups diarios y reportes se conservan en S3 Standard ($0.023 por GB/mes).
+  * Dia 91 en adelante: Regla de ciclo de vida (Lifecycle Rule) transfiere automaticamente la data a S3 Glacier Flexible.
+- Impacto Economico: Reduccion del costo de almacenamiento de $0.023 a $0.0036 por GB/mes, representando
+  un ahorro financiero directo del 84.3% en retencion historica de datos de la empresa.
+
+
+5. PILAR 4: BASES DE DATOS ADMINISTRADAS Y ALTA DISPONIBILIDAD (AMAZON RDS)
+--------------------------------------------------------------------------------
+Diagnostico Previo en Hostinger:
+Base de datos MySQL en un hosting compartido sin failover, con copias de seguridad manuales,
+bloqueos de concurrencia y un riesgo inminente de perdida total de informacion ante caidas del servidor unico.
+
+Solucion Aprovisionada en AWS:
+- Motor Seleccionado: Amazon RDS PostgreSQL 16 (optimo para transaccionalidad ACID y ERP Workspace MTA).
+- Capacidad Elegible: Instancia db.t3.micro / db.t4g.micro con 20 GB de almacenamiento SSD gp2/gp3 dentro del Free Tier.
+- Despliegue en Alta Disponibilidad (Multi-AZ):
+  * Instancia Principal (Master): Ubicada en us-east-1a (Subred Privada A).
+  * Instancia Secundaria (Standby Replica): Ubicada en us-east-1b (Subred Privada B).
+  * Replicacion: Sincrona y automatica a nivel de almacenamiento fisico.
+  * Mecanismo de Failover: En caso de falla de hardware, mantenimiento o caida zonal de AWS, el DNS se redirige
+    automaticamente a la instancia en standby en menos de 60 a 120 segundos sin intervencion humana.
+  * Metricas de Recuperacion: RPO = 0 (cero perdida de transacciones confirmadas) y RTO < 2 minutos.
+- Copias de Seguridad Automatizadas: Snapshots diarios automatizados con retencion de 7 dias y Point-In-Time Restore (PITR)
+  que permite restaurar la base de datos a cualquier segundo especifico de la ultima semana.
+- Evaluacion Futura: Adopcion de Amazon Aurora Serverless v2 para ajuste instantaneo de unidades de capacidad (ACUs)
+  durante semanas de matriculas o cierres de notas bimestrales.
+
+
+6. MATRIZ DE INTEGRACION OPERATIVA CON LOS 10 PRACTICANTES
+--------------------------------------------------------------------------------
+| Componente Tecnico | Servicio AWS        | Impacto Directo en el Flujo de Trabajo                   |
+|--------------------|---------------------|----------------------------------------------------------|
+| Ambiente Pruebas   | EC2 + EBS Staging   | Pruebas en nube centralizada; fin a diferencias de SO.   |
+| Servidor Archivos  | Amazon EFS (NFSv4)  | Espacio de trabajo compartido y concurrente entre P01-10.|
+| Tareas Batch       | AWS Lambda          | Liquidacion y notas procesadas sin degradar el backend.  |
+| Activos Web        | Amazon S3           | Repositorio central de documentos y assets multimedia.   |
+| Backups Historicos | S3 Glacier Flexible | Cumplimiento normativo y resguardo de datos al -84% costo|
+| Base de Datos      | RDS Multi-AZ        | Transacciones blindadas; cero caidas de Workspace MTA.  |
+
+
+7. RESUMEN FINANCIERO Y GOBERNANZA DE COSTOS EN ETAPA 2
+--------------------------------------------------------------------------------
+- Uso Exhaustivo de Capa Gratuita (Free Tier 12 Meses):
+  * 750 horas mensuales de EC2 (t2.micro / t3.micro).
+  * 750 horas mensuales de RDS PostgreSQL (db.t3.micro / db.t4g.micro).
+  * 30 GB de almacenamiento Amazon EBS gp3.
+  * 20 GB de almacenamiento Amazon RDS SSD.
+  * 5 GB de almacenamiento estandar en Amazon S3.
+  * 1,000,000 de invocaciones mensuales en AWS Lambda.
+
+- Monitoreo Activo de Presupuesto:
+  * AWS Budgets configurado con umbral estricto en $10.00 USD mensuales.
+  * Envio de notificaciones SNS automaticas al Lead Tecnico ante el consumo del 85% ($8.50 USD).
+  * Alarmas en Amazon CloudWatch sobre metricas de CPU, lecturas de IOPS y conexiones a base de datos.
+
+
+8. CONCLUSION Y TRANSICION HACIA ETAPA 3
+--------------------------------------------------------------------------------
+La Etapa 2 consolida una infraestructura funcional, elastica y tolerante a fallos.
+MTA Software deja de ser un sistema vulnerable alojado en un proveedor compartido para convertirse
+en una plataforma empresarial moderna sobre Amazon Web Services.
+
+Con el computo, el almacenamiento y la base de datos completamente aprovisionados, el proyecto queda
+preparado para la Etapa 3 (Seguridad Avanzada, Monitoreo Integral y Despliegue Continuo con CI/CD).
+================================================================================
+FIN DEL DOCUMENTO TECNICO - ETAPA 2
+================================================================================

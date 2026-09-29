@@ -14,9 +14,11 @@ import { S09_CAF } from "./slides/S09_CAF.jsx";
 import { S10_Economia } from "./slides/S10_Economia.jsx";
 import { S11_IAM } from "./slides/S11_IAM.jsx";
 import { S12_Arquitectura } from "./slides/S12_Arquitectura.jsx";
-import { S14_Computo } from "./slides/S13_Computo.jsx";
-import { S15_Almacenamiento } from "./slides/S14_Almacenamiento.jsx";
-import { S16_BasesDatos } from "./slides/S15_BasesDatos.jsx";
+import { S12b_Etapa2Intro } from "./slides/S12b_Etapa2Intro.jsx";
+import { S13_ComputoStaging } from "./slides/S13_ComputoStaging.jsx";
+import { S14_ComputoServicios } from "./slides/S14_ComputoServicios.jsx";
+import { S15_AlmacenamientoServicios } from "./slides/S15_AlmacenamientoServicios.jsx";
+import { S16_BasesDatosServicios } from "./slides/S16_BasesDatosServicios.jsx";
 import { S14_Cierre } from "./slides/S16_Cierre.jsx";
 
 /**
@@ -97,17 +99,23 @@ function App() {
 
         {/* ─────────────── ENTREGABLE 2 · SEMANA 7 ─────────────── */}
 
-        {/* Slide 13 — Diseño de Cómputo y Servidores Cloud (EC2, EBS, Lambda, Beanstalk) */}
-        <S14_Computo isActive={activeSlide === 12} />
+        {/* Slide 13 — Transición e Introducción: ETAPA 2 (3 Pilares) */}
+        <S12b_Etapa2Intro isActive={activeSlide === 12} />
 
-        {/* Slide 14 — Estrategia de Almacenamiento y Archivo (S3, EFS, S3 Glacier) */}
-        <S15_Almacenamiento isActive={activeSlide === 13} />
+        {/* Slide 14 — Entorno de Staging Unificado (Amazon EC2 + EBS gp3) */}
+        <S13_ComputoStaging isActive={activeSlide === 13} />
 
-        {/* Slide 15 — Bases de Datos Administradas (RDS, Aurora, DynamoDB) */}
-        <S16_BasesDatos isActive={activeSlide === 14} />
+        {/* Slide 15 — Cómputo Elástico y Serverless (Nueva versión de investigación: EC2, Lambda, ECS) */}
+        <S14_ComputoServicios isActive={activeSlide === 14} />
 
-        {/* Slide 16 — Cierre Final: Síntesis + Preguntas */}
-        <S14_Cierre isActive={activeSlide === 15} />
+        {/* Slide 16 — Almacenamiento Unificado y Archivo (Nueva versión de investigación: S3, EFS, Glacier) */}
+        <S15_AlmacenamientoServicios isActive={activeSlide === 15} />
+
+        {/* Slide 17 — Bases de Datos Administradas (RDS Multi-AZ, Aurora, DynamoDB) */}
+        <S16_BasesDatosServicios isActive={activeSlide === 16} />
+
+        {/* Slide 18 — Cierre Final: Síntesis + Preguntas */}
+        <S14_Cierre isActive={activeSlide === 17} />
       </RevealDeck>
 
       {/* ── Preloader: cortina cinematográfica encima del deck ── */}

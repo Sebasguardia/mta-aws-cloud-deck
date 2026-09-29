@@ -17,7 +17,7 @@ const c = slidesContent.s14_computo;
 
 export function S14_Computo({ isActive: propActive } = {}) {
   const shouldReduceMotion = useReducedMotion();
-  const hookActive = useSlideActive(12);
+  const hookActive = useSlideActive(13);
   const sectionRef = useRef(null);
   const [domActive, setDomActive] = useState(false);
 

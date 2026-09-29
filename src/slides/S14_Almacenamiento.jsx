@@ -17,7 +17,7 @@ const c = slidesContent.s15_almacenamiento;
 
 export function S15_Almacenamiento({ isActive: propActive } = {}) {
   const shouldReduceMotion = useReducedMotion();
-  const hookActive = useSlideActive(13);
+  const hookActive = useSlideActive(14);
   const sectionRef = useRef(null);
   const [domActive, setDomActive] = useState(false);
 

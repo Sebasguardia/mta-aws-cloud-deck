@@ -5,7 +5,6 @@ import {
   Database,
   Table2,
   ShieldCheck,
-  Zap,
   Activity,
   Sparkles,
   CheckCircle2,
@@ -18,7 +17,7 @@ const c = slidesContent.s16_basesDatos;
 
 export function S16_BasesDatos({ isActive: propActive } = {}) {
   const shouldReduceMotion = useReducedMotion();
-  const hookActive = useSlideActive(14);
+  const hookActive = useSlideActive(15);
   const sectionRef = useRef(null);
   const [domActive, setDomActive] = useState(false);
 

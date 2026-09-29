@@ -339,6 +339,15 @@ export const slidesContent = {
     ],
   },
 
+  s13_computo_staging: {
+    sectionNum: "04",
+    badge: "BLOQUE 4 · ENTREGABLE 2",
+    scriptTag: "Capa de Computación",
+    title: "ENTORNO DE PRUEBAS Y STAGING EN AMAZON EC2",
+    subtitle: "Centralización de compilación y pruebas en la nube con Amazon EC2 (t2/t3.micro) y almacenamiento persistente Amazon EBS (30 GB gp3) para los 10 practicantes de MTA Software",
+    techSummary: "Eliminación de pruebas dispersas en localhost: aprovisionamiento de un servidor virtual elástico bajo demanda con disco SSD de 30 GB para alojar el SO y repositorios de clientes y del ERP.",
+  },
+
   s14_computo: {
     sectionNum: "04",
     badge: "BLOQUE 4 · ENTREGABLE 2",

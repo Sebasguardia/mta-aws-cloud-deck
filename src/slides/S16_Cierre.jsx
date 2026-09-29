@@ -52,7 +52,7 @@ const c = slidesContent.s17_cierre || slidesContent.s14_cierre || {
  */
 export function S14_Cierre({ isActive: propActive } = {}) {
   const shouldReduceMotion = useReducedMotion();
-  const hookActive = useSlideActive(15);
+  const hookActive = useSlideActive(16);
   const sectionRef = useRef(null);
   const [domActive, setDomActive] = useState(false);
   const [celebrateCount, setCelebrateCount] = useState(0);
