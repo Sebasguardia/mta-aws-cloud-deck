@@ -14,6 +14,31 @@ import {
   ArrowRight,
   Activity,
   Layers,
+  ChevronLeft,
+  ChevronRight,
+  User,
+  Compass,
+  Cpu,
+  Radio,
+  ShieldCheck,
+  Sparkles,
+  Maximize2,
+  Minimize2,
+  Terminal,
+  Key,
+  Network,
+  Wifi,
+  Laptop,
+  HardDrive,
+  ShieldAlert,
+  Binary,
+  Split,
+  Box,
+  Workflow,
+  Send,
+  CloudLightning,
+  CornerDownRight,
+  ShieldCheck as ShieldCheckIcon,
 } from "lucide-react";
 import { slidesContent } from "../data/content.es.js";
 import { awsServices } from "../data/awsServices.js";
@@ -72,62 +97,111 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
   const [activeStep, setActiveStep] = useState(0); // 0 = Reposo, 1..6 = Nodos, 7 = 200 OK
   const [isSimulating, setIsSimulating] = useState(false);
   const [activeTelemetry, setActiveTelemetry] = useState(null);
+  const [isExpanded3D, setIsExpanded3D] = useState(false); // Modo pantalla completa / cine 3D
   const timerRef = useRef(null);
 
   const nodes = [
     {
       id: 1,
       name: "Cliente / Browser",
-      protocol: "HTTPS :443",
+      protocol: "HTTPS :443 (TLS 1.3)",
       icon: Globe,
       latency: "0ms",
-      detail: "Petición originada desde el navegador web del practicante o cliente.",
+      detail: "El usuario o practicante inicia una transacción en Workspace MTA mediante navegador web cifrado con TLS 1.3.",
       statusText: "DISPATCHED",
+      actionStep: "Generación de paquete HTTP POST /api/mta/v1/auth con Payload JSON firmado.",
+      securityRule: "Cifrado en tránsito forzado HSTS (Strict-Transport-Security), previniendo ataques Man-in-the-Middle.",
+      telemetryDetails: {
+        sourceIp: "190.235.12.84 (Lima, Perú)",
+        targetDns: "app.senati-mta.com",
+        tlsCipher: "TLS_AES_256_GCM_SHA384",
+        packetSize: "1.42 KB",
+      },
     },
     {
       id: 2,
-      name: "CloudFront",
-      protocol: "CDN Edge",
+      name: "Amazon CloudFront",
+      protocol: "CDN Edge Location",
       icon: Zap,
       latency: "+14ms",
-      detail: "Caché de contenido estático y frontend en puntos de presencia globales.",
-      statusText: "EDGE HIT",
+      detail: "Punto de presencia perimetral (PoP) en Lima que absorbe peticiones estáticas y optimiza la ruta hacia Virginia (us-east-1).",
+      statusText: "EDGE CACHE HIT",
+      actionStep: "Terminación SSL en el borde y entrega de bundle JS/CSS sin tocar servidores de cómputo.",
+      securityRule: "AWS Shield Standard integrado para mitigación automática de DDoS en Capas 3 y 4 (Syn Flood, UDP reflection).",
+      telemetryDetails: {
+        popLocation: "LIM50-C1 (Lima, PE)",
+        cacheStatus: "HIT from cloudfront",
+        shieldStatus: "PROTECTED (DDoS Auto-Mitigation)",
+        compression: "Brotli (br)",
+      },
     },
     {
       id: 3,
-      name: "Route 53",
-      protocol: "DNS Routing",
+      name: "Amazon Route 53",
+      protocol: "Anycast DNS Routing",
       icon: Globe,
       latency: "+8ms",
-      detail: "Resolución de dominios con chequeos de salud y enrutamiento por baja latencia.",
-      statusText: "RESOLVED",
+      detail: "Servicio DNS autoritativo global con resolución basada en latencia y health checks automatizados.",
+      statusText: "DNS RESOLVED",
+      actionStep: "Traduce app.senati-mta.com a la dirección IP privada del backend en us-east-1 con failover multi-AZ.",
+      securityRule: "DNSSEC activado con claves criptográficas para impedir DNS Spoofing o envenenamiento de caché.",
+      telemetryDetails: {
+        queryType: "A Record (Alias CloudFront)",
+        ttl: "60 seconds",
+        dnssec: "VALIDATED (SHA-256 RRSIG)",
+        slaAvailable: "100.0% Uptime SLA",
+      },
     },
     {
       id: 4,
-      name: "Amazon VPC",
-      protocol: "10.0.0.0/16",
+      name: "Amazon VPC (Virtual Private Cloud)",
+      protocol: "CIDR 10.0.0.0/16",
       icon: Server,
       latency: "+3ms",
-      detail: "Red virtual privada aislada donde residen los recursos protegidos.",
-      statusText: "INSPECTION",
+      detail: "Red virtual privada totalmente aislada donde residen los recursos centrales protegidos contra acceso público.",
+      statusText: "VPC ISOLATION",
+      actionStep: "El paquete ingresa por la interfaz de red elástica (ENI) y es segmentado en una subred privada 10.0.2.0/24.",
+      securityRule: "NACLs (Network Access Control Lists) sin estado inspeccionando subredes a nivel de capa 3.",
+      telemetryDetails: {
+        vpcId: "vpc-0a8b9f71c4d",
+        subnetId: "subnet-priv-db-az1 (10.0.2.0/24)",
+        internetGateway: "BLOCKED (No IGW Route)",
+        flowLogs: "ENI Flow Logs ACCEPT 10.0.1.15 -> 10.0.2.40",
+      },
     },
     {
       id: 5,
-      name: "Security Groups",
-      protocol: "Stateful L4",
+      name: "Security Groups (Firewall L4)",
+      protocol: "Stateful L4 Inspection",
       icon: Shield,
       latency: "+1ms",
-      detail: "Firewall perimetral que solo autoriza tráfico en puertos específicos.",
+      detail: "Firewall con seguimiento de estado que únicamente permite tráfico entrante en el puerto 5432 desde la IP del backend.",
       statusText: "PORT 5432 OK",
+      actionStep: "Evaluación perimétrica instantánea: permite puerto TCP 5432 y descarta inmediatamente escaneos SSH (22) o HTTP (80).",
+      securityRule: "Zero-Trust Ingress: Solo acepta conexiones si el grupo de origen coincide con sg-backend-app.",
+      telemetryDetails: {
+        evaluatedPort: "TCP :5432 (PostgreSQL)",
+        actionTaken: "PERMIT (Ingress Rule 01)",
+        statefulMemory: "Connection tracked established",
+        unauthorizedDrops: "0 DROPPED PACKETS",
+      },
     },
     {
       id: 6,
-      name: "RDS Database",
-      protocol: "Subred Privada",
+      name: "Amazon RDS (PostgreSQL Engine)",
+      protocol: "PostgreSQL 16 Multi-AZ",
       icon: Database,
       latency: "+4ms",
-      detail: "Base de datos PostgreSQL de Workspace MTA completamente inaccesible desde internet.",
-      statusText: "QUERY 200 OK",
+      detail: "Motor de base de datos relacional de alta concurrencia con replicación síncrona en zona de disponibilidad secundaria.",
+      statusText: "QUERY EXECUTED",
+      actionStep: "Ejecución de SELECT en tabla institucional de Workspace MTA y escritura en búfer de almacenamiento SSD GP3 cifrado.",
+      securityRule: "Cifrado en reposo AES-256 gestionado con AWS KMS (Key Management Service) y copias automáticas snapshot.",
+      telemetryDetails: {
+        instanceType: "db.t4g.medium (Multi-AZ)",
+        kmsKey: "arn:aws:kms:us-east-1:alias/mta-db-key",
+        iopsCapacity: "3,000 IOPS Baseline",
+        storageStatus: "AES-256 ENCRYPTED AT REST",
+      },
     },
   ];
 
@@ -163,7 +237,35 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
         setActiveStep(nodes.length + 1); // 7: 200 OK completado
         setIsSimulating(false);
       }
-    }, 850);
+    }, 2000); // 2 segundos por nodo para que se aprecie la cinemática de zoom y el modal animado
+  };
+
+  const handleNextStep = () => {
+    if (isSimulating) {
+      clearInterval(timerRef.current);
+      setIsSimulating(false);
+    }
+    const next = activeStep < nodes.length + 1 ? activeStep + 1 : 1;
+    setActiveStep(next);
+    if (next >= 1 && next <= nodes.length) {
+      setActiveTelemetry(nodes[next - 1]);
+    } else {
+      setActiveTelemetry(null);
+    }
+  };
+
+  const handlePrevStep = () => {
+    if (isSimulating) {
+      clearInterval(timerRef.current);
+      setIsSimulating(false);
+    }
+    const prev = activeStep > 1 ? activeStep - 1 : (activeStep === 0 ? nodes.length + 1 : 0);
+    setActiveStep(prev);
+    if (prev >= 1 && prev <= nodes.length) {
+      setActiveTelemetry(nodes[prev - 1]);
+    } else {
+      setActiveTelemetry(null);
+    }
   };
 
   const handleReset = () => {
@@ -404,17 +506,55 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
               </span>
             </div>
 
-            {activeStep > nodes.length ? (
-              <Button
-                variant="outline"
-                size="sm"
-                icon={RotateCcw}
-                onClick={handleReset}
-                className="!py-1 !px-2.5 !text-xs !border-white/30 !text-white hover:!bg-white/10"
+            <div style={{ display: "flex", alignItems: "center", gap: "0.35rem" }}>
+              {/* Controles de avance paso a paso */}
+              <button
+                type="button"
+                onClick={handlePrevStep}
+                title="Paso Anterior"
+                style={{
+                  background: "rgba(255,255,255,0.06)",
+                  border: "1px solid rgba(245,241,232,0.2)",
+                  color: "#F5F1E8",
+                  padding: "0.25rem 0.4rem",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
               >
-                Reiniciar
-              </Button>
-            ) : (
+                <ChevronLeft size={13} />
+              </button>
+              <button
+                type="button"
+                onClick={handleNextStep}
+                title="Siguiente Paso"
+                style={{
+                  background: "rgba(255,255,255,0.06)",
+                  border: "1px solid rgba(245,241,232,0.2)",
+                  color: "#F5F1E8",
+                  padding: "0.25rem 0.4rem",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <ChevronRight size={13} />
+              </button>
+
+              {activeStep > 0 && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  icon={RotateCcw}
+                  onClick={handleReset}
+                  className="!py-1 !px-2.5 !text-xs !border-white/30 !text-white hover:!bg-white/10"
+                >
+                  Reset
+                </Button>
+              )}
+
               <Button
                 variant="primary"
                 size="sm"
@@ -423,9 +563,9 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
                 disabled={isSimulating}
                 className="!py-1 !px-3 !text-xs"
               >
-                {isSimulating ? "Trazando..." : "▶ Simular Petición"}
+                {isSimulating ? "Trazando..." : "▶ Simular"}
               </Button>
-            )}
+            </div>
           </div>
 
           {/* Grid de los 6 Nodos del Recorrido */}
@@ -543,7 +683,7 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
                     exit={{ opacity: 0 }}
                     style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.62rem", color: "#6e8e59", fontWeight: 800 }}
                   >
-                    ✅ 200 OK — CloudFront CDN Cache Hit + Amazon VPC Firewall Aprobado (30ms)
+                    [HTTP 200 OK] — CloudFront CDN Cache Hit + Amazon VPC Firewall Aprobado (30ms)
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -592,214 +732,896 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
       </div>
 
       {/* ══════════════════════════════════════════════════════════
-          COLUMNA DERECHA (50%): Hero Canvas 3D de Capas Perimetrales
+          COLUMNA DERECHA: Hero Canvas 3D de Capas Perimetrales
+          (Modo pantalla completa expansible con cielo estrellado inmersivo)
       ══════════════════════════════════════════════════════════ */}
       <div
         style={{
-          flex: "0 0 50%",
-          position: "relative",
+          position: isExpanded3D ? "absolute" : "relative",
+          inset: isExpanded3D ? 0 : "auto",
+          width: isExpanded3D ? "100%" : "auto",
+          height: isExpanded3D ? "100%" : "100%",
+          flex: isExpanded3D ? "none" : "0 0 50%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
           overflow: "hidden",
-          borderLeft: "1px solid rgba(245,241,232,0.1)",
-          background: "radial-gradient(ellipse at center, #141414 0%, #0a0a0a 85%)",
+          borderLeft: isExpanded3D ? "none" : "1px solid rgba(245,241,232,0.1)",
+          background: "#0A0A0A",
+          zIndex: isExpanded3D ? 50 : 5,
+          transition: "all 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
-        {/* Cabecera Técnica Flotante */}
+        {/* Cabecera Técnica Flotante + Título del Diagrama de Flujo + Botones */}
         <div
           style={{
             position: "absolute",
-            top: "2rem",
-            left: "2.5rem",
+            top: isExpanded3D ? "1.5rem" : "1.0rem",
+            left: isExpanded3D ? "2.5rem" : "1.2rem",
+            right: isExpanded3D ? "2.5rem" : "1.2rem",
             display: "flex",
+            justifyContent: "space-between",
             alignItems: "center",
+            zIndex: 40,
+            pointerEvents: "auto",
             gap: "0.5rem",
-            zIndex: 10,
-            pointerEvents: "none",
           }}
         >
-          <Server size={13} style={{ color: "#d4a017" }} />
-          <span
-            style={{
-              fontFamily: "'JetBrains Mono', monospace",
-              fontSize: "0.62rem",
-              letterSpacing: "0.15em",
-              color: "rgba(245,241,232,0.6)",
-              textTransform: "uppercase",
-              fontWeight: 700,
-            }}
-          >
-            AWS NETWORK TOPOLOGY // 5 LAYERS
-          </span>
+          {/* Título de la Arquitectura & Badges (Solo visible en pantalla expandida) */}
+          {isExpanded3D ? (
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", minWidth: 0 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", whiteSpace: "nowrap" }}>
+                <Server size={14} style={{ color: "#d4a017", flexShrink: 0 }} />
+                <span
+                  style={{
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: "0.68rem",
+                    letterSpacing: "0.15em",
+                    color: "#F5F1E8",
+                    textTransform: "uppercase",
+                    fontWeight: 800,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  DIAGRAMA DE FLUJO PERIMETRAL AWS // TOPOLOGÍA 5 CAPAS
+                </span>
+              </div>
+
+              <span
+                style={{
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: "0.52rem",
+                  color: "#0A0A0A",
+                  background: "#d4a017",
+                  padding: "0.15rem 0.45rem",
+                  fontWeight: 900,
+                  whiteSpace: "nowrap",
+                  flexShrink: 0,
+                }}
+              >
+                {activeStep === 0
+                  ? "LISTO"
+                  : activeStep <= nodes.length
+                  ? `PASO 0${activeStep}`
+                  : "200 OK"}
+              </span>
+            </div>
+          ) : (
+            <div />
+          )}
+
+          {/* Botones de Acción en Cabecera (Compactos en vista normal, completos en expandida) */}
+          <div style={{ display: "flex", alignItems: "center", gap: isExpanded3D ? "0.5rem" : "0.3rem", flexShrink: 0 }}>
+            {/* Botón de Inicio de Simulación */}
+            <Button
+              variant="primary"
+              size="sm"
+              icon={Play}
+              onClick={handleSimulateRequest}
+              disabled={isSimulating}
+              className={isExpanded3D ? "!py-1 !px-3 !text-xs !font-bold" : "!py-0.5 !px-2 !text-[0.62rem] !font-bold"}
+            >
+              {isSimulating ? (isExpanded3D ? "Simulando..." : "Simulando") : (isExpanded3D ? "▶ Iniciar Simulación" : "▶ Simular")}
+            </Button>
+
+            {/* Botón de Reset si ya se simuló */}
+            {activeStep > 0 && (
+              <Button
+                variant="outline"
+                size="sm"
+                icon={RotateCcw}
+                onClick={handleReset}
+                className={isExpanded3D ? "!py-1 !px-2.5 !text-xs !border-white/30 !text-white hover:!bg-white/10" : "!py-0.5 !px-1.5 !text-[0.6rem] !border-white/30 !text-white hover:!bg-white/10"}
+              >
+                {isExpanded3D ? "Reiniciar" : "Reset"}
+              </Button>
+            )}
+
+            {/* Botón de Pantalla Completa / Expandir */}
+            <button
+              type="button"
+              onClick={() => setIsExpanded3D(!isExpanded3D)}
+              title={isExpanded3D ? "Restaurar vista dual" : "Agrandar a Pantalla Completa"}
+              style={{
+                background: isExpanded3D ? "#d4a017" : "rgba(255,255,255,0.08)",
+                border: isExpanded3D ? "1px solid #d4a017" : "1px solid rgba(245,241,232,0.25)",
+                color: isExpanded3D ? "#0A0A0A" : "#F5F1E8",
+                padding: isExpanded3D ? "0.25rem 0.55rem" : "0.2rem 0.4rem",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.25rem",
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: isExpanded3D ? "0.55rem" : "0.5rem",
+                fontWeight: 800,
+                transition: "all 0.15s ease",
+              }}
+            >
+              {isExpanded3D ? (
+                <>
+                  <Minimize2 size={12} />
+                  <span>REDUCIR</span>
+                </>
+              ) : (
+                <>
+                  <Maximize2 size={10} />
+                  <span>EXPANDIR</span>
+                </>
+              )}
+            </button>
+          </div>
         </div>
 
-        {/* ── CUADRO FLOTANTE ARRIBA A LA DERECHA: EXPLICACIÓN DETALLADA DEL FLUJO ── */}
+        {/* ── HEADER FLOTANTE DE NAVEGACIÓN ENTRE PASOS (SOLO EN MODO EXPANDIDO / PANTALLA COMPLETA) ── */}
+        {isExpanded3D && activeStep > 0 && (
+          <div
+            style={{
+              position: "absolute",
+              top: "4.2rem",
+              left: "2.5rem",
+              zIndex: 40,
+              display: "flex",
+              alignItems: "center",
+              gap: "0.35rem",
+              background: "rgba(10,10,10,0.85)",
+              border: "1px solid rgba(212,160,23,0.3)",
+              padding: "0.3rem 0.6rem",
+              backdropFilter: "blur(10px)",
+              boxShadow: "4px 4px 0px rgba(0,0,0,0.8)",
+            }}
+          >
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.52rem", color: "#d4a017", fontWeight: 800, marginRight: "0.3rem" }}>
+              NAVEGAR PASOS:
+            </span>
+
+            <button
+              type="button"
+              onClick={handlePrevStep}
+              title="Paso Anterior"
+              style={{
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(245,241,232,0.2)",
+                color: "#F5F1E8",
+                padding: "0.15rem 0.35rem",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <ChevronLeft size={11} />
+            </button>
+
+            {nodes.map((n) => {
+              const isCur = activeStep === n.id;
+              const isPassed = activeStep > n.id;
+              return (
+                <button
+                  key={n.id}
+                  type="button"
+                  onClick={() => {
+                    if (isSimulating) {
+                      clearInterval(timerRef.current);
+                      setIsSimulating(false);
+                    }
+                    setActiveStep(n.id);
+                    setActiveTelemetry(n);
+                  }}
+                  style={{
+                    background: isCur ? "#d4a017" : isPassed ? "rgba(110,142,89,0.25)" : "rgba(255,255,255,0.05)",
+                    border: isCur ? "1px solid #d4a017" : isPassed ? "1px solid #6e8e59" : "1px solid rgba(245,241,232,0.15)",
+                    color: isCur ? "#0A0A0A" : isPassed ? "#6e8e59" : "rgba(245,241,232,0.6)",
+                    padding: "0.2rem 0.45rem",
+                    fontFamily: "'JetBrains Mono', monospace",
+                    fontSize: "0.55rem",
+                    fontWeight: 800,
+                    cursor: "pointer",
+                    transition: "all 0.15s ease",
+                  }}
+                >
+                  0{n.id} {n.name.split(" ")[0]}
+                </button>
+              );
+            })}
+
+            <button
+              type="button"
+              onClick={handleNextStep}
+              title="Siguiente Paso"
+              style={{
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(245,241,232,0.2)",
+                color: "#F5F1E8",
+                padding: "0.15rem 0.35rem",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <ChevronRight size={11} />
+            </button>
+          </div>
+        )}
+
+        {/* ── MODAL ANIMADO FLOTANTE DE ALTO IMPACTO (FLOTANDO ENCIMA DE LA FORMA 3D CON TRANSPARENCIA Y BLUR) ── */}
         <div
           style={{
             position: "absolute",
-            top: "1.8rem",
-            right: "2.5rem",
-            zIndex: 20,
-            maxWidth: 320,
+            top: isExpanded3D ? (activeStep > 0 ? "7.2rem" : "5.0rem") : (activeStep > 0 ? "4.8rem" : "3.8rem"),
+            right: isExpanded3D ? "2.5rem" : "1.0rem",
+            zIndex: 45,
+            width: isExpanded3D ? "520px" : "345px",
+            maxWidth: "calc(100% - 2rem)",
+            transition: "all 0.3s ease",
+            pointerEvents: "auto",
           }}
         >
           <AnimatePresence mode="wait">
             {activeStep === 0 ? (
               <motion.div
                 key="flow-idle"
-                initial={{ opacity: 0, y: -6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
+                initial={{ opacity: 0, y: -10, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -8, scale: 0.95 }}
+                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                 style={{
-                  padding: "0.75rem 0.95rem",
-                  background: "rgba(14,14,14,0.92)",
-                  border: "1.5px solid rgba(212,160,23,0.35)",
-                  boxShadow: "4px 4px 0px rgba(0,0,0,0.8)",
-                  backdropFilter: "blur(8px)",
+                  padding: isExpanded3D ? "1.1rem 1.25rem" : "0.75rem 0.9rem",
+                  background: "rgba(10,10,10,0.78)",
+                  border: "1.5px solid rgba(212,160,23,0.4)",
+                  boxShadow: "0 16px 40px rgba(0,0,0,0.8), 4px 4px 0px rgba(212,160,23,0.4)",
+                  backdropFilter: "blur(16px)",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.3rem" }}>
-                  <Globe size={14} style={{ color: "#d4a017" }} />
-                  <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.68rem", color: "#F5F1E8", textTransform: "uppercase" }}>
-                    FLUJO PERIMETRAL END-TO-END
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.3rem" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    <Globe size={13} style={{ color: "#d4a017" }} />
+                    <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: isExpanded3D ? "0.72rem" : "0.62rem", color: "#F5F1E8", textTransform: "uppercase" }}>
+                      FLUJO PERIMETRAL END-TO-END
+                    </span>
+                  </div>
+                  <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.48rem", color: "rgba(245,241,232,0.5)", border: "1px solid rgba(245,241,232,0.15)", padding: "0.1rem 0.3rem" }}>
+                    INTERACTIVO
                   </span>
                 </div>
-                <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "rgba(245,241,232,0.75)", lineHeight: 1.35, margin: 0 }}>
-                  La petición viaja desde el cliente exterior a través de 5 capas de seguridad y caché hasta el núcleo de la base de datos en subred privada.
+                <p style={{ fontFamily: "system-ui, sans-serif", fontSize: isExpanded3D ? "0.7rem" : "0.62rem", color: "rgba(245,241,232,0.8)", lineHeight: 1.35, margin: 0 }}>
+                  Observa la trayectoria en 3D: cada paquete atraviesa 5 anillos perimetrales hasta la subred privada de la base de datos.
                 </p>
-                <div style={{ marginTop: "0.35rem", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.56rem", color: "#d4a017" }}>
-                  ▶ Presiona "Simular Petición" para ver cada evento en tiempo real.
+                <div style={{ marginTop: "0.5rem", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    icon={Play}
+                    onClick={handleSimulateRequest}
+                    className="!py-0.5 !px-2 !text-xs !w-full !justify-center"
+                  >
+                    Iniciar Simulación 3D
+                  </Button>
                 </div>
               </motion.div>
             ) : activeStep <= nodes.length && activeTelemetry ? (
               <motion.div
                 key={`flow-step-${activeStep}`}
-                initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                initial={{ opacity: 0, y: -12, scale: 0.92 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -6, scale: 0.96 }}
-                transition={{ duration: 0.18 }}
+                exit={{ opacity: 0, y: -10, scale: 0.92 }}
+                transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                 style={{
-                  padding: "0.75rem 0.95rem",
-                  background: "rgba(14,14,14,0.94)",
-                  border: "1.5px solid #d4a017",
-                  boxShadow: "4px 4px 0px #d4a017",
-                  backdropFilter: "blur(8px)",
+                  padding: isExpanded3D ? "1.1rem 1.25rem" : "0.75rem 0.85rem",
+                  background: "rgba(10,10,10,0.86)",
+                  border: "2px solid #d4a017",
+                  boxShadow: "0 20px 50px rgba(0,0,0,0.85), 5px 5px 0px #d4a017",
+                  backdropFilter: "blur(20px)",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "0.35rem",
+                  gap: isExpanded3D ? "0.65rem" : "0.45rem",
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <span
-                    style={{
-                      fontFamily: "'Archivo Black', sans-serif",
-                      fontSize: "0.72rem",
-                      color: "#F5F1E8",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    PASO 0{activeStep} // {activeTelemetry.name}
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.52rem",
-                      color: "#0A0A0A",
-                      background: "#d4a017",
-                      padding: "0.15rem 0.4rem",
-                      fontWeight: 800,
-                    }}
-                  >
-                    {activeTelemetry.statusText}
-                  </span>
-                </div>
+                {/* ════════════════════════════════════════════════════════
+                    MODAL DIVIDIDO EN 2:
+                    PARTE SUPERIOR: Dibujo Técnico Animado (Hero Visual)
+                    PARTE INFERIOR: Explicación Clara y Resumida en Dual View
+                ════════════════════════════════════════════════════════ */}
 
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.6rem", color: "#d4a017" }}>
-                  Protocolo: {activeTelemetry.protocol} · Latencia acumulada: {activeTelemetry.latency}
-                </div>
-
-                <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "rgba(245,241,232,0.85)", lineHeight: 1.35, margin: 0 }}>
-                  {activeTelemetry.detail}
-                </p>
-
+                {/* ── PARTE SUPERIOR: DIBUJO TÉCNICO ANIMADO GRANDE (HERO VISUAL SIN EMOJIS) ── */}
                 <div
                   style={{
-                    fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.55rem",
-                    color: "rgba(245,241,232,0.5)",
-                    borderTop: "1px solid rgba(245,241,232,0.1)",
-                    paddingTop: "0.25rem",
+                    background: "radial-gradient(ellipse at 50% 30%, rgba(20,24,30,0.9) 0%, rgba(6,8,10,0.95) 100%)",
+                    border: "1.5px solid rgba(212,160,23,0.4)",
+                    padding: isExpanded3D ? "1.2rem 1.4rem" : "0.85rem 1rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    minHeight: isExpanded3D ? 185 : 145,
+                    position: "relative",
+                    overflow: "hidden",
+                    boxShadow: "inset 0 0 25px rgba(0,0,0,0.8)",
                   }}
                 >
-                  {activeStep === 1 && "Acción: Navegador emite paquete TCP/TLS hacia la nube de AWS."}
-                  {activeStep === 2 && "Acción: CloudFront entrega frontend desde PoP Edge sin tocar el servidor central."}
-                  {activeStep === 3 && "Acción: Route 53 resuelve el registro DNS y deriva la solicitud por menor latencia."}
-                  {activeStep === 4 && "Acción: La VPC aísla el tráfico en un segmento de red privado (10.0.0.0/16)."}
-                  {activeStep === 5 && "Acción: Security Group valida el puerto 5432 y filtra todo acceso no autorizado."}
-                  {activeStep === 6 && "Acción: Base de datos procesa la consulta de Workspace MTA en reposo cifrado."}
+                  {/* Rejilla técnica de fondo en el dibujo */}
+                  <div
+                    aria-hidden="true"
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      backgroundImage: "linear-gradient(rgba(212,160,23,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(212,160,23,0.06) 1px, transparent 1px)",
+                      backgroundSize: "20px 20px",
+                      pointerEvents: "none",
+                    }}
+                  />
+
+                  {/* Header superior del dibujo técnico */}
+                  <div style={{ position: "absolute", top: isExpanded3D ? "0.6rem" : "0.4rem", left: isExpanded3D ? "0.9rem" : "0.6rem", display: "flex", alignItems: "center", gap: "0.35rem", zIndex: 2 }}>
+                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#d4a017", boxShadow: "0 0 8px #d4a017" }} />
+                    <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: isExpanded3D ? "0.72rem" : "0.6rem", color: "#F5F1E8", textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                      {activeTelemetry.name}
+                    </span>
+                  </div>
+
+                  <div style={{ position: "absolute", top: isExpanded3D ? "0.6rem" : "0.4rem", right: isExpanded3D ? "0.9rem" : "0.6rem", zIndex: 2 }}>
+                    <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.56rem" : "0.48rem", color: "#0A0A0A", background: "#d4a017", padding: "0.15rem 0.4rem", fontWeight: 900, letterSpacing: "0.05em" }}>
+                      {activeTelemetry.statusText}
+                    </span>
+                  </div>
+
+                  {/* ─────────────────────────────────────────────────────────────
+                      PASO 1: CLIENTE / BROWSER -> TRANSMISIÓN HTTPS TLS 1.3
+                  ───────────────────────────────────────────────────────────── */}
+                  {activeStep === 1 && (
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginTop: isExpanded3D ? "1.4rem" : "0.9rem", zIndex: 2 }}>
+                      {/* Nodo Origen: Usuario en Terminal */}
+                      <motion.div
+                        animate={{ y: [0, -2, 0] }}
+                        transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+                        style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem" }}
+                      >
+                        <div style={{ position: "relative" }}>
+                          <div style={{ padding: isExpanded3D ? "0.65rem" : "0.45rem", background: "rgba(212,160,23,0.15)", borderRadius: "10px", border: "1.5px solid #d4a017", boxShadow: "0 0 15px rgba(212,160,23,0.3)" }}>
+                            <Laptop size={isExpanded3D ? 34 : 24} style={{ color: "#d4a017" }} />
+                          </div>
+                          <motion.div
+                            animate={{ scale: [1, 1.35, 1], opacity: [0.6, 0.1, 0.6] }}
+                            transition={{ repeat: Infinity, duration: 1.8 }}
+                            style={{ position: "absolute", inset: -3, borderRadius: "12px", border: "1.5px solid #d4a017", pointerEvents: "none" }}
+                          />
+                        </div>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.62rem" : "0.54rem", color: "#F5F1E8", fontWeight: 700 }}>
+                          Cliente MTA
+                        </span>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.52rem" : "0.46rem", color: "rgba(245,241,232,0.5)" }}>
+                          IP 190.235.12.84
+                        </span>
+                      </motion.div>
+
+                      {/* Canal de Transmisión con Paquete Cifrado en Viaje */}
+                      <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "0.3rem", padding: isExpanded3D ? "0 1.2rem" : "0 0.6rem" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.3rem", background: "rgba(110,142,89,0.18)", padding: "0.15rem 0.45rem", border: "1px solid rgba(110,142,89,0.5)", borderRadius: "15px" }}>
+                          <Lock size={10} style={{ color: "#6e8e59" }} />
+                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.58rem" : "0.5rem", color: "#6e8e59", fontWeight: 800 }}>
+                            TLS 1.3 AES
+                          </span>
+                        </div>
+
+                        {/* Pista de Fibra Óptica con Pulso */}
+                        <div style={{ width: "100%", height: 4, background: "rgba(245,241,232,0.15)", borderRadius: 2, position: "relative", overflow: "hidden" }}>
+                          <motion.div
+                            animate={{ x: ["-100%", "220%"] }}
+                            transition={{ repeat: Infinity, duration: 1.2, ease: "easeInOut" }}
+                            style={{ width: "35%", height: "100%", background: "linear-gradient(90deg, transparent, #d4a017, #F5F1E8)", borderRadius: 2 }}
+                          />
+                        </div>
+
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                          <Send size={10} style={{ color: "#d4a017" }} />
+                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.54rem" : "0.48rem", color: "#d4a017", fontWeight: 700 }}>
+                            POST /api/auth
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Nodo Destino: Internet Gateway */}
+                      <motion.div
+                        animate={{ scale: [1, 1.05, 1] }}
+                        transition={{ repeat: Infinity, duration: 2.4 }}
+                        style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem" }}
+                      >
+                        <div style={{ padding: isExpanded3D ? "0.65rem" : "0.45rem", background: "rgba(255,255,255,0.06)", borderRadius: "10px", border: "1.5px solid rgba(245,241,232,0.35)" }}>
+                          <Globe size={isExpanded3D ? 34 : 24} style={{ color: "#F5F1E8" }} />
+                        </div>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.62rem" : "0.54rem", color: "rgba(245,241,232,0.9)", fontWeight: 700 }}>
+                          Internet
+                        </span>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.52rem" : "0.46rem", color: "rgba(245,241,232,0.5)" }}>
+                          Puerto :443
+                        </span>
+                      </motion.div>
+                    </div>
+                  )}
+
+                  {/* ─────────────────────────────────────────────────────────────
+                      PASO 2: AMAZON CLOUDFRONT -> CDN EDGE POP LIMA (CACHE HIT)
+                  ───────────────────────────────────────────────────────────── */}
+                  {activeStep === 2 && (
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginTop: isExpanded3D ? "1.4rem" : "0.9rem", zIndex: 2 }}>
+                      {/* Nodo Izquierda: PoP Lima LIM50 */}
+                      <motion.div
+                        animate={{ scale: [1, 1.08, 1] }}
+                        transition={{ repeat: Infinity, duration: 2 }}
+                        style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem" }}
+                      >
+                        <div style={{ position: "relative" }}>
+                          <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
+                            style={{ position: "absolute", inset: -4, borderRadius: "50%", border: "2px dashed #d4a017" }}
+                          />
+                          <div style={{ padding: isExpanded3D ? "0.65rem" : "0.45rem", background: "rgba(212,160,23,0.18)", borderRadius: "50%", border: "2px solid #d4a017" }}>
+                            <Zap size={isExpanded3D ? 34 : 24} style={{ color: "#d4a017" }} />
+                          </div>
+                        </div>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.62rem" : "0.54rem", color: "#F5F1E8", fontWeight: 700 }}>
+                          PoP Lima
+                        </span>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.52rem" : "0.46rem", color: "#6e8e59", fontWeight: 700 }}>
+                          14ms
+                        </span>
+                      </motion.div>
+
+                      {/* Animación central: Rayos de Aceleración y Absorción DDoS */}
+                      <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem", padding: isExpanded3D ? "0 1.2rem" : "0 0.6rem" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.3rem", background: "rgba(110,142,89,0.18)", padding: "0.2rem 0.5rem", border: "1px solid #6e8e59" }}>
+                          <CheckCircle2 size={12} style={{ color: "#6e8e59" }} />
+                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.6rem" : "0.52rem", color: "#6e8e59", fontWeight: 900 }}>
+                            EDGE CACHE HIT
+                          </span>
+                        </div>
+
+                        {/* Flechas dinámicas de respuesta */}
+                        <div style={{ width: "100%", display: "flex", justifyContent: "center", gap: "0.3rem", alignItems: "center" }}>
+                          <motion.div animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 0.8 }}>
+                            <ArrowRight size={12} style={{ color: "#d4a017" }} />
+                          </motion.div>
+                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.54rem" : "0.48rem", color: "#F5F1E8" }}>
+                            Entrega bundle JS
+                          </span>
+                          <motion.div animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 0.8, delay: 0.3 }}>
+                            <ArrowRight size={12} style={{ color: "#d4a017" }} />
+                          </motion.div>
+                        </div>
+
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                          <Shield size={10} style={{ color: "#6e8e59" }} />
+                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.52rem" : "0.46rem", color: "rgba(245,241,232,0.6)" }}>
+                            AWS Shield L3/L4
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Nodo Derecha: Origen Cómputo No Impactado */}
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem" }}>
+                        <div style={{ padding: isExpanded3D ? "0.65rem" : "0.45rem", background: "rgba(110,142,89,0.12)", borderRadius: "10px", border: "1.5px solid #6e8e59" }}>
+                          <Server size={isExpanded3D ? 34 : 24} style={{ color: "#6e8e59" }} />
+                        </div>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.62rem" : "0.54rem", color: "#F5F1E8", fontWeight: 700 }}>
+                          us-east-1
+                        </span>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.52rem" : "0.46rem", color: "rgba(245,241,232,0.5)" }}>
+                          0% Carga
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* ─────────────────────────────────────────────────────────────
+                      PASO 3: AMAZON ROUTE 53 -> RESOLUCIÓN DNS ANYCAST CON FAILOVER
+                  ───────────────────────────────────────────────────────────── */}
+                  {activeStep === 3 && (
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginTop: isExpanded3D ? "1.4rem" : "0.9rem", zIndex: 2 }}>
+                      {/* Nodo Consulta DNS */}
+                      <motion.div
+                        animate={{ y: [0, -2, 0] }}
+                        transition={{ repeat: Infinity, duration: 1.8 }}
+                        style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem" }}
+                      >
+                        <div style={{ padding: isExpanded3D ? "0.65rem" : "0.45rem", background: "rgba(255,255,255,0.06)", borderRadius: "10px", border: "1.5px solid rgba(245,241,232,0.3)" }}>
+                          <Terminal size={isExpanded3D ? 34 : 24} style={{ color: "#F5F1E8" }} />
+                        </div>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.62rem" : "0.54rem", color: "#F5F1E8", fontWeight: 700 }}>
+                          DNS Query
+                        </span>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.52rem" : "0.46rem", color: "#d4a017" }}>
+                          senati-mta
+                        </span>
+                      </motion.div>
+
+                      {/* Nodo Central: Anycast Routing Tower */}
+                      <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem", padding: isExpanded3D ? "0 1rem" : "0 0.5rem" }}>
+                        <motion.div
+                          animate={{ scale: [1, 1.15, 1] }}
+                          transition={{ repeat: Infinity, duration: 1.4 }}
+                          style={{ padding: isExpanded3D ? "0.6rem" : "0.4rem", background: "rgba(110,142,89,0.18)", borderRadius: "50%", border: "2px solid #6e8e59", boxShadow: "0 0 15px rgba(110,142,89,0.3)" }}
+                        >
+                          <Radio size={isExpanded3D ? 30 : 22} style={{ color: "#6e8e59" }} />
+                        </motion.div>
+
+                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.58rem" : "0.5rem", color: "#6e8e59", fontWeight: 800, background: "rgba(0,0,0,0.6)", padding: "0.1rem 0.4rem", border: "1px solid #6e8e59" }}>
+                          ROUTE 53 ANYCAST
+                        </div>
+
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                          <CheckCircle2 size={10} style={{ color: "#6e8e59" }} />
+                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.52rem" : "0.46rem", color: "#F5F1E8" }}>
+                            DNSSEC (TTL 60s)
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Nodo IP Resuelta en Subred Privada */}
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem" }}>
+                        <div style={{ padding: isExpanded3D ? "0.65rem" : "0.45rem", background: "rgba(212,160,23,0.15)", borderRadius: "10px", border: "1.5px solid #d4a017" }}>
+                          <Network size={isExpanded3D ? 34 : 24} style={{ color: "#d4a017" }} />
+                        </div>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.62rem" : "0.54rem", color: "#F5F1E8", fontWeight: 700 }}>
+                          Alias IP
+                        </span>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.52rem" : "0.46rem", color: "#6e8e59", fontWeight: 700 }}>
+                          10.0.1.24
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* ─────────────────────────────────────────────────────────────
+                      PASO 4: AMAZON VPC -> ENI Y SEGMENTACIÓN DE SUBRED PRIVADA
+                  ───────────────────────────────────────────────────────────── */}
+                  {activeStep === 4 && (
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginTop: isExpanded3D ? "1.4rem" : "0.9rem", zIndex: 2 }}>
+                      {/* Límite Público: Bloqueo de Gateway */}
+                      <motion.div
+                        animate={{ scale: [1, 1.05, 1] }}
+                        transition={{ repeat: Infinity, duration: 2 }}
+                        style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem" }}
+                      >
+                        <div style={{ padding: isExpanded3D ? "0.65rem" : "0.45rem", background: "rgba(198,67,43,0.15)", borderRadius: "10px", border: "1.5px solid #c6432b" }}>
+                          <ShieldAlert size={isExpanded3D ? 34 : 24} style={{ color: "#c6432b" }} />
+                        </div>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.62rem" : "0.54rem", color: "#c6432b", fontWeight: 700 }}>
+                          Internet GW
+                        </span>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.52rem" : "0.46rem", color: "rgba(245,241,232,0.5)" }}>
+                          Bloqueado
+                        </span>
+                      </motion.div>
+
+                      {/* Muro Perimetral VPC: ENI y Subred */}
+                      <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem", padding: isExpanded3D ? "0 1.2rem" : "0 0.6rem" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.3rem", background: "rgba(212,160,23,0.15)", padding: "0.2rem 0.5rem", border: "1.5px solid #d4a017" }}>
+                          <Layers size={11} style={{ color: "#d4a017" }} />
+                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.62rem" : "0.52rem", color: "#d4a017", fontWeight: 800 }}>
+                            VPC 10.0.0.0/16
+                          </span>
+                        </div>
+
+                        <div style={{ width: "100%", height: 4, background: "rgba(245,241,232,0.15)", borderRadius: 2, position: "relative", overflow: "hidden" }}>
+                          <motion.div
+                            animate={{ x: ["-100%", "220%"] }}
+                            transition={{ repeat: Infinity, duration: 1.1, ease: "linear" }}
+                            style={{ width: "40%", height: "100%", background: "#6e8e59" }}
+                          />
+                        </div>
+
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.54rem" : "0.48rem", color: "rgba(245,241,232,0.7)" }}>
+                          Segmentación ENI
+                        </span>
+                      </div>
+
+                      {/* Subred Privada Aislada */}
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem" }}>
+                        <div style={{ padding: isExpanded3D ? "0.65rem" : "0.45rem", background: "rgba(110,142,89,0.15)", borderRadius: "10px", border: "1.5px solid #6e8e59" }}>
+                          <Box size={isExpanded3D ? 34 : 24} style={{ color: "#6e8e59" }} />
+                        </div>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.62rem" : "0.54rem", color: "#F5F1E8", fontWeight: 700 }}>
+                          Subred Privada
+                        </span>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.52rem" : "0.46rem", color: "#6e8e59", fontWeight: 700 }}>
+                          10.0.2.0/24
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* ─────────────────────────────────────────────────────────────
+                      PASO 5: SECURITY GROUPS -> INSPECCIÓN STATEFUL PUERTO 5432
+                  ───────────────────────────────────────────────────────────── */}
+                  {activeStep === 5 && (
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginTop: isExpanded3D ? "1.4rem" : "0.9rem", zIndex: 2 }}>
+                      {/* Paquetes Entrantes Varios */}
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem" }}>
+                        <div style={{ padding: isExpanded3D ? "0.65rem" : "0.45rem", background: "rgba(255,255,255,0.06)", borderRadius: "10px", border: "1.5px solid rgba(245,241,232,0.3)" }}>
+                          <Binary size={isExpanded3D ? 34 : 24} style={{ color: "#F5F1E8" }} />
+                        </div>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.62rem" : "0.54rem", color: "#F5F1E8", fontWeight: 700 }}>
+                          Puertos
+                        </span>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.52rem" : "0.46rem", color: "rgba(245,241,232,0.5)" }}>
+                          22, 80, 5432
+                        </span>
+                      </div>
+
+                      {/* Escudo Giratorio de Inspección L4 */}
+                      <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem", padding: isExpanded3D ? "0 1rem" : "0 0.5rem" }}>
+                        <motion.div
+                          animate={{ rotateY: [0, 180, 360] }}
+                          transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                          style={{ padding: isExpanded3D ? "0.6rem" : "0.4rem", background: "rgba(110,142,89,0.2)", borderRadius: "50%", border: "2px solid #6e8e59", boxShadow: "0 0 20px rgba(110,142,89,0.4)" }}
+                        >
+                          <ShieldCheck size={isExpanded3D ? 32 : 22} style={{ color: "#6e8e59" }} />
+                        </motion.div>
+
+                        <div style={{ display: "flex", gap: "0.3rem" }}>
+                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.56rem" : "0.48rem", color: "#6e8e59", background: "rgba(110,142,89,0.15)", border: "1px solid #6e8e59", padding: "0.1rem 0.35rem", fontWeight: 800 }}>
+                            5432 OK
+                          </span>
+                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.56rem" : "0.48rem", color: "#c6432b", background: "rgba(198,67,43,0.15)", border: "1px solid #c6432b", padding: "0.1rem 0.35rem", fontWeight: 800 }}>
+                            DROP
+                          </span>
+                        </div>
+
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.52rem" : "0.46rem", color: "rgba(245,241,232,0.6)" }}>
+                          Zero-Trust L4
+                        </span>
+                      </div>
+
+                      {/* Backend App Autorizado */}
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem" }}>
+                        <div style={{ padding: isExpanded3D ? "0.65rem" : "0.45rem", background: "rgba(110,142,89,0.15)", borderRadius: "10px", border: "1.5px solid #6e8e59" }}>
+                          <Key size={isExpanded3D ? 34 : 24} style={{ color: "#6e8e59" }} />
+                        </div>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.62rem" : "0.54rem", color: "#F5F1E8", fontWeight: 700 }}>
+                          sg-backend
+                        </span>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.52rem" : "0.46rem", color: "#6e8e59", fontWeight: 700 }}>
+                          Permitido
+                        </span>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* ─────────────────────────────────────────────────────────────
+                      PASO 6: AMAZON RDS -> ESCRITURA/LECTURA SQL CIFRADA KMS
+                  ───────────────────────────────────────────────────────────── */}
+                  {activeStep === 6 && (
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", marginTop: isExpanded3D ? "1.4rem" : "0.9rem", zIndex: 2 }}>
+                      {/* Nodo Instancia Primaria */}
+                      <motion.div
+                        animate={{ y: [0, -2, 0] }}
+                        transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+                        style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem" }}
+                      >
+                        <div style={{ position: "relative" }}>
+                          <div style={{ padding: isExpanded3D ? "0.65rem" : "0.45rem", background: "rgba(212,160,23,0.2)", borderRadius: "10px", border: "2px solid #d4a017", boxShadow: "0 0 20px rgba(212,160,23,0.35)" }}>
+                            <Database size={isExpanded3D ? 34 : 24} style={{ color: "#d4a017" }} />
+                          </div>
+                          <motion.div
+                            animate={{ scale: [1, 1.3, 1], opacity: [0.8, 0.2, 0.8] }}
+                            transition={{ repeat: Infinity, duration: 1.5 }}
+                            style={{ position: "absolute", inset: -3, borderRadius: "12px", border: "1.5px solid #d4a017", pointerEvents: "none" }}
+                          />
+                        </div>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.62rem" : "0.54rem", color: "#F5F1E8", fontWeight: 700 }}>
+                          RDS Primario
+                        </span>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.52rem" : "0.46rem", color: "#d4a017", fontWeight: 700 }}>
+                          db.t4g.medium
+                        </span>
+                      </motion.div>
+
+                      {/* Replicación Síncrona Multi-AZ y Cifrado KMS */}
+                      <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem", padding: isExpanded3D ? "0 1.2rem" : "0 0.6rem" }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.3rem", background: "rgba(110,142,89,0.18)", padding: "0.15rem 0.45rem", border: "1px solid #6e8e59" }}>
+                          <Lock size={10} style={{ color: "#6e8e59" }} />
+                          <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.58rem" : "0.5rem", color: "#6e8e59", fontWeight: 800 }}>
+                            KMS AES-256
+                          </span>
+                        </div>
+
+                        {/* Canal de Replicación Síncrona */}
+                        <div style={{ width: "100%", height: 4, background: "rgba(245,241,232,0.15)", borderRadius: 2, position: "relative", overflow: "hidden" }}>
+                          <motion.div
+                            animate={{ x: ["-100%", "220%"] }}
+                            transition={{ repeat: Infinity, duration: 1.3, ease: "linear" }}
+                            style={{ width: "35%", height: "100%", background: "#d4a017" }}
+                          />
+                        </div>
+
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.54rem" : "0.48rem", color: "#6e8e59", fontWeight: 700 }}>
+                          Multi-AZ Sync
+                        </span>
+                      </div>
+
+                      {/* Nodo Standby en AZ-2 */}
+                      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.25rem" }}>
+                        <div style={{ padding: isExpanded3D ? "0.65rem" : "0.45rem", background: "rgba(110,142,89,0.15)", borderRadius: "10px", border: "1.5px solid #6e8e59" }}>
+                          <HardDrive size={isExpanded3D ? 34 : 24} style={{ color: "#6e8e59" }} />
+                        </div>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.62rem" : "0.54rem", color: "#F5F1E8", fontWeight: 700 }}>
+                          RDS Standby
+                        </span>
+                        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: isExpanded3D ? "0.52rem" : "0.46rem", color: "rgba(245,241,232,0.5)" }}>
+                          Failover Auto
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
+
+                {/* ── PARTE INFERIOR: EXPLICACIÓN TÉCNICA (SOLO VISIBLE EN PANTALLA EXPANDIDA) ── */}
+                {isExpanded3D && (
+                  <>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+                      <div>
+                        <h3 style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.86rem", color: "#F5F1E8", margin: "0 0 0.15rem 0", textTransform: "uppercase" }}>
+                          {activeTelemetry.name} ({activeTelemetry.protocol})
+                        </h3>
+                        <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.78rem", color: "rgba(245,241,232,0.9)", lineHeight: 1.45, margin: 0 }}>
+                          {activeTelemetry.detail}
+                        </p>
+                      </div>
+
+                      {/* Acción Concreta */}
+                      <div style={{ padding: "0.45rem 0.65rem", background: "rgba(255,255,255,0.03)", borderLeft: "3.5px solid #d4a017" }}>
+                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.56rem", color: "#d4a017", fontWeight: 800 }}>
+                          ACCIÓN EN ESTE NODO:
+                        </div>
+                        <div style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.72rem", color: "#F5F1E8", marginTop: "0.15rem", lineHeight: 1.35 }}>
+                          {activeTelemetry.actionStep}
+                        </div>
+                      </div>
+
+                      {/* Blindaje de Seguridad */}
+                      <div style={{ padding: "0.45rem 0.65rem", background: "rgba(255,255,255,0.03)", borderLeft: "3.5px solid #6e8e59" }}>
+                        <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.56rem", color: "#6e8e59", fontWeight: 800 }}>
+                          BLINDAJE DE SEGURIDAD:
+                        </div>
+                        <div style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.72rem", color: "#F5F1E8", marginTop: "0.15rem", lineHeight: 1.35 }}>
+                          {activeTelemetry.securityRule}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Telemetría y Latencia Acumulada */}
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        borderTop: "1px solid rgba(245,241,232,0.12)",
+                        paddingTop: "0.4rem",
+                        fontFamily: "'JetBrains Mono', monospace",
+                        fontSize: "0.58rem",
+                      }}
+                    >
+                      <span style={{ color: "rgba(245,241,232,0.6)" }}>
+                        Latencia salto: <strong style={{ color: "#d4a017" }}>{activeTelemetry.latency}</strong>
+                      </span>
+                      <span style={{ color: "#6e8e59", fontWeight: 700 }}>
+                        {isSimulating ? "TRANSICIÓN AUTOMÁTICA..." : "PAUSA DE INSPECCIÓN"}
+                      </span>
+                    </div>
+                  </>
+                )}
               </motion.div>
             ) : (
               <motion.div
                 key="flow-finished"
-                initial={{ opacity: 0, y: -8, scale: 0.96 }}
+                initial={{ opacity: 0, y: -12, scale: 0.92 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -6, scale: 0.96 }}
-                transition={{ duration: 0.2 }}
+                exit={{ opacity: 0, y: -10, scale: 0.92 }}
+                transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
                 style={{
-                  padding: "0.75rem 0.95rem",
-                  background: "rgba(10,18,10,0.94)",
-                  border: "1.5px solid #6e8e59",
-                  boxShadow: "4px 4px 0px #6e8e59",
-                  backdropFilter: "blur(8px)",
+                  padding: "1.1rem 1.25rem",
+                  background: "rgba(10,18,10,0.85)",
+                  border: "2px solid #6e8e59",
+                  boxShadow: "0 20px 50px rgba(0,0,0,0.85), 6px 6px 0px #6e8e59",
+                  backdropFilter: "blur(20px)",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "0.3rem",
+                  gap: "0.6rem",
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                    <CheckCircle2 size={15} style={{ color: "#6e8e59" }} />
-                    <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.72rem", color: "#F5F1E8", textTransform: "uppercase" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
+                    <CheckCircle2 size={18} style={{ color: "#6e8e59" }} />
+                    <span style={{ fontFamily: "'Archivo Black', sans-serif", fontSize: "0.78rem", color: "#F5F1E8", textTransform: "uppercase" }}>
                       PETICIÓN HTTP EXITOSA // 200 OK
                     </span>
                   </div>
                   <span
                     style={{
                       fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.52rem",
+                      fontSize: "0.55rem",
                       color: "#6e8e59",
                       background: "rgba(110,142,89,0.2)",
                       border: "1px solid #6e8e59",
-                      padding: "0.15rem 0.4rem",
+                      padding: "0.15rem 0.45rem",
                       fontWeight: 800,
                     }}
                   >
-                    30ms LATENCIA
+                    30ms TOTAL
                   </span>
                 </div>
 
-                <p style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "rgba(245,241,232,0.85)", lineHeight: 1.35, margin: 0 }}>
-                  Respuesta despachada al navegador. La arquitectura de red garantizó caché de contenido en CloudFront, enrutamiento rápido con Route 53 y blindaje total de la base de datos dentro de la VPC.
-                </p>
+                <div
+                  style={{
+                    background: "rgba(110,142,89,0.08)",
+                    border: "1px solid rgba(110,142,89,0.3)",
+                    padding: "0.5rem 0.75rem",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.6rem",
+                  }}
+                >
+                  <Sparkles size={20} style={{ color: "#6e8e59", flexShrink: 0 }} />
+                  <div style={{ fontFamily: "system-ui, sans-serif", fontSize: "0.68rem", color: "rgba(245,241,232,0.9)", lineHeight: 1.35 }}>
+                    Ciclo completado con éxito. Respuesta devuelta al navegador con cifrado TLS 1.3 sin vulnerar la red privada.
+                  </div>
+                </div>
 
-                <div style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.55rem", color: "#6e8e59", borderTop: "1px solid rgba(110,142,89,0.3)", paddingTop: "0.25rem" }}>
-                  Tolerancia a fallos: ✅ ALTA DISPONIBILIDAD // Puntos de presencia globales.
+                <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.2rem" }}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    icon={RotateCcw}
+                    onClick={handleReset}
+                    className="!py-1 !px-2.5 !text-xs !border-white/30 !text-white hover:!bg-white/10 !flex-1"
+                  >
+                    Reiniciar Vista
+                  </Button>
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    icon={Play}
+                    onClick={handleSimulateRequest}
+                    className="!py-1 !px-2.5 !text-xs !flex-1"
+                  >
+                    Repetir Flujo
+                  </Button>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        {/* Canvas 3D Three.js */}
+        {/* Canvas 3D Three.js (Ocupa el 100% del espacio para que las estrellas cubran toda la pantalla) */}
         <div
           style={{
             width: "100%",
-            height: "75%",
-            position: "relative",
+            height: isExpanded3D ? "100%" : "75%",
+            position: isExpanded3D ? "absolute" : "relative",
+            inset: isExpanded3D ? 0 : "auto",
             zIndex: 5,
+            transition: "all 0.3s ease",
           }}
         >
           <CanvasTransitionWrapper isActive={isActive}>
@@ -814,13 +1636,14 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
         <div
           style={{
             position: "absolute",
-            bottom: "2rem",
-            left: "3rem",
-            right: "3.5rem",
-            zIndex: 10,
+            bottom: "1.5rem",
+            left: "2.5rem",
+            right: isExpanded3D ? "calc(460px + 4.5rem)" : "3.5rem",
+            zIndex: 35,
             display: "grid",
             gridTemplateColumns: "repeat(4, 1fr)",
             gap: "0.55rem",
+            transition: "all 0.3s ease",
           }}
         >
           <div style={{ padding: "0.5rem 0.65rem", background: "rgba(14,14,14,0.75)", border: "1px solid rgba(245,241,232,0.15)", backdropFilter: "blur(6px)" }}>

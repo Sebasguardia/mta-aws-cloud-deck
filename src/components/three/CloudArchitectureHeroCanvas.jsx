@@ -158,9 +158,10 @@ export function CloudArchitectureHeroCanvas({
     // 5: Security Groups (Octaedro)
     // 6: Base de datos privada RDS (Cilindro central)
     // 7: 200 OK (retorno al usuario)
+    // Waypoints espaciales del paquete HTTP
     const waypoints = [
       new THREE.Vector3(0, 0, 4.8),      // 0: Idle
-      new THREE.Vector3(0, 0, 4.4),      // 1: Client
+      new THREE.Vector3(0, -0.2, 4.2),   // 1: Client
       new THREE.Vector3(0, 1.8, 3.2),    // 2: CloudFront
       new THREE.Vector3(1.6, -0.6, 2.2), // 3: Route 53
       new THREE.Vector3(-1.1, 0.8, 1.1), // 4: VPC
@@ -169,35 +170,69 @@ export function CloudArchitectureHeroCanvas({
       new THREE.Vector3(0, 0, 4.4),      // 7: 200 OK response
     ];
 
-    // ── 7. Nube de Datos en Tráfico (70 puntos) ──
-    const trafficCount = 70;
-    const trafficGeo = new THREE.BufferGeometry();
-    const trafficPos = new Float32Array(trafficCount * 3);
-    const trafficVel = [];
+    // Posiciones dinámicas de CÁMARA (Zoom cinematográfico) según cada paso
+    const cameraWaypoints = [
+      { pos: new THREE.Vector3(0, 0.5, 10.5), target: new THREE.Vector3(0, 0, 0) },        // 0: Vista panorámica general
+      { pos: new THREE.Vector3(0, 0.2, 7.8), target: new THREE.Vector3(0, -0.2, 4.2) },     // 1: Acercamiento al Cliente
+      { pos: new THREE.Vector3(0.8, 2.4, 6.2), target: new THREE.Vector3(0, 1.8, 3.2) },   // 2: Zoom a CloudFront Edge Torus
+      { pos: new THREE.Vector3(2.4, -0.3, 5.0), target: new THREE.Vector3(1.6, -0.6, 2.2) },// 3: Zoom a Route 53 DNS Icosahedron
+      { pos: new THREE.Vector3(-1.9, 1.3, 4.2), target: new THREE.Vector3(-1.1, 0.8, 1.1) },// 4: Zoom perimetral al Cubo VPC
+      { pos: new THREE.Vector3(1.3, -0.1, 3.2), target: new THREE.Vector3(0.6, -0.3, 0.5) },// 5: Zoom al Firewall Octaedro SG
+      { pos: new THREE.Vector3(0, 0.4, 2.4), target: new THREE.Vector3(0, 0, 0) },          // 6: Ultra-zoom al Núcleo de Base de Datos RDS
+      { pos: new THREE.Vector3(0, 0.8, 9.8), target: new THREE.Vector3(0, 0, 0) },          // 7: Gran apertura panorámica 200 OK
+    ];
 
-    for (let i = 0; i < trafficCount; i++) {
-      const rad = 1.2 + Math.random() * 2.8;
-      const angle = Math.random() * Math.PI * 2;
-      trafficPos[i * 3] = Math.cos(angle) * rad;
-      trafficPos[i * 3 + 1] = (Math.random() - 0.5) * 3.5;
-      trafficPos[i * 3 + 2] = Math.sin(angle) * rad;
+    // Vector mutable para la interpolación de la cámara
+    const currentCamLookAt = new THREE.Vector3(0, 0, 0);
 
-      trafficVel.push({
-        angle,
-        rad,
-        speed: 0.01 + Math.random() * 0.02,
+    // ── 7. Campo Estelar Cósmico Profundo (Starfield de 600 estrellas centelleantes) ──
+    const starCount = 650;
+    const starGeo = new THREE.BufferGeometry();
+    const starPos = new Float32Array(starCount * 3);
+    const starColors = new Float32Array(starCount * 3);
+    const starVel = [];
+
+    const goldColor = new THREE.Color(0xd4a017);
+    const whiteColor = new THREE.Color(0xf5f1e8);
+    const oliveColor = new THREE.Color(0x6e8e59);
+    const blueColor = new THREE.Color(0x88ccff);
+
+    for (let i = 0; i < starCount; i++) {
+      // Distribución esférica y volumétrica amplia para profundidad espacial
+      const radius = 3.5 + Math.random() * 12.0;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+
+      starPos[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+      starPos[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+      starPos[i * 3 + 2] = radius * Math.cos(phi);
+
+      // Colores de estrellas (doradas AWS, blancas y azules estelares)
+      const randType = Math.random();
+      const col = randType > 0.6 ? goldColor : randType > 0.3 ? whiteColor : randType > 0.15 ? blueColor : oliveColor;
+      starColors[i * 3] = col.r;
+      starColors[i * 3 + 1] = col.g;
+      starColors[i * 3 + 2] = col.b;
+
+      starVel.push({
+        origX: starPos[i * 3],
+        origY: starPos[i * 3 + 1],
+        origZ: starPos[i * 3 + 2],
+        speed: 0.0005 + Math.random() * 0.0015,
+        twinkleOffset: Math.random() * Math.PI * 2,
       });
     }
 
-    trafficGeo.setAttribute("position", new THREE.BufferAttribute(trafficPos, 3));
-    const trafficMat = new THREE.PointsMaterial({
-      color: 0xd4a017,
-      size: 0.045,
+    starGeo.setAttribute("position", new THREE.BufferAttribute(starPos, 3));
+    starGeo.setAttribute("color", new THREE.BufferAttribute(starColors, 3));
+    const starMat = new THREE.PointsMaterial({
+      size: 0.065,
+      vertexColors: true,
       transparent: true,
-      opacity: 0.55,
+      opacity: 0.85,
     });
-    const trafficPoints = new THREE.Points(trafficGeo, trafficMat);
-    rootGroup.add(trafficPoints);
+    const starPoints = new THREE.Points(starGeo, starMat);
+    scene.add(starPoints); // Agregamos a la escena para fondo cósmico inmersivo
 
     // ── 8. Parallax con el ratón ──
     let mouseX = 0;
@@ -302,15 +337,45 @@ export function CloudArchitectureHeroCanvas({
         packetMesh.visible = false;
       }
 
-      // Tráfico de partículas
-      const posArray = trafficPoints.geometry.attributes.position.array;
-      for (let i = 0; i < trafficCount; i++) {
-        const pv = trafficVel[i];
-        pv.angle += pv.speed;
-        posArray[i * 3] = Math.cos(pv.angle) * pv.rad;
-        posArray[i * 3 + 2] = Math.sin(pv.angle) * pv.rad;
-      }
-      trafficPoints.geometry.attributes.position.needsUpdate = true;
+      // Interpolación fluida de la Cámara 3D (Efecto ZOOM CINEMATOGRÁFICO que SIGUE la rotación de la bola/malla)
+      const targetCamDef = cameraWaypoints[currentStep] || cameraWaypoints[0];
+      
+      // Calculamos la posición del objetivo y de la cámara proyectada con la rotación actual de rootGroup
+      const rotY = rootGroup.rotation.y;
+      const rotX = rootGroup.rotation.x;
+      const cosY = Math.cos(rotY);
+      const sinY = Math.sin(rotY);
+
+      // Rotar vector objetivo alrededor de Y para seguir la rotación del grupo
+      const origTarget = targetCamDef.target;
+      const rotatedTarget = new THREE.Vector3(
+        origTarget.x * cosY + origTarget.z * sinY,
+        origTarget.y,
+        -origTarget.x * sinY + origTarget.z * cosY
+      );
+
+      // Rotar la posición relativa de la cámara respecto al objetivo para que orbite junto con el objeto
+      const relCamPos = targetCamDef.pos.clone().sub(origTarget);
+      const rotatedRelCam = new THREE.Vector3(
+        relCamPos.x * cosY + relCamPos.z * sinY,
+        relCamPos.y,
+        -relCamPos.x * sinY + relCamPos.z * cosY
+      );
+
+      const dynamicCamPos = rotatedTarget.clone().add(rotatedRelCam);
+
+      // Si estamos en reposo (paso 0), mantenemos la cámara fija en perspectiva para que se vea la rotación frontal
+      const finalCamPos = currentStep === 0 ? targetCamDef.pos : dynamicCamPos;
+      const finalLookAt = currentStep === 0 ? targetCamDef.target : rotatedTarget;
+
+      // Lerp continuo y elástico hacia la posición y lookAt orbital
+      camera.position.lerp(finalCamPos, 0.05);
+      currentCamLookAt.lerp(finalLookAt, 0.06);
+      camera.lookAt(currentCamLookAt);
+
+      // Giro lento del campo estelar de fondo
+      starPoints.rotation.y = elapsed * 0.02;
+      starPoints.rotation.x = Math.sin(elapsed * 0.03) * 0.01;
 
       renderer.render(scene, camera);
     };

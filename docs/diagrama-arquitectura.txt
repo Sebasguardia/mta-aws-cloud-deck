@@ -1,0 +1,174 @@
+================================================================================
+GUÍA COMPLETA PARA DIBUJAR EL DIAGRAMA DE RED EN AWS (CASO: MTA SOFTWARE)
+Basado en: Slide 12 (src/slides/S12_Arquitectura.jsx) y Arquitectura Típica AWS
+================================================================================
+
+Este documento detalla exactamente CADA CAJA, CADA SERVICIO, CADA CONEXIÓN y el
+FLUJO DE DATOS para que puedas dibujar el diagrama de arquitectura en herramientas
+como Draw.io, Lucidchart, Miro o Canva, siguiendo el estilo visual del ejemplo.
+
+--------------------------------------------------------------------------------
+1. ESTRUCTURA JERÁRQUICA DEL DIAGRAMA (DE AFUERA HACIA ADENTRO)
+--------------------------------------------------------------------------------
+
+El diagrama se organiza en 4 capas o cajas contenedoras principales:
+
+[CAJA 0: EXTERIOR / USUARIOS Y CLIENTES]
+  - Usuarios / Clientes (Navegadores Web / Apps Móviles)
+  - Practicantes Remotos (10 practicantes de MTA conectándose por internet)
+
+[CAJA 1: AWS CLOUD GLOBAL (Borde y Servicios Globales)]
+  - Amazon Route 53 (DNS Global Gestionado - SLA 100%)
+  - Amazon CloudFront (CDN Edge con Puntos de Presencia en Sudamérica / Lima - SLA 99.9%)
+  - AWS WAF / Shield (Protección perimetral DDoS en capa 7)
+  - Amazon S3 Bucket (Almacenamiento estático del frontend React / Vite / Next.js)
+
+[CAJA 2: REGIÓN AWS: us-east-1 (N. Virginia)]
+  - Es el contenedor geográfico que agrupa las Zonas de Disponibilidad.
+  - Alberga la VPC principal.
+
+[CAJA 3: AMAZON VPC (Red Privada Virtual - CIDR: 10.0.0.0/16)]
+  - Internet Gateway (IGW): Puerta de entrada y salida a internet.
+  - La VPC está dividida verticalmente en 2 ZONAS DE DISPONIBILIDAD (Multi-AZ):
+    * Zona de Disponibilidad 1: us-east-1a
+    * Zona de Disponibilidad 2: us-east-1b
+
+--------------------------------------------------------------------------------
+2. DETALLE INTERNO DE LAS ZONAS DE DISPONIBILIDAD (MULTI-AZ)
+--------------------------------------------------------------------------------
+
+Dentro de la VPC (10.0.0.0/16), cada Zona de Disponibilidad tiene 2 niveles de subredes:
+
+A. CAPA PÚBLICA (Nivel Web / Presentación / Tráfico de Entrada):
+   - Subred Pública A (en us-east-1a) -> CIDR: 10.0.1.0/24
+     * NAT Gateway A (Permite salida a internet para parches sin recibir tráfico externo directo)
+     * Application Load Balancer (ALB) - Nodo Primario (distribuye tráfico web)
+     * Bastion Host / Servidor EC2 Web Frontend
+   - Subred Pública B (en us-east-1b) -> CIDR: 10.0.2.0/24
+     * NAT Gateway B (Redundancia de salida)
+     * Application Load Balancer (ALB) - Nodo Secundario Standby
+
+B. CAPA PRIVADA (Nivel Lógica de Negocio y Base de Datos - 100% AISLADA):
+   - Subred Privada A (en us-east-1a) -> CIDR: 10.0.10.0/24
+     * Instancia EC2 Backend (APIs Node.js / Express / NestJS de Workspace MTA)
+     * Amazon RDS PostgreSQL (Instancia Primaria / Master) -> Almacena datos del ERP
+     * Security Group (Firewall L4 Stateful): Permite solo puerto 5432 desde la EC2
+   - Subred Privada B (en us-east-1b) -> CIDR: 10.0.20.0/24
+     * Instancia EC2 Backend Standby / Réplica
+     * Amazon RDS PostgreSQL (Réplica Sincrónica Standby Multi-AZ - SLA 99.95%)
+     * Flecha punteada entre RDS Primaria y Réplica: Replicación continua de datos
+
+--------------------------------------------------------------------------------
+3. SERVICIOS COMPLEMENTARIOS Y MONITOREO (ALREDEDOR DE LA VPC)
+--------------------------------------------------------------------------------
+
+Igual que en el ejemplo gráfico, se colocan servicios conectados por VPC Endpoints:
+- Amazon S3: Almacenamiento de backups de base de datos y archivos multimedia.
+- Amazon CloudWatch: Recolecta métricas de CPU, RAM y latencia en tiempo real.
+- AWS Budgets & Amazon SNS: Alarma de gobernanza presupuestaria a $10.00 USD.
+- AWS IAM: Gobernanza con 10 usuarios con Mínimo Privilegio (Zero Trust) y cuenta root con MFA.
+
+--------------------------------------------------------------------------------
+4. RUTA PASO A PASO DEL FLUJO DE DATOS (EL TRAZADO DE 6 PASOS DEL SLIDE 12)
+--------------------------------------------------------------------------------
+
+Para dibujar las flechas de conexión con sus números o etiquetas, sigue esta secuencia exacta:
+
+PASO 1: CLIENTE / USUARIOS -> INTERNET (0 ms)
+- El practicante o cliente en Lima abre la web en su navegador: https://workspace.mta.com
+- Protocolo: HTTPS en puerto 443.
+
+PASO 2: CLOUDFRONT EDGE POP SUDAMÉRICA (+14 ms)
+- La petición llega primero al Punto de Presencia (Edge Location) en Lima/Sudamérica.
+- Si el frontend estático (HTML, CSS, JS, imágenes) ya está en caché, CloudFront
+  responde de inmediato sin viajar a EE. UU. (Cache Hit).
+- Si requiere datos dinámicos o la API del ERP, pasa al Paso 3.
+
+PASO 3: ROUTE 53 DNS RESOLUTION (+8 ms)
+- Route 53 resuelve el nombre de dominio con enrutamiento por menor latencia y
+  chequeos de salud automáticos (Health Checks con SLA 100%).
+
+PASO 4: INTERNET GATEWAY -> AMAZON VPC (+3 ms)
+- El tráfico ingresa a la VPC de AWS (10.0.0.0/16) en la región us-east-1 a través
+  del Internet Gateway (IGW) hacia el Balanceador de Carga (ALB) en la Subred Pública.
+
+PASO 5: SECURITY GROUPS (FIREWALL STATEFUL L4) (+1 ms)
+- El Security Group inspecciona la solicitud entrante.
+- Filtra cualquier paquete sospechoso y solo autoriza la comunicación interna hacia
+  el puerto 5432 (PostgreSQL) proveniente únicamente de la subred del backend.
+
+PASO 6: AMAZON RDS DATABASE EN SUBRED PRIVADA (+4 ms)
+- La base de datos relacional procesa la consulta (asistencia, notas o proyectos de MTA).
+- Los datos viajan de regreso encriptados hacia el cliente.
+- LATENCIA TOTAL DEL FLUJO: ~30 milisegundos con respuesta "200 OK".
+
+--------------------------------------------------------------------------------
+5. GUÍA VISUAL RÁPIDA PARA DIBUJAR EN TU LIENZO
+--------------------------------------------------------------------------------
+
+             ┌──────────────────────────────────────────────────┐
+             │       USUARIOS / CLIENTES / 10 PRACTICANTES       │
+             └─────────────────────────┬────────────────────────┘
+                                       │ HTTPS :443
+                                       ▼
+             ┌──────────────────────────────────────────────────┐
+             │  AMAZON CLOUDFRONT (Edge PoP Lima - SLA 99.9%)    │◄─── [Amazon S3: Frontend Assets]
+             └─────────────────────────┬────────────────────────┘
+                                       │
+                                       ▼
+             ┌──────────────────────────────────────────────────┐
+             │    AMAZON ROUTE 53 (DNS Routing - SLA 100%)      │
+             └─────────────────────────┬────────────────────────┘
+                                       │
+═══════════════════════════════════════╪═══════════════════════════════════════════════
+ AWS CLOUD · REGIÓN: us-east-1 (N. Virginia)
+═══════════════════════════════════════╪═══════════════════════════════════════════════
+   ┌───────────────────────────────────┼─────────────────────────────────────────────┐
+   │ AMAZON VPC (10.0.0.0/16)          ▼ [Internet Gateway - IGW]                    │
+   │ ┌─────────────────────────────────────────────────────────────────────────────┐ │
+   │ │            APPLICATION LOAD BALANCER (ALB Multi-AZ)                         │ │
+   │ └─────────────────────────┬─────────────────────────────────┬─────────────────┘ │
+   │                           │                                 │                   │
+   │  ┌────────────────────────┴─────────────┐     ┌─────────────┴────────────────┐  │
+   │  │ ZONA DE DISPONIBILIDAD 1: us-east-1a │     │ ZONA DISPONIBILIDAD 2: 1b    │  │
+   │  │ ┌──────────────────────────────────┐ │     │ ┌──────────────────────────┐ │  │
+   │  │ │ SUBRED PÚBLICA (10.0.1.0/24)     │ │     │ │ SUBRED PÚBLICA (10.0.2.0)│ │  │
+   │  │ │ - NAT Gateway A                  │ │     │ │ - NAT Gateway B          │ │  │
+   │  │ └──────────────────┬───────────────┘ │     │ └──────────────┬───────────┘ │  │
+   │  │                    │                 │     │                │             │  │
+   │  │                    ▼                 │     │                ▼             │  │
+   │  │ ┌──────────────────────────────────┐ │     │ ┌──────────────────────────┐ │  │
+   │  │ │ SUBRED PRIVADA (10.0.10.0/24)    │ │     │ │ SUBRED PRIVADA (10.0.20) │ │  │
+   │  │ │ - EC2 Backend (Node.js APIs)     │ │     │ │ - EC2 Backend (Standby)  │ │  │
+   │  │ │           │                      │ │     │ │                          │ │  │
+   │  │ │   [Security Group: Port 5432]    │ │     │ │                          │ │  │
+   │  │ │           ▼                      │ │     │ │                          │ │  │
+   │  │ │ - Amazon RDS PostgreSQL Master   │─┼─────┼─┼─► Amazon RDS Réplica     │ │  │
+   │  │ │   (Workspace MTA Database)       │ │     │ │   (Standby Multi-AZ)     │ │  │
+   │  │ └──────────────────────────────────┘ │     │ └──────────────────────────┘ │  │
+   │  └──────────────────────────────────────┘     └──────────────────────────────┘  │
+   │                                                                                 │
+   │          VPC Endpoints / Monitoreo:                                             │
+   │          ├── Amazon CloudWatch (Métricas en tiempo real)                        │
+   │          ├── AWS Budgets (Alarma preventiva a $10.00 USD)                       │
+   │          └── AWS IAM (10 Practicantes con Zero Trust + MFA en Root)             │
+   └─────────────────────────────────────────────────────────────────────────────────┘
+
+--------------------------------------------------------------------------------
+6. COLORES Y ESTILO RECOMENDADOS PARA TU DIAGRAMA
+--------------------------------------------------------------------------------
+- Caja Externa de AWS Cloud: Borde gris oscuro (#232F3E) o cian suave.
+- Caja de Región: Borde verde azulado o cian punteado.
+- Caja de la VPC: Borde morado (#8C4FFF) con fondo violeta tenue.
+- Subredes Públicas: Color verde oliva o verde claro (#6E8E59 / #D4EDDA).
+- Subredes Privadas: Color azul suave o gris técnico con candado cerrado.
+- Iconos oficiales de AWS:
+  * Naranja: Cómputo (EC2).
+  * Azul/Morado: Base de datos (RDS PostgreSQL).
+  * Rojo/Rosa: Redes y Contenido (Route 53, CloudFront, VPC, NAT Gateway).
+  * Verde: Almacenamiento (Amazon S3).
+  * Dorado/Amarillo: Alertas y Gobierno (AWS Budgets, IAM).
+
+Con esta información tienes exactamente los nombres técnicos, las IPs, los SLAs,
+las zonas y los componentes para armar tu diagrama profesional idéntico al modelo.
+================================================================================
