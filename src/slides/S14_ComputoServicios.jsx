@@ -195,7 +195,6 @@ export function S14_ComputoServicios({ isActive: propActive } = {}) {
       {/* Retícula ambiental */}
       <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(245,241,232,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(245,241,232,0.025) 1px, transparent 1px)", backgroundSize: "64px 64px", pointerEvents: "none", zIndex: 0 }} />
       <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.07) 3px, rgba(0,0,0,0.07) 6px)", pointerEvents: "none", zIndex: 1 }} />
-      <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "radial-gradient(circle at 75% 50%, rgba(212,160,23,0.18) 0%, transparent 65%)", pointerEvents: "none", zIndex: 1 }} />
 
       {/* Línea vertical de acento Oro AWS */}
       <motion.div

@@ -52,7 +52,7 @@ const c = slidesContent.s17_cierre || slidesContent.s14_cierre || {
  */
 export function S14_Cierre({ isActive: propActive } = {}) {
   const shouldReduceMotion = useReducedMotion();
-  const hookActive = useSlideActive(16);
+  const hookActive = useSlideActive(22);
   const sectionRef = useRef(null);
   const [domActive, setDomActive] = useState(false);
   const [celebrateCount, setCelebrateCount] = useState(0);
@@ -146,17 +146,6 @@ export function S14_Cierre({ isActive: propActive } = {}) {
         }}
       />
 
-      {/* ── Resplandor ambiental de culminación ── */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "radial-gradient(circle at 75% 50%, rgba(212,160,23,0.18) 0%, transparent 65%)",
-          pointerEvents: "none",
-          zIndex: 1,
-        }}
-      />
 
       {/* ── Barra de acento vertical izquierda Oro AWS ── */}
       <motion.div

@@ -327,17 +327,6 @@ export function S12_Arquitectura({ isActive: propActive } = {}) {
         }}
       />
 
-      {/* ── Resplandor perimetral de seguridad ── */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: 0,
-          background: "radial-gradient(circle at 75% 50%, rgba(212,160,23,0.18) 0%, transparent 65%)",
-          pointerEvents: "none",
-          zIndex: 1,
-        }}
-      />
 
       {/* ── Barra de acento vertical izquierda Oro AWS ── */}
       <motion.div

@@ -19,6 +19,11 @@ import { S13_ComputoStaging } from "./slides/S13_ComputoStaging.jsx";
 import { S14_ComputoServicios } from "./slides/S14_ComputoServicios.jsx";
 import { S15_AlmacenamientoServicios } from "./slides/S15_AlmacenamientoServicios.jsx";
 import { S16_BasesDatosServicios } from "./slides/S16_BasesDatosServicios.jsx";
+import { S18_Etapa3Intro } from "./slides/S18_Etapa3Intro.jsx";
+import { S19_ArquitecturaDinamica } from "./slides/S19_ArquitecturaDinamica.jsx";
+import { S20_SeguridadRed } from "./slides/S20_SeguridadRed.jsx";
+import { S21_MonitoreoFinOps } from "./slides/S21_MonitoreoFinOps.jsx";
+import { S22_IaC_DevOps } from "./slides/S22_IaC_DevOps.jsx";
 import { S14_Cierre } from "./slides/S16_Cierre.jsx";
 
 /**
@@ -114,8 +119,25 @@ function App() {
         {/* Slide 17 — Bases de Datos Administradas (RDS Multi-AZ, Aurora, DynamoDB) */}
         <S16_BasesDatosServicios isActive={activeSlide === 16} />
 
-        {/* Slide 18 — Cierre Final: Síntesis + Preguntas */}
-        <S14_Cierre isActive={activeSlide === 17} />
+        {/* ─────────────── ENTREGABLE FINAL · SEMANA 8 (ETAPA 3) ─────────────── */}
+
+        {/* Slide 18 — Transición e Introducción: ETAPA 3 (4 Ejes) */}
+        <S18_Etapa3Intro isActive={activeSlide === 17} />
+
+        {/* Slide 19 — Arquitectura Dinámica y Alta Disponibilidad (ALB + Auto Scaling Multi-AZ) */}
+        <S19_ArquitecturaDinamica isActive={activeSlide === 18} />
+
+        {/* Slide 20 — Seguridad Avanzada de Red y Bastion Host (SG vs NACL + Defensa en Capas) */}
+        <S20_SeguridadRed isActive={activeSlide === 19} />
+
+        {/* Slide 21 — Monitoreo, Tagging y FinOps (CloudWatch Metrics + Trusted Advisor + Alerta $10) */}
+        <S21_MonitoreoFinOps isActive={activeSlide === 20} />
+
+        {/* Slide 22 — Automatización e Infraestructura como Código (AWS CloudFormation & CI/CD) */}
+        <S22_IaC_DevOps isActive={activeSlide === 21} />
+
+        {/* Slide 23 — Cierre Final: Síntesis + Preguntas */}
+        <S14_Cierre isActive={activeSlide === 22} />
       </RevealDeck>
 
       {/* ── Preloader: cortina cinematográfica encima del deck ── */}

@@ -103,16 +103,6 @@ export function S12b_Etapa2Intro({ isActive: propActive } = {}) {
           pointerEvents: "none",
         }}
       />
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "radial-gradient(circle at 50% 50%, rgba(212,160,23,0.08) 0%, transparent 70%)",
-          pointerEvents: "none",
-        }}
-      />
 
       <div
         style={{
