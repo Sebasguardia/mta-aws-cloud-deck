@@ -23,22 +23,25 @@ import * as THREE from "three";
  *  5. Campo estelar multicromático con rotación continua a 60 FPS e inercia de mouse parallax.
  */
 export function StorageArchitecturesCanvas({
-  selectedStorage = "s3", // "s3" | "efs" | "glacier"
+  selectedStorage,
+  selectedService,
+  selectedTech,
   isMigrating = false,
   lifecycleTier = "glacier", // "standard" | "ia" | "glacier"
 }) {
+  const activeSelected = selectedStorage || selectedService || selectedTech || "s3";
   const containerRef = useRef(null);
   const animFrameId = useRef(null);
 
-  const selectedRef = useRef(selectedStorage);
+  const selectedRef = useRef(activeSelected);
   const migratingRef = useRef(isMigrating);
   const tierRef = useRef(lifecycleTier);
 
   useEffect(() => {
-    selectedRef.current = selectedStorage;
+    selectedRef.current = activeSelected;
     migratingRef.current = isMigrating;
     tierRef.current = lifecycleTier;
-  }, [selectedStorage, isMigrating, lifecycleTier]);
+  }, [activeSelected, isMigrating, lifecycleTier]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -400,9 +403,9 @@ export function StorageArchitecturesCanvas({
       lifecyclePacket.position.y = -1.05 + Math.sin(cycle * Math.PI) * 0.12;
 
       // ── E. Escalado Dinámico y Destacado del Módulo Activo ──
-      const sS3 = selected === "s3" ? 1.15 : 0.88;
-      const sEFS = selected === "efs" ? 1.15 : 0.88;
-      const sGlacier = selected === "glacier" ? 1.18 : 0.88;
+      const sS3 = (selected === "s3" || selected === "all") ? 1.06 : 0.88;
+      const sEFS = (selected === "efs" || selected === "all") ? 1.06 : 0.88;
+      const sGlacier = (selected === "glacier" || selected === "all") ? 1.08 : 0.88;
 
       s3Group.scale.lerp(new THREE.Vector3(sS3, sS3, sS3), 0.06);
       efsGroup.scale.lerp(new THREE.Vector3(sEFS, sEFS, sEFS), 0.06);
