@@ -20,19 +20,22 @@ import * as THREE from "three";
  *  - Campo estelar profundo multicromático con animación suave de 60fps con requestAnimationFrame y DeltaTime.
  */
 export function ComputeArchitecturesCanvas({
-  selectedCompute = "ec2", // "ec2" | "lambda" | "containers"
+  selectedCompute,
+  selectedService,
+  selectedTech,
   isExecuting = false,
 }) {
+  const activeSelected = selectedCompute || selectedService || selectedTech || "ec2";
   const containerRef = useRef(null);
   const animFrameId = useRef(null);
 
-  const selectedRef = useRef(selectedCompute);
+  const selectedRef = useRef(activeSelected);
   const executingRef = useRef(isExecuting);
 
   useEffect(() => {
-    selectedRef.current = selectedCompute;
+    selectedRef.current = activeSelected;
     executingRef.current = isExecuting;
-  }, [selectedCompute, isExecuting]);
+  }, [activeSelected, isExecuting]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -455,9 +458,9 @@ export function ComputeArchitecturesCanvas({
       pulsePacket.position.y = -1.05 + Math.sin(cycle * Math.PI) * 0.12;
 
       // ── E. Escalado Dinámico y Destacado del Módulo Activo ──
-      const sEC2 = selected === "ec2" ? 1.14 : 0.88;
-      const sLambda = selected === "lambda" ? 1.18 : 0.88;
-      const sECS = selected === "containers" ? 1.14 : 0.88;
+      const sEC2 = (selected === "ec2" || selected === "all") ? 1.06 : 0.88;
+      const sLambda = (selected === "lambda" || selected === "all") ? 1.08 : 0.88;
+      const sECS = (selected === "containers" || selected === "all") ? 1.06 : 0.88;
 
       ec2Group.scale.lerp(new THREE.Vector3(sEC2, sEC2, sEC2), 0.06);
       lambdaGroup.scale.lerp(new THREE.Vector3(sLambda, sLambda, sLambda), 0.06);

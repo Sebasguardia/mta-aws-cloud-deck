@@ -23,19 +23,22 @@ import * as THREE from "three";
  *  5. Campo estelar multicromático con rotación continua a 60 FPS e inercia de mouse parallax.
  */
 export function DatabaseArchitecturesCanvas({
-  selectedEngine = "rds", // "rds" | "aurora" | "dynamodb"
+  selectedEngine,
+  selectedService,
+  selectedTech,
   isExecutingQuery = false,
 }) {
+  const activeSelected = selectedEngine || selectedService || selectedTech || "rds";
   const containerRef = useRef(null);
   const animFrameId = useRef(null);
 
-  const selectedRef = useRef(selectedEngine);
+  const selectedRef = useRef(activeSelected);
   const executingRef = useRef(isExecutingQuery);
 
   useEffect(() => {
-    selectedRef.current = selectedEngine;
+    selectedRef.current = activeSelected;
     executingRef.current = isExecutingQuery;
-  }, [selectedEngine, isExecutingQuery]);
+  }, [activeSelected, isExecutingQuery]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -378,9 +381,9 @@ export function DatabaseArchitecturesCanvas({
       sqlPacket.position.y = -1.05 + Math.sin(cycle * Math.PI) * 0.12;
 
       // ── E. Escalado Dinámico del Módulo Activo ──
-      const sRDS = selected === "rds" ? 1.16 : 0.88;
-      const sAurora = selected === "aurora" ? 1.18 : 0.88;
-      const sDynamo = selected === "dynamodb" ? 1.15 : 0.88;
+      const sRDS = (selected === "rds" || selected === "all") ? 1.06 : 0.88;
+      const sAurora = (selected === "aurora" || selected === "all") ? 1.08 : 0.88;
+      const sDynamo = (selected === "dynamodb" || selected === "all") ? 1.06 : 0.88;
 
       rdsGroup.scale.lerp(new THREE.Vector3(sRDS, sRDS, sRDS), 0.06);
       auroraGroup.scale.lerp(new THREE.Vector3(sAurora, sAurora, sAurora), 0.06);

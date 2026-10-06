@@ -210,10 +210,10 @@ export function S02_Agenda({ isActive: propActive } = {}) {
           style={{ height: 2, background: "#D4A017", width: "100%", maxWidth: 320 }}
         />
 
-        {/* ── Tarjetas de bloque — Grid 4 columnas ── */}
+        {/* ── Tarjetas de bloque — Grid dinámico por columnas ── */}
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
+          gridTemplateColumns: `repeat(${c.blocks.length}, 1fr)`,
           gap: "1px",
           background: "rgba(245,241,232,0.08)",
         }}>
@@ -236,14 +236,14 @@ export function S02_Agenda({ isActive: propActive } = {}) {
                 style={{
                   background: isHovered ? "rgba(245,241,232,0.06)" : "#0a0a0a",
                   border: "none",
-                  padding: "1.25rem 1.35rem",
+                  padding: "1.0rem 1.0rem",
                   cursor: "pointer",
                   textAlign: "left",
                   position: "relative",
                   overflow: "hidden",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "0.5rem",
+                  gap: "0.4rem",
                   borderTop: `3px solid ${isHovered || isZooming ? acc.border : "rgba(245,241,232,0.1)"}`,
                   boxShadow: isZooming ? `0 0 35px ${acc.glow}` : "none",
                   transform: isZooming
@@ -262,7 +262,7 @@ export function S02_Agenda({ isActive: propActive } = {}) {
                   right: "-0.5rem",
                   bottom: "-1rem",
                   fontFamily: "'Archivo Black', 'Arial Black', sans-serif",
-                  fontSize: "clamp(5rem, 10vw, 9.5rem)",
+                  fontSize: "clamp(3.8rem, 6.5vw, 6.5rem)",
                   color: "transparent",
                   WebkitTextStroke: `2px ${isHovered ? acc.border : "rgba(245,241,232,0.07)"}`,
                   letterSpacing: "-0.05em",
@@ -278,8 +278,8 @@ export function S02_Agenda({ isActive: propActive } = {}) {
                 {/* Indicador de bloque */}
                 <span style={{
                   fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.74rem",
-                  letterSpacing: "0.18em",
+                  fontSize: "0.70rem",
+                  letterSpacing: "0.16em",
                   textTransform: "uppercase",
                   fontWeight: 500,
                   color: isHovered ? acc.border : "rgba(212,160,23,0.7)",
@@ -297,7 +297,7 @@ export function S02_Agenda({ isActive: propActive } = {}) {
                 {/* Script acento */}
                 <p style={{
                   fontFamily: "Yellowtail, cursive",
-                  fontSize: "clamp(1.2rem, 1.8vw, 1.65rem)",
+                  fontSize: "clamp(1.05rem, 1.4vw, 1.45rem)",
                   color: isHovered ? acc.border : "rgba(245,241,232,0.6)",
                   lineHeight: 1.1,
                   fontWeight: 400,
@@ -310,13 +310,13 @@ export function S02_Agenda({ isActive: propActive } = {}) {
                 {/* Título del bloque */}
                 <p style={{
                   fontFamily: "'Archivo Black', 'Arial Black', sans-serif",
-                  fontSize: "clamp(1.2rem, 1.8vw, 1.7rem)",
+                  fontSize: "clamp(1.0rem, 1.35vw, 1.35rem)",
                   color: "#F5F1E8",
                   letterSpacing: "-0.01em",
                   textTransform: "uppercase",
                   lineHeight: 1.1,
                   fontWeight: 400,
-                  maxWidth: "290px",
+                  maxWidth: "100%",
                   margin: "0.1rem 0",
                 }}>
                   {block.title}
@@ -333,10 +333,10 @@ export function S02_Agenda({ isActive: propActive } = {}) {
                 {/* Descripción */}
                 <p style={{
                   fontFamily: "Inter, sans-serif",
-                  fontSize: "0.82rem",
+                  fontSize: "0.76rem",
                   color: "rgba(245,241,232,0.68)",
-                  lineHeight: 1.5,
-                  maxWidth: "320px",
+                  lineHeight: 1.45,
+                  maxWidth: "100%",
                   fontWeight: 400,
                   margin: 0,
                 }}>
