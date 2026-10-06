@@ -336,8 +336,9 @@ export const slidesContent = {
         title: "Servicios Core, Almacenamiento y BD",
         status: "SIGUIENTE HITO",
         period: "Semana 7",
-        desc: "Aprovisionamiento de servidores con Amazon EC2 (instancias y volúmenes EBS), evaluación de arquitecturas serverless con AWS Lambda, almacenamiento en Amazon S3 y EFS con archivado en S3 Glacier, e implementación de base de datos administrada con Amazon RDS (PostgreSQL).",
+        desc: "Aprovisionamiento de servidores con Amazon EC2 (instancias y volúmenes EBS), evaluación de arquitecturas modernas (contenedores, AWS Lambda y evaluación/descarte de AWS Elastic Beanstalk), almacenamiento en Amazon S3 y EFS con archivado en S3 Glacier, e implementación de base de datos administrada con Amazon RDS (PostgreSQL).",
         deliverables: [
+          "Diseño de la Capa de Cómputo (EC2, EBS, Lambda, ECS y análisis PaaS Elastic Beanstalk)",
           "Diseño de cómputo: instancias Amazon EC2, EBS y AWS Lambda",
           "Estrategia de almacenamiento: Amazon S3, EFS y S3 Glacier",
           "Implementación de base de datos: Amazon RDS PostgreSQL / Aurora",

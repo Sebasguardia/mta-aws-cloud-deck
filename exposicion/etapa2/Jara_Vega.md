@@ -53,19 +53,26 @@ Por ello, diseñamos un **Modelo Híbrido Moderno** combinando tres servicios de
    `[PATRONES DE USO REALES]`  
    Tareas puntuales y esporádicas no deben consumir CPU del servidor principal. Cuando un practicante sube su fotografía de perfil, un trigger ejecuta una función Lambda que redimensiona la imagen y la optimiza. Del mismo modo, la generación masiva de reportes contables en PDF a fin de mes o el envío de correos transaccionales se procesa en funciones Lambda efímeras que se encienden, ejecutan en segundos y se apagan, facturando al milisegundo exacto.
 3. **AWS Fargate (Amazon ECS) ➔ Microservicios en Contenedores:**  
-   Para servicios modulares empaquetados en contenedores Docker, Fargate nos permite ejecutar contenedores sin tener que administrar, aprovisionar ni parchar servidores subyacentes."*
+   Para servicios modulares empaquetados en contenedores Docker, Fargate nos permite ejecutar contenedores sin tener que administrar, aprovisionar ni parchar servidores subyacentes.
+4. **Fundamento de Adopción y Descarte de Alternativas (Visible en el panel derecho):**  
+   *(Señalando la tarjeta 04 en la izquierda y el bloque dorado de justificación en el panel derecho)*:  
+   *"Profesor, como pueden observar en el panel derecho, nuestra arquitectura se sustenta en dos afirmaciones directas:  
+   Primero, **el fundamento de adopción**: combinamos instancias `t4g.small` de EC2 Graviton para el backend principal por sus conexiones WebSocket persistentes y latencia uniforme menor a 30 ms sin arranques en frío, junto con AWS Lambda para tareas por lotes nocturnas a costo cero en reposo, y AWS Fargate para microservicios en contenedores inmutables.  
+   Segundo, **el descarte de alternativas**: descartamos formalmente **AWS Elastic Beanstalk** porque su arquitectura de caja negra oculta la topología de red, limitando el aislamiento de nuestras subredes privadas en la VPC e impidiendo el encadenamiento fino de Security Groups mediante plantillas de CloudFormation (IaC). Asimismo, descartamos basar el 100% en Lambda por su límite de ejecución de 15 minutos y las penalizaciones de latencia en consultas continuas a PostgreSQL. Por ello, el modelo seleccionado y ganador es **Amazon EC2 + ECS/Fargate**."*
 
 ---
 
 #### 4. Conclusión y Pase a Diego Estilo (0.5 minutos)
 `[PASE AL SIGUIENTE EXPOSITOR]`  
-*"Con Graviton y Serverless garantizamos un cómputo potente, elástico y sumamente económico.  
+*"Con Graviton, Serverless y contenedores garantizamos un cómputo potente, elástico y con control total.  
 Pero este cómputo necesita guardar información: archivos estáticos, configuraciones compartidas y respaldos históricos.  
 Para explicar el ecosistema de almacenamiento desacoplado con S3, EFS y Glacier, le cedo la palabra a mi compañero **Diego Estilo Ratache**."*
 
 ---
 
 ### 🛡️ Respuestas Rápidas para Analí (Preguntas del Profesor)
+- **Si el profesor pregunta: ¿Evaluaron AWS Elastic Beanstalk para desplegar el backend?**  
+  *Respuesta:* "Sí, profesor, evaluamos Elastic Beanstalk como alternativa de Plataforma como Servicio (PaaS). Sin embargo, lo descartamos porque oculta la arquitectura de red subyacente y restringe la personalización granular de nuestras subredes privadas en la VPC y las políticas de Auto Scaling. Para MTA Software, la combinación de Amazon EC2 con Graviton y ECS/Fargate nos otorga gobierno total, mayor seguridad y total compatibilidad con plantillas de CloudFormation."
 - **Si el profesor pregunta: ¿Por qué no migrar el 100% del backend a AWS Lambda y prescindir de EC2?**  
   *Respuesta:* "Porque el ERP Workspace utiliza WebSockets persistentes para comunicación en tiempo real y maneja conexiones transaccionales continuas con PostgreSQL. AWS Lambda tiene límites de ejecución de 15 minutos, padece de latencias de arranque en frío (Cold Starts) y para tráfico continuo 24/7 resulta más costoso que una instancia EC2 reservada."
 - **Si el profesor pregunta: ¿Qué ventaja tiene Graviton frente a un procesador AMD EPYC?**  

@@ -378,6 +378,10 @@ export function ComputeArchitecturesCanvas({
         pos: new THREE.Vector3(2.35, 0.95, 5.4),
         lookAt: new THREE.Vector3(2.35, 0.1, 0),
       },
+      beanstalk: {
+        pos: new THREE.Vector3(0, 1.25, 7.0),
+        lookAt: new THREE.Vector3(0, 0.1, 0),
+      },
       all: {
         pos: new THREE.Vector3(0, 1.2, 7.8),
         lookAt: new THREE.Vector3(0, 0, 0),

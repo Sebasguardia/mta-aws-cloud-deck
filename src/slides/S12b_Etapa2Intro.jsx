@@ -53,7 +53,7 @@ export function S12b_Etapa2Intro({ isActive: propActive } = {}) {
     {
       num: "01",
       title: "CÓMPUTO",
-      desc: "Amazon EC2 & AWS Lambda",
+      desc: "EC2, ECS, Lambda vs Beanstalk",
       color: "#d4a017",
       icon: Cpu,
     },

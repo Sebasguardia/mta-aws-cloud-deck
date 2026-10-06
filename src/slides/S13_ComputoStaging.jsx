@@ -265,30 +265,6 @@ export function S13_ComputoStaging({ isActive: propActive } = {}) {
               Git Push ➔ Jest Tests ➔ Build EC2 ➔ Staging OK
             </div>
           </motion.div>
-
-          {/* Bloque 4: Justificación Técnica */}
-          <motion.div variants={fadeUp(0.30)} initial="hidden" animate={entered ? "visible" : "hidden"}
-            style={{
-              padding: "0.6rem 0.85rem",
-              background: "rgba(212,160,23,0.08)",
-              backdropFilter: "blur(10px)",
-              border: "1px solid rgba(212,160,23,0.3)",
-              borderLeft: "3.5px solid #d4a017",
-              display: "flex",
-              flexDirection: "column",
-              gap: "0.25rem",
-            }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
-              <ShieldCheck size={14} color="#d4a017" />
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.70rem", color: "#d4a017", fontWeight: 700, letterSpacing: "0.05em" }}>
-                JUSTIFICACIÓN TÉCNICA · MTA SOFTWARE
-              </span>
-            </div>
-            <p style={{ fontFamily: "Inter, sans-serif", fontSize: "0.76rem", color: "rgba(245,241,232,0.9)", margin: 0, lineHeight: 1.35 }}>
-              Se eligió <strong>t3.micro + EBS gp3</strong> por ser <strong>100% Free Tier (12 meses a $0/mes)</strong>, brindando CPU ráfaga para compilar Next.js y 30 GB SSD persistentes sin gastar el presupuesto de $10 USD.
-            </p>
-          </motion.div>
-
         </div>
 
         {/* Telemetría y Botón de Estado Servidor */}

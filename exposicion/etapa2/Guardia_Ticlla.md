@@ -45,12 +45,18 @@ Para erradicar esto de raíz, aprovisionamos una **instancia Amazon EC2 dedicada
 - **Almacenamiento:** Volumen **Amazon EBS gp3 de 30 GB** (también cubierto por la capa gratuita), que nos ofrece **3,000 IOPS base sostenidos y 125 MB/s de rendimiento** sin costo adicional por aprovisionamiento.
 
 `[PIPELINE DE HOMOLOGACIÓN]`  
-Sobre este servidor implementamos un pipeline estricto de homologación en 5 pasos:
+Sobre este servidor implementamos un pipeline estricto de homologación en 5 pasos visible en el panel interactivo derecho:
 1. El practicante sube su código a la rama `staging` de GitHub.
 2. Se ejecutan automáticamente pruebas unitarias con Jest.
 3. El código se construye y despliega en la instancia EC2 de Staging.
 4. El Lead Técnico y el practicante de QA validan la funcionalidad en un entorno real con acceso a red y base de datos de prueba.
 5. Solo tras la aprobación formal de QA, el pull request es autorizado para merge hacia producción.  
+
+`[JUSTIFICACIÓN ARQUITECTÓNICA EN PANEL DERECHO]`  
+*(Señalando el bloque dorado de justificación en el panel derecho)*:  
+*"Como pueden observar en el panel derecho, sustentamos esta decisión técnica de forma contundente en dos partes:  
+Por un lado, **el fundamento de adopción**: implementamos `t3.micro` con EBS gp3 porque elimina la fragmentación de desarrollo en 10 computadoras locales, dándonos un entorno canónico en Amazon Linux 2023 LTS con créditos de ráfaga para compilar Next.js en 3.2 segundos y 3,000 IOPS base en 30 GB de almacenamiento persistente, operando **750 horas al mes a costo cero ($0.00 USD)** bajo la capa gratuita.  
+Y por otro lado, **el descarte de alternativas**: descartamos los discos efímeros (Instance Store) porque destruirían los artefactos tras cada reinicio obligando a re-descargas lentas de dependencias, y descartamos instancias más grandes (como `t3.medium` o `c5.large`) porque generarían sobrecostos innecesarios de más de $30 USD mensuales para pruebas puntuales.  
 
 Con esto, el clásico error *'En mi máquina funciona'* desaparece por completo de la cultura de MTA Software."*
 

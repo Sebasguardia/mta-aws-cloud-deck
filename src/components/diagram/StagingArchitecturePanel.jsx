@@ -333,6 +333,37 @@ export function StagingArchitecturePanel({
               </p>
             </div>
           </div>
+
+          {/* Bloque de Justificación Arquitectónica del Entorno de Staging */}
+          <div
+            style={{
+              padding: "0.75rem 0.95rem",
+              background: "linear-gradient(135deg, rgba(212,160,23,0.08) 0%, rgba(12,12,14,0.95) 100%)",
+              border: "1px solid rgba(212,160,23,0.35)",
+              borderLeft: "4px solid #d4a017",
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.4rem",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                <Activity size={15} color="#d4a017" />
+                <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.74rem", color: "#d4a017", fontWeight: 700, letterSpacing: "0.06em" }}>
+                  JUSTIFICACIÓN ARQUITECTÓNICA DE STAGING · MTA SOFTWARE
+                </span>
+              </div>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.66rem", color: "#7a9b5c", fontWeight: 600 }}>
+                100% FREE TIER · FIN AL LOCALHOST
+              </span>
+            </div>
+            <p style={{ fontFamily: "Inter, sans-serif", fontSize: "0.75rem", color: "rgba(245,241,232,0.92)", margin: 0, lineHeight: 1.45 }}>
+              <strong>Fundamento de adopción (EC2 t3.micro + EBS gp3):</strong> Se implementa esta arquitectura porque erradica de raíz la fragmentación en 10 laptops dispares de los practicantes, garantizando un entorno canónico en Amazon Linux 2023 LTS con 2 vCPUs y créditos de ráfaga para compilar Next.js en 3.2 segundos. Además, el volumen desacoplado de 30 GB gp3 ofrece 3,000 IOPS base fijos para retener módulos y cachés, operando <strong>750 horas al mes a costo $0.00 USD</strong> dentro de la capa gratuita sin comprometer el presupuesto.
+            </p>
+            <p style={{ fontFamily: "Inter, sans-serif", fontSize: "0.73rem", color: "rgba(245,241,232,0.78)", margin: 0, lineHeight: 1.4 }}>
+              <strong>Descarte de almacenamiento efímero y servidores sobredimensionados:</strong> Se descartaron los discos efímeros de instancia (Instance Store) porque destruirían los artefactos compilados tras cada reinicio, obligando a re-descargas lentas de dependencias. Asimismo, se descartaron instancias dedicadas de mayor calibre (como t3.medium o c5.large) porque incurrirían en costos innecesarios de más de $30 USD mensuales para cargas de prueba no continuas.
+            </p>
+          </div>
         </div>
       )}
 

@@ -77,7 +77,11 @@ Los 10 practicantes ejecutan pruebas en sus ambientes locales (localhost Windows
 - Estandarización de microservicios de Workspace MTA en imágenes ligeras
 - Zero-Downtime Rolling Updates (despliegues sin interrupción)
 
-> **Palabras clave:** EC2, Graviton2, Auto Scaling Group, Lambda, serverless, ECS, contenedores, Docker, rolling updates.
+#### D) Evaluación y Descarte de AWS Elastic Beanstalk (PaaS)
+- **Concepto curricular:** Plataforma como Servicio (PaaS) que automatiza el despliegue de aplicaciones aprovisionando automáticamente instancias EC2, balanceadores y grupos de autoescalado.
+- **Justificación de descarte para MTA:** Aunque acelera despliegues para aplicaciones sencillas, oculta la orquestación de red y **restringe el control granular** sobre la VPC Multi-AZ, reglas de subredes privadas aisladas y la reproducibilidad con plantillas de Infraestructura como Código (IaC). Por ello, se prefirió el control desacoplado de **Amazon EC2 + Amazon ECS/Fargate**.
+
+> **Palabras clave:** EC2, Graviton2, Auto Scaling Group, Lambda, serverless, ECS, contenedores, Docker, Elastic Beanstalk, PaaS, rolling updates.
 
 ---
 

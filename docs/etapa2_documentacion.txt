@@ -77,6 +77,10 @@ C) Docker y Amazon ECS (Elastic Container Service):
 - Estandarizacion de microservicios y modulos independientes de Workspace MTA en imagenes ligeras.
 - Facilita migraciones, parches de seguridad y despliegues sin interrupcion de servicio (Zero-Downtime Rolling Updates).
 
+D) Evaluacion de AWS Elastic Beanstalk (PaaS) frente a EC2 / ECS:
+- Analisis: Se evaluo Elastic Beanstalk como alternativa de Plataforma como Servicio (PaaS) para simplificar despliegues monoliticos rapidos.
+- Resolucion y Descarte: Se descarto para el nucleo de MTA Software debido a que oculta el aprovisionamiento de red y restringe el control fino sobre la VPC Multi-AZ, reglas de subredes privadas y personalizacion de infraestructura como codigo (IaC), prefiriendose el control granular y desacoplado de Amazon EC2 + Amazon ECS/Fargate.
+
 
 4. PILAR 3: ESTRATEGIA DE ALMACENAMIENTO UNIFICADO Y ARCHIVO HISTORICO
 --------------------------------------------------------------------------------

@@ -18,6 +18,7 @@ import {
   Maximize2,
   Minimize2,
   Terminal,
+  Cloud,
 } from "lucide-react";
 import { slidesContent } from "../data/content.es.js";
 import { useSlideActive } from "../hooks/useSlideActive.js";
@@ -112,6 +113,15 @@ export function S14_ComputoServicios({ isActive: propActive } = {}) {
       specs: "AWS Fargate / EC2 · Registro privado Amazon ECR",
       roleMta: "Mismo entorno inmutable Node.js / Next.js para los 10 practicantes de MTA.",
     },
+    beanstalk: {
+      id: "beanstalk",
+      name: "AWS Elastic Beanstalk",
+      category: "PaaS (Evaluado y Descartado)",
+      icon: Cloud,
+      color: "#60a5fa",
+      specs: "Despliegue guiado · Abstracción de IaaS · PaaS gestionado",
+      roleMta: "Descartado: limita control granular de subredes privadas VPC, Multi-AZ e IaC.",
+    },
   };
 
   const handleRunSimulation = (e, techKey) => {
@@ -168,7 +178,7 @@ export function S14_ComputoServicios({ isActive: propActive } = {}) {
               [ {c.badge} ]
             </span>
             <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.76rem", color: "#7a9b5c", background: "rgba(122,155,92,0.15)", border: "1px solid rgba(122,155,92,0.35)", padding: "0.18rem 0.55rem", fontWeight: 600 }}>
-              EC2 · LAMBDA · DOCKER
+              EC2 · LAMBDA · ECS · BEANSTALK
             </span>
           </motion.div>
 
@@ -242,30 +252,6 @@ export function S14_ComputoServicios({ isActive: propActive } = {}) {
               </motion.div>
             );
           })}
-
-          {/* Bloque de Justificación Técnica */}
-          <motion.div variants={fadeUp(0.30)} initial="hidden" animate={entered ? "visible" : "hidden"}
-            style={{
-              padding: "0.6rem 0.85rem",
-              background: "rgba(212,160,23,0.08)",
-              backdropFilter: "blur(10px)",
-              border: "1px solid rgba(212,160,23,0.3)",
-              borderLeft: "3.5px solid #d4a017",
-              display: "flex",
-              flexDirection: "column",
-              gap: "0.25rem",
-            }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
-              <ShieldCheck size={14} color="#d4a017" />
-              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: "0.70rem", color: "#d4a017", fontWeight: 700, letterSpacing: "0.05em" }}>
-                JUSTIFICACIÓN DE ELECCIÓN · MTA SOFTWARE
-              </span>
-            </div>
-            <p style={{ fontFamily: "Inter, sans-serif", fontSize: "0.76rem", color: "rgba(245,241,232,0.9)", margin: 0, lineHeight: 1.35 }}>
-              Se seleccionó <strong>AWS EC2 y ECS/Fargate</strong> frente a Serverless puro (Lambda) para el backend del ERP porque garantiza sesiones HTTP persistentes y evita Cold Starts en consultas de practicantes.
-            </p>
-          </motion.div>
-
         </div>
 
         {/* Telemetría y Botón Probar Invocación */}
