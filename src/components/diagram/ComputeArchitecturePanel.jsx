@@ -285,10 +285,10 @@ export function ComputeArchitecturePanel({
           </span>
         </div>
         <p style={{ fontFamily: "Inter, sans-serif", fontSize: "0.75rem", color: "rgba(245,241,232,0.92)", margin: 0, lineHeight: 1.45 }}>
-          <strong>Fundamento de adopción (EC2 Graviton + Lambda + ECS):</strong> Se adopta esta arquitectura híbrida porque equilibra rendimiento persistente y optimización financiera. Las instancias <strong>EC2 Graviton ARM64 (`t4g.small`)</strong> sostienen el backend del ERP con sesiones WebSocket continuas y latencia uniforme &lt; 30 ms sin experimentar Cold Starts, mientras que <strong>AWS Lambda</strong> procesa eventos asíncronos y reportes nocturnos a costo $0.00 USD en reposo, y <strong>AWS ECS/Fargate</strong> orquesta microservicios modulares inmutables para los 10 practicantes.
+          <strong>Adopción del modelo híbrido (Graviton + Lambda + ECS):</strong> Combina instancias <strong>EC2 <code>t4g.small</code> (ARM64)</strong> para el backend del ERP con WebSockets continuos y latencia &lt; 30 ms sin Cold Starts, <strong>AWS Lambda</strong> para tareas batch nocturnas a costo $0 en reposo, y <strong>AWS Fargate</strong> para microservicios inmutables de los practicantes.
         </p>
         <p style={{ fontFamily: "Inter, sans-serif", fontSize: "0.73rem", color: "rgba(245,241,232,0.78)", margin: 0, lineHeight: 1.4 }}>
-          <strong>Descarte de AWS Elastic Beanstalk (PaaS) y Serverless puro:</strong> Se descartó Elastic Beanstalk debido a que su enfoque de caja negra restringe el control granular de subredes privadas en la VPC Multi-AZ, oculta la orquestación de red e impide el encadenamiento estricto de Security Groups en capa 4 mediante CloudFormation (IaC). Asimismo, se descartó basar el 100% del backend en Lambda debido al límite de 15 minutos por función y al impacto de arranques en frío sobre conexiones transaccionales continuas con la base de datos PostgreSQL.
+          <strong>Descarte de Elastic Beanstalk (PaaS) y Serverless puro:</strong> Se descarta Beanstalk porque su caja negra impide el control granular de subredes privadas VPC, Security Groups e IaC con CloudFormation. Se descarta Serverless puro por el límite de 15 min de Lambda y la latencia en conexiones continuas a PostgreSQL.
         </p>
       </div>
 

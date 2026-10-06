@@ -358,10 +358,10 @@ export function StagingArchitecturePanel({
               </span>
             </div>
             <p style={{ fontFamily: "Inter, sans-serif", fontSize: "0.75rem", color: "rgba(245,241,232,0.92)", margin: 0, lineHeight: 1.45 }}>
-              <strong>Fundamento de adopción (EC2 t3.micro + EBS gp3):</strong> Se implementa esta arquitectura porque erradica de raíz la fragmentación en 10 laptops dispares de los practicantes, garantizando un entorno canónico en Amazon Linux 2023 LTS con 2 vCPUs y créditos de ráfaga para compilar Next.js en 3.2 segundos. Además, el volumen desacoplado de 30 GB gp3 ofrece 3,000 IOPS base fijos para retener módulos y cachés, operando <strong>750 horas al mes a costo $0.00 USD</strong> dentro de la capa gratuita sin comprometer el presupuesto.
+              <strong>Adopción de EC2 t3.micro + EBS gp3:</strong> Erradica el desarrollo fragmentado en 10 laptops al estandarizar Amazon Linux 2023 con 2 vCPUs ráfaga para compilar Next.js en 3.2s. Su volumen de 30 GB gp3 aporta 3,000 IOPS base persistentes para cachés y opera <strong>750 h/mes a costo $0.00 USD</strong> bajo el Free Tier.
             </p>
             <p style={{ fontFamily: "Inter, sans-serif", fontSize: "0.73rem", color: "rgba(245,241,232,0.78)", margin: 0, lineHeight: 1.4 }}>
-              <strong>Descarte de almacenamiento efímero y servidores sobredimensionados:</strong> Se descartaron los discos efímeros de instancia (Instance Store) porque destruirían los artefactos compilados tras cada reinicio, obligando a re-descargas lentas de dependencias. Asimismo, se descartaron instancias dedicadas de mayor calibre (como t3.medium o c5.large) porque incurrirían en costos innecesarios de más de $30 USD mensuales para cargas de prueba no continuas.
+              <strong>Descarte de discos efímeros y familias sobredimensionadas:</strong> Se descartan discos locales (Instance Store) para evitar la pérdida de dependencias tras reinicios, y se descartan instancias como <code>t3.medium</code> o <code>c5</code> para no generar sobrecostos innecesarios mayores a $30 USD/mes en pruebas.
             </p>
           </div>
         </div>
