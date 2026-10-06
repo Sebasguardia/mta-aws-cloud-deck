@@ -20,6 +20,17 @@ export function StorageArchitecturePanel({
   setSelectedStorage,
 }) {
   const [lifecycleDay, setLifecycleDay] = useState(0);
+  const [isSimulating, setIsSimulating] = useState(false);
+
+  const runLifecycleSimulation = () => {
+    setIsSimulating(true);
+    setLifecycleDay(0);
+    setTimeout(() => setLifecycleDay(30), 1200);
+    setTimeout(() => {
+      setLifecycleDay(90);
+      setIsSimulating(false);
+    }, 2500);
+  };
 
   const getTierInfo = () => {
     if (lifecycleDay >= 90) {
@@ -74,19 +85,23 @@ export function StorageArchitecturePanel({
           </span>
         </div>
 
-        <span
+        <button
+          type="button"
+          onClick={runLifecycleSimulation}
+          disabled={isSimulating}
           style={{
             fontFamily: "'JetBrains Mono', monospace",
             fontSize: "0.68rem",
             color: "#7a9b5c",
-            background: "rgba(122,155,92,0.15)",
+            background: isSimulating ? "rgba(122,155,92,0.3)" : "rgba(122,155,92,0.15)",
             border: "1px solid rgba(122,155,92,0.35)",
-            padding: "0.2rem 0.55rem",
-            fontWeight: 600,
+            padding: "0.25rem 0.65rem",
+            fontWeight: 700,
+            cursor: isSimulating ? "default" : "pointer",
           }}
         >
-          DURABILIDAD 99.999999999% (11 NUEVES)
-        </span>
+          {isSimulating ? `SIMULANDO TRANSICIÓN... (${lifecycleDay}d)` : "PROBAR CICLO DE VIDA"}
+        </button>
       </div>
 
       {/* SVG Storage Architecture Flow */}

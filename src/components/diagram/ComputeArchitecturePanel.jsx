@@ -121,15 +121,21 @@ export function ComputeArchitecturePanel({
         </div>
 
         <svg viewBox="0 0 680 110" style={{ width: "100%", height: "auto" }}>
+          {isSimulating && (
+            <circle cx="180" cy="55" r="5" fill="#d4a017">
+              <animate attributeName="cx" values="140;440;630" dur="0.8s" repeatCount="1" />
+            </circle>
+          )}
+
           {selectedTech === "ec2" && (
             <g>
-              <rect x="20" y="20" width="120" height="70" rx="4" fill="#141418" stroke="#d4a017" strokeWidth="1.5" />
+              <rect x="20" y="20" width="120" height="70" rx="4" fill="#141418" stroke={isSimulating ? "#F5F1E8" : "#d4a017"} strokeWidth="1.5" />
               <text x="80" y="50" textAnchor="middle" fill="#F5F1E8" fontSize="10" fontFamily="JetBrains Mono" fontWeight="bold">USUARIOS MTA</text>
               <text x="80" y="65" textAnchor="middle" fill="#d4a017" fontSize="8" fontFamily="JetBrains Mono">HTTP Port 80/443</text>
 
               <line x1="140" y1="55" x2="220" y2="55" stroke="#d4a017" strokeWidth="2" strokeDasharray="4 4" />
 
-              <rect x="220" y="20" width="140" height="70" rx="4" fill="#141418" stroke="#d4a017" strokeWidth="1.5" />
+              <rect x="220" y="20" width="140" height="70" rx="4" fill="#141418" stroke={isSimulating ? "#7a9b5c" : "#d4a017"} strokeWidth={isSimulating ? "2.5" : "1.5"} />
               <text x="290" y="48" textAnchor="middle" fill="#F5F1E8" fontSize="10" fontFamily="JetBrains Mono" fontWeight="bold">INSTANCIA EC2</text>
               <text x="290" y="62" textAnchor="middle" fill="#7a9b5c" fontSize="8" fontFamily="JetBrains Mono">t4g.small / Ubuntu</text>
               <text x="290" y="75" textAnchor="middle" fill="#d4a017" fontSize="8" fontFamily="JetBrains Mono">Next.js / Node.js ERP</text>
@@ -140,20 +146,20 @@ export function ComputeArchitecturePanel({
               <text x="505" y="48" textAnchor="middle" fill="#F5F1E8" fontSize="10" fontFamily="JetBrains Mono" fontWeight="bold">AMAZON EBS gp3</text>
               <text x="505" y="65" textAnchor="middle" fill="#7a9b5c" fontSize="8" fontFamily="JetBrains Mono">Almacenamiento SSD</text>
 
-              <circle cx="630" cy="55" r="22" fill="rgba(212,160,23,0.2)" stroke="#d4a017" strokeWidth="2" />
+              <circle cx="630" cy="55" r="22" fill={isSimulating ? "rgba(212,160,23,0.4)" : "rgba(212,160,23,0.2)"} stroke="#d4a017" strokeWidth="2" />
               <text x="630" y="59" textAnchor="middle" fill="#d4a017" fontSize="9" fontFamily="JetBrains Mono" fontWeight="bold">IaaS</text>
             </g>
           )}
 
           {selectedTech === "lambda" && (
             <g>
-              <rect x="20" y="20" width="120" height="70" rx="4" fill="#141418" stroke="#e8a0bf" strokeWidth="1.5" />
+              <rect x="20" y="20" width="120" height="70" rx="4" fill="#141418" stroke={isSimulating ? "#F5F1E8" : "#e8a0bf"} strokeWidth="1.5" />
               <text x="80" y="50" textAnchor="middle" fill="#F5F1E8" fontSize="10" fontFamily="JetBrains Mono" fontWeight="bold">API GATEWAY / S3</text>
               <text x="80" y="65" textAnchor="middle" fill="#e8a0bf" fontSize="8" fontFamily="JetBrains Mono">Trigger Evento</text>
 
               <line x1="140" y1="55" x2="220" y2="55" stroke="#e8a0bf" strokeWidth="2" strokeDasharray="4 4" />
 
-              <rect x="220" y="20" width="140" height="70" rx="4" fill="#141418" stroke="#e8a0bf" strokeWidth="1.5" />
+              <rect x="220" y="20" width="140" height="70" rx="4" fill="#141418" stroke={isSimulating ? "#7a9b5c" : "#e8a0bf"} strokeWidth={isSimulating ? "2.5" : "1.5"} />
               <text x="290" y="48" textAnchor="middle" fill="#F5F1E8" fontSize="10" fontFamily="JetBrains Mono" fontWeight="bold">AWS LAMBDA</text>
               <text x="290" y="62" textAnchor="middle" fill="#e8a0bf" fontSize="8" fontFamily="JetBrains Mono">Función FaaS Ephemere</text>
               <text x="290" y="75" textAnchor="middle" fill="#d4a017" fontSize="8" fontFamily="JetBrains Mono">Ejecución &lt; 15 min</text>
@@ -164,20 +170,20 @@ export function ComputeArchitecturePanel({
               <text x="505" y="48" textAnchor="middle" fill="#F5F1E8" fontSize="10" fontFamily="JetBrains Mono" fontWeight="bold">AMAZON DYNAMODB</text>
               <text x="505" y="65" textAnchor="middle" fill="#7a9b5c" fontSize="8" fontFamily="JetBrains Mono">Escritura NoSQL</text>
 
-              <circle cx="630" cy="55" r="22" fill="rgba(232,160,191,0.2)" stroke="#e8a0bf" strokeWidth="2" />
+              <circle cx="630" cy="55" r="22" fill={isSimulating ? "rgba(232,160,191,0.4)" : "rgba(232,160,191,0.2)"} stroke="#e8a0bf" strokeWidth="2" />
               <text x="630" y="59" textAnchor="middle" fill="#e8a0bf" fontSize="8" fontFamily="JetBrains Mono" fontWeight="bold">Serverless</text>
             </g>
           )}
 
-          {selectedTech === "fargate" && (
+          {(selectedTech === "containers" || selectedTech === "fargate") && (
             <g>
-              <rect x="20" y="20" width="120" height="70" rx="4" fill="#141418" stroke="#7a9b5c" strokeWidth="1.5" />
+              <rect x="20" y="20" width="120" height="70" rx="4" fill="#141418" stroke={isSimulating ? "#F5F1E8" : "#7a9b5c"} strokeWidth="1.5" />
               <text x="80" y="50" textAnchor="middle" fill="#F5F1E8" fontSize="10" fontFamily="JetBrains Mono" fontWeight="bold">AMAZON ECR</text>
               <text x="80" y="65" textAnchor="middle" fill="#7a9b5c" fontSize="8" fontFamily="JetBrains Mono">Docker Images</text>
 
               <line x1="140" y1="55" x2="220" y2="55" stroke="#7a9b5c" strokeWidth="2" strokeDasharray="4 4" />
 
-              <rect x="220" y="20" width="140" height="70" rx="4" fill="#141418" stroke="#7a9b5c" strokeWidth="1.5" />
+              <rect x="220" y="20" width="140" height="70" rx="4" fill="#141418" stroke={isSimulating ? "#d4a017" : "#7a9b5c"} strokeWidth={isSimulating ? "2.5" : "1.5"} />
               <text x="290" y="48" textAnchor="middle" fill="#F5F1E8" fontSize="10" fontFamily="JetBrains Mono" fontWeight="bold">AWS FARGATE / ECS</text>
               <text x="290" y="62" textAnchor="middle" fill="#7a9b5c" fontSize="8" fontFamily="JetBrains Mono">Contenedor Serverless</text>
               <text x="290" y="75" textAnchor="middle" fill="#d4a017" fontSize="8" fontFamily="JetBrains Mono">Task Definition Inmutable</text>
@@ -188,7 +194,7 @@ export function ComputeArchitecturePanel({
               <text x="505" y="48" textAnchor="middle" fill="#F5F1E8" fontSize="10" fontFamily="JetBrains Mono" fontWeight="bold">APPLICATION LOAD BALANCER</text>
               <text x="505" y="65" textAnchor="middle" fill="#d4a017" fontSize="8" fontFamily="JetBrains Mono">Autoscaling por CPU</text>
 
-              <circle cx="630" cy="55" r="22" fill="rgba(122,155,92,0.2)" stroke="#7a9b5c" strokeWidth="2" />
+              <circle cx="630" cy="55" r="22" fill={isSimulating ? "rgba(122,155,92,0.4)" : "rgba(122,155,92,0.2)"} stroke="#7a9b5c" strokeWidth="2" />
               <text x="630" y="59" textAnchor="middle" fill="#7a9b5c" fontSize="9" fontFamily="JetBrains Mono" fontWeight="bold">CaaS</text>
             </g>
           )}

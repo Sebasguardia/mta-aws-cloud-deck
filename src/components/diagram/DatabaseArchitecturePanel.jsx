@@ -19,13 +19,22 @@ export function DatabaseArchitecturePanel({
 }) {
   const [isFailoverSim, setIsFailoverSim] = useState(false);
   const [activePrimary, setActivePrimary] = useState("AZ-A");
+  const [failoverLog, setFailoverLog] = useState("SISTEMA OK: Replicación síncrona activa en US-EAST-1A");
 
   const triggerFailover = () => {
     setIsFailoverSim(true);
+    const targetAZ = activePrimary === "AZ-A" ? "US-EAST-1B" : "US-EAST-1A";
+    setFailoverLog(`[00:01s] ALERTA: Falla detectada en nodo primario (${activePrimary}). Iniciando conmutación...`);
+    
+    setTimeout(() => {
+      setFailoverLog(`[00:12s] DNS UPDATE: Redirigiendo CNAME de endpoint RDS hacia ${targetAZ}...`);
+    }, 600);
+
     setTimeout(() => {
       setActivePrimary((prev) => (prev === "AZ-A" ? "AZ-B" : "AZ-A"));
+      setFailoverLog(`[00:24s] OK: Nodo ${targetAZ} promovido a PRIMARIO. RTO < 30s | RPO = 0s (Cero pérdida)`);
       setIsFailoverSim(false);
-    }, 1200);
+    }, 1400);
   };
 
   return (
@@ -148,6 +157,11 @@ export function DatabaseArchitecturePanel({
             {activePrimary === "AZ-B" ? "● LECTURA / ESCRITURA ACTIVA" : "○ STANDBY PASIVO"}
           </text>
         </svg>
+
+        {/* Live Failover Trace Log Banner */}
+        <div style={{ marginTop: "0.5rem", background: "#08080a", border: "1px solid rgba(212,160,23,0.3)", padding: "0.4rem 0.6rem", fontFamily: "'JetBrains Mono', monospace", fontSize: "0.68rem", color: isFailoverSim ? "#d4a017" : "#7a9b5c" }}>
+          {failoverLog}
+        </div>
       </div>
 
       {/* RTO / RPO Resiliency Metrics Cards */}

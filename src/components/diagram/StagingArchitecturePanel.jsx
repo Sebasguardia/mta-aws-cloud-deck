@@ -25,14 +25,76 @@ export function StagingArchitecturePanel({
   setSelectedTech,
 }) {
   const [activeTab, setActiveTab] = useState("pipeline"); // pipeline | security | console
-
-  const logs = [
+  const [isDeploying, setIsDeploying] = useState(false);
+  const [deployStep, setDeployStep] = useState(0); // 0: Idle, 1: Git Push, 2: GitHub Actions, 3: EC2 Build, 4: EBS Storage, 5: OK 200
+  const [deployFailed, setDeployFailed] = useState(false);
+  const [dynamicLogs, setDynamicLogs] = useState([
     "[INFO] 22:15:01 ssh_connect: Connected to ec2-54-210-88-14.compute-1.amazonaws.com",
     "[INFO] 22:15:03 git_pull: Fetching latest commits from origin/staging...",
     "[PASS] 22:15:06 jest_tests: 14 test suites passed (100% code coverage)",
     "[BUILD] 22:15:10 next_build: Compiled /workspace-mta in 3.4s (30 GB EBS gp3 SSD)",
     "[OK] 22:15:12 pm2_restart: Process 'mta-staging-app' online on port 3000",
-  ];
+  ]);
+
+  const runDeploySimulation = () => {
+    setIsDeploying(true);
+    setDeployFailed(false);
+    setActiveTab("pipeline");
+    setDeployStep(1);
+
+    const now = new Date().toLocaleTimeString();
+
+    setDynamicLogs((prev) => [
+      ...prev.slice(-3),
+      `[TRIGGER] ${now} git_push: 10 Practicantes enviaron cambios a origin/staging...`,
+    ]);
+
+    setTimeout(() => {
+      setDeployStep(2);
+      setDynamicLogs((prev) => [
+        ...prev,
+        `[BUILD] ${now} github_actions: Ejecutando Jest test suite en entorno runner...`,
+        `[PASS] ${now} jest_tests: 14 test suites pasaron con 100% cobertura`,
+      ]);
+    }, 1000);
+
+    setTimeout(() => {
+      setDeployStep(3);
+      if (serverState === "stopped") {
+        setDeployFailed(true);
+        setIsDeploying(false);
+        setDynamicLogs((prev) => [
+          ...prev,
+          `[FAIL] ${now} ssh_connect: Connection refused to 54.210.88.14 (EC2 DETENIDO $0/H)`,
+          `[ERROR] ${now} deploy_aborted: Enciende la instancia EC2 primero antes de realizar el deploy.`,
+        ]);
+        return;
+      }
+
+      setDynamicLogs((prev) => [
+        ...prev,
+        `[SSH] ${now} ec2_deploy: Desplegando en t3.micro (IP 54.210.88.14)...`,
+        `[BUILD] ${now} next_build: Compilando Next.js en 3.2s con ráfaga CPU...`,
+      ]);
+
+      setTimeout(() => {
+        setDeployStep(4);
+        setDynamicLogs((prev) => [
+          ...prev,
+          `[STORAGE] ${now} ebs_write: Persistiendo artifact en 30 GB EBS gp3 (3000 IOPS)...`,
+        ]);
+      }, 1000);
+
+      setTimeout(() => {
+        setDeployStep(5);
+        setDynamicLogs((prev) => [
+          ...prev,
+          `[OK] ${now} pm2_restart: 'mta-staging-app' online en puerto 3000 (HTTP 200 OK)`,
+        ]);
+        setIsDeploying(false);
+      }, 2000);
+    }, 2200);
+  };
 
   return (
     <div
@@ -86,8 +148,30 @@ export function StagingArchitecturePanel({
           </div>
         </div>
 
-        {/* Tab Navigation Controls */}
-        <div style={{ display: "flex", gap: "0.35rem" }}>
+        {/* Action Button & Tab Navigation Controls */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <button
+            type="button"
+            onClick={runDeploySimulation}
+            disabled={isDeploying}
+            style={{
+              background: deployFailed ? "rgba(198,67,43,0.25)" : isDeploying ? "rgba(212,160,23,0.3)" : "rgba(212,160,23,0.2)",
+              color: deployFailed ? "#e8a0bf" : "#d4a017",
+              border: `1px solid ${deployFailed ? "#c6432b" : "#d4a017"}`,
+              padding: "0.25rem 0.65rem",
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: "0.68rem",
+              fontWeight: 700,
+              cursor: isDeploying ? "default" : "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.35rem",
+            }}
+          >
+            <Play size={12} />
+            <span>{isDeploying ? `PROCESANDO (${deployStep}/5)...` : deployFailed ? "REINTENTAR DEPLOY (EC2 DETENIDO)" : "EJECUTAR DEPLOY CI/CD"}</span>
+          </button>
+
           {[
             { id: "pipeline", label: "PIPELINE CI/CD" },
             { id: "security", label: "SEGURIDAD VPC" },
@@ -148,34 +232,60 @@ export function StagingArchitecturePanel({
 
             <svg viewBox="0 0 700 120" style={{ width: "100%", height: "auto" }}>
               {/* Lines connecting nodes */}
-              <line x1="110" y1="60" x2="160" y2="60" stroke="#d4a017" strokeWidth="2" strokeDasharray="4 4" />
-              <line x1="270" y1="60" x2="320" y2="60" stroke="#7a9b5c" strokeWidth="2" />
-              <line x1="430" y1="60" x2="480" y2="60" stroke="#e8a0bf" strokeWidth="2" />
-              <line x1="590" y1="60" x2="630" y2="60" stroke="#7a9b5c" strokeWidth="2" />
+              <line x1="110" y1="60" x2="160" y2="60" stroke={deployStep >= 1 ? "#d4a017" : "rgba(212,160,23,0.3)"} strokeWidth="2" strokeDasharray="4 4" />
+              <line x1="270" y1="60" x2="320" y2="60" stroke={deployStep >= 2 ? "#7a9b5c" : "rgba(122,155,92,0.3)"} strokeWidth="2" />
+              <line x1="430" y1="60" x2="480" y2="60" stroke={deployStep >= 3 ? "#e8a0bf" : "rgba(232,160,191,0.3)"} strokeWidth="2" />
+              <line x1="590" y1="60" x2="630" y2="60" stroke={deployStep >= 4 ? "#7a9b5c" : "rgba(122,155,92,0.3)"} strokeWidth="2" />
+
+              {/* Animated data packet during deploy */}
+              {isDeploying && (
+                <circle
+                  cx={
+                    deployStep === 1 ? 135 :
+                    deployStep === 2 ? 295 :
+                    deployStep === 3 ? 455 :
+                    deployStep === 4 ? 610 : 655
+                  }
+                  cy="60"
+                  r="5"
+                  fill="#d4a017"
+                />
+              )}
 
               {/* Node 1: Dev Laptops */}
-              <rect x="10" y="25" width="100" height="70" rx="4" fill="#141418" stroke="#e8a0bf" strokeWidth="1.5" />
+              <rect x="10" y="25" width="100" height="70" rx="4" fill="#141418" stroke={deployStep === 1 ? "#F5F1E8" : "#e8a0bf"} strokeWidth={deployStep === 1 ? "2.5" : "1.5"} />
               <text x="60" y="55" textAnchor="middle" fill="#F5F1E8" fontSize="10" fontFamily="JetBrains Mono" fontWeight="bold">10 PRACTICANTES</text>
               <text x="60" y="72" textAnchor="middle" fill="#e8a0bf" fontSize="8" fontFamily="JetBrains Mono">Git Push staging</text>
 
               {/* Node 2: GitHub Actions */}
-              <rect x="160" y="25" width="110" height="70" rx="4" fill="#141418" stroke="#d4a017" strokeWidth="1.5" />
+              <rect x="160" y="25" width="110" height="70" rx="4" fill="#141418" stroke={deployStep === 2 ? "#F5F1E8" : "#d4a017"} strokeWidth={deployStep === 2 ? "2.5" : "1.5"} />
               <text x="215" y="52" textAnchor="middle" fill="#F5F1E8" fontSize="10" fontFamily="JetBrains Mono" fontWeight="bold">GITHUB ACTIONS</text>
               <text x="215" y="68" textAnchor="middle" fill="#7a9b5c" fontSize="8" fontFamily="JetBrains Mono">Jest Tests Pass</text>
 
               {/* Node 3: Amazon EC2 Staging */}
-              <rect x="320" y="25" width="110" height="70" rx="4" fill="#141418" stroke="#7a9b5c" strokeWidth="1.5" />
+              <rect x="320" y="25" width="110" height="70" rx="4" fill="#141418" stroke={serverState === "stopped" || deployFailed ? "#c6432b" : deployStep === 3 ? "#F5F1E8" : "#7a9b5c"} strokeWidth={deployStep === 3 ? "2.5" : "1.5"} />
               <text x="375" y="52" textAnchor="middle" fill="#F5F1E8" fontSize="10" fontFamily="JetBrains Mono" fontWeight="bold">EC2 t3.micro</text>
-              <text x="375" y="68" textAnchor="middle" fill="#d4a017" fontSize="8" fontFamily="JetBrains Mono">Build Next.js</text>
+              <text x="375" y="68" textAnchor="middle" fill={serverState === "stopped" || deployFailed ? "#c6432b" : "#d4a017"} fontSize="8" fontFamily="JetBrains Mono">
+                {serverState === "stopped" ? "SERVID DETENIDO" : deployFailed ? "DEPLOY FALLIDO" : "Build Next.js"}
+              </text>
 
               {/* Node 4: Amazon EBS gp3 */}
-              <rect x="480" y="25" width="110" height="70" rx="4" fill="#141418" stroke="#7a9b5c" strokeWidth="1.5" />
+              <rect x="480" y="25" width="110" height="70" rx="4" fill="#141418" stroke={deployStep === 4 ? "#F5F1E8" : "#7a9b5c"} strokeWidth={deployStep === 4 ? "2.5" : "1.5"} />
               <text x="535" y="52" textAnchor="middle" fill="#F5F1E8" fontSize="10" fontFamily="JetBrains Mono" fontWeight="bold">EBS 30 GB gp3</text>
               <text x="535" y="68" textAnchor="middle" fill="#7a9b5c" fontSize="8" fontFamily="JetBrains Mono">3000 IOPS SSD</text>
 
-              {/* Node 5: Staging Ready */}
-              <circle cx="655" cy="60" r="22" fill="rgba(122,155,92,0.2)" stroke="#7a9b5c" strokeWidth="2" />
-              <text x="655" y="64" textAnchor="middle" fill="#7a9b5c" fontSize="9" fontFamily="JetBrains Mono" fontWeight="bold">OK 200</text>
+              {/* Node 5: Staging Status */}
+              <circle
+                cx="655"
+                cy="60"
+                r="22"
+                fill={serverState === "stopped" || deployFailed ? "rgba(198,67,43,0.2)" : deployStep === 5 ? "rgba(122,155,92,0.4)" : "rgba(122,155,92,0.2)"}
+                stroke={serverState === "stopped" || deployFailed ? "#c6432b" : deployStep === 5 ? "#F5F1E8" : "#7a9b5c"}
+                strokeWidth={deployStep === 5 ? "3" : "2"}
+              />
+              <text x="655" y="64" textAnchor="middle" fill={serverState === "stopped" || deployFailed ? "#c6432b" : "#7a9b5c"} fontSize="9" fontFamily="JetBrains Mono" fontWeight="bold">
+                {serverState === "stopped" || deployFailed ? "503 ERR" : "OK 200"}
+              </text>
             </svg>
           </div>
 
@@ -285,6 +395,8 @@ export function StagingArchitecturePanel({
             display: "flex",
             flexDirection: "column",
             gap: "0.4rem",
+            maxHeight: "220px",
+            overflowY: "auto",
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", borderBottom: "1px solid rgba(245,241,232,0.1)", paddingBottom: "0.4rem" }}>
@@ -292,8 +404,8 @@ export function StagingArchitecturePanel({
             <span style={{ color: "#7a9b5c", fontWeight: 700 }}>ubuntu@ec2-staging-mta:~$ pm2 logs mta-staging</span>
           </div>
 
-          {logs.map((log, i) => (
-            <div key={i} style={{ color: log.includes("PASS") || log.includes("OK") ? "#7a9b5c" : "#d4a017" }}>
+          {dynamicLogs.map((log, i) => (
+            <div key={i} style={{ color: log.includes("PASS") || log.includes("OK") ? "#7a9b5c" : log.includes("TRIGGER") || log.includes("BUILD") ? "#d4a017" : "#F5F1E8" }}>
               {log}
             </div>
           ))}
